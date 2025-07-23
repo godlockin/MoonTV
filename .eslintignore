@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+.vercel/
+out/
+build/
+dist/
+
+# Generated files
+public/sw.js
+public/workbox-*.js
+src/lib/runtime.ts
+
+# Config files
+next.config.js
+tailwind.config.ts
+postcss.config.js
+jest.config.js
+commitlint.config.js
+
+# Scripts
+scripts/
+
+# Other
+*.log
+.env*
+.DS_Store
