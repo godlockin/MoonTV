@@ -19,9 +19,37 @@ interface DoubanCategoryApiResponse {
   }>;
 }
 
+interface DoubanRecommendApiResponse {
+  count: number;
+  items: Array<{
+    id: string;
+    title: string;
+    year?: string;
+    pic?: {
+      large?: string;
+      normal?: string;
+    };
+    rating?: {
+      value?: number;
+    };
+    card_subtitle?: string;
+    item_type?: string;
+  }>;
+}
+
+interface DoubanSearchApiResponse {
+  subjects: Array<{
+    id: string;
+    title: string;
+    year: string;
+    cover: string;
+    rate: string;
+  }>;
+}
+
 async function fetchDoubanData(
   url: string
-): Promise<DoubanCategoryApiResponse> {
+): Promise<DoubanCategoryApiResponse | DoubanRecommendApiResponse | DoubanSearchApiResponse> {
   // 添加超时控制
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
@@ -63,13 +91,13 @@ export async function GET(request: Request) {
   const kind = searchParams.get('kind') || 'movie';
   const category = searchParams.get('category');
   const type = searchParams.get('type');
-  const pageLimit = parseInt(searchParams.get('limit') || '20');
-  const pageStart = parseInt(searchParams.get('start') || '0');
+  const pageLimit = parseInt(searchParams.get('pageLimit') || searchParams.get('limit') || '20');
+  const pageStart = parseInt(searchParams.get('pageStart') || searchParams.get('start') || '0');
 
   // 验证参数
-  if (!kind || !category || !type) {
+  if (!kind) {
     return NextResponse.json(
-      { error: '缺少必要参数: kind 或 category 或 type' },
+      { error: '缺少必要参数: kind' },
       { status: 400 }
     );
   }
@@ -83,7 +111,7 @@ export async function GET(request: Request) {
 
   if (pageLimit < 1 || pageLimit > 100) {
     return NextResponse.json(
-      { error: 'pageSize 必须在 1-100 之间' },
+      { error: 'pageLimit 必须在 1-100 之间' },
       { status: 400 }
     );
   }
@@ -95,20 +123,67 @@ export async function GET(request: Request) {
     );
   }
 
-  const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=${pageStart}&limit=${pageLimit}&category=${category}&type=${type}`;
+  // 确定使用的标签
+  let tag = '';
+  
+  // 如果有type参数，优先使用type作为标签
+  if (type && type !== '全部') {
+    tag = type;
+  } else if (category && category !== '热门电影' && category !== '热门') {
+    // 否则使用category作为标签（排除通用分类）
+    tag = category;
+  } else {
+    // 默认使用豆瓣高分
+    tag = '豆瓣高分';
+  }
+
+  // 可信网站的标签列表
+  const validMovieTags = ['热门', '最新', '经典', '豆瓣高分', '冷门佳片', '华语', '历史', '欧美', '韩国', '日本', '动作', '喜剧', '爱情', '科幻', '悬疑', '恐怖', '治愈', '动画', '伦理'];
+  const validTvTags = ['热门', '美剧', '英剧', '韩剧', '日剧', '国产剧', '港剧', '日本动画', '综艺', '纪录片'];
+  
+  // 标签映射（处理一些特殊情况）
+  const tagMapping: { [key: string]: string } = {
+    '喜剧片': '喜剧',
+    '爱情片': '爱情',
+    '科幻片': '科幻',
+    '动作片': '动作',
+    '悬疑片': '悬疑',
+    '恐怖片': '恐怖',
+    '治愈片': '治愈',
+    '动画片': '动画',
+    '热门电影': '热门',
+    '热门剧集': '热门',
+    '中国大陆': '华语',
+    '美国': '欧美',
+    '伦理': '伦理',
+    '英国': '欧美'
+  };
+  
+  // 应用标签映射
+  tag = tagMapping[tag] || tag;
+  
+  // 验证标签是否有效
+  const validTags = kind === 'movie' ? validMovieTags : validTvTags;
+  if (!validTags.includes(tag)) {
+    // 如果标签无效，使用默认标签
+    tag = kind === 'movie' ? '热门' : '热门';
+  }
+  
+  // 统一使用豆瓣搜索API
+  const target = `https://movie.douban.com/j/search_subjects?type=${kind}&tag=${encodeURIComponent(tag)}&sort=recommend&page_limit=${pageLimit}&page_start=${Math.floor(pageStart / pageLimit)}`;
 
   try {
     // 调用豆瓣 API
-    const doubanData = await fetchDoubanData(target);
+    const doubanData = await fetchDoubanData(target) as DoubanSearchApiResponse;
 
-    // 转换数据格式
-    const list: DoubanItem[] = doubanData.items.map((item) => ({
+    // 转换数据格式 - 统一使用搜索API的数据格式
+    const list: DoubanItem[] = doubanData.subjects?.map((item) => ({
       id: item.id,
       title: item.title,
-      poster: item.pic?.normal || item.pic?.large || '',
-      rate: item.rating?.value ? item.rating.value.toFixed(1) : '',
-      year: item.card_subtitle?.match(/(\d{4})/)?.[1] || '',
-    }));
+      poster: item.cover || '',
+      rate: item.rate || '',
+      year: item.year || '',
+    })) || [];
 
     const response: DoubanResult = {
       code: 200,

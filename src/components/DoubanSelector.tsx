@@ -39,32 +39,43 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     width: number;
   }>({ left: 0, width: 0 });
 
-  // 电影的一级选择器选项
+  // 电影的一级选择器选项 - 基于豆瓣API测试结果更新
   const moviePrimaryOptions: SelectorOption[] = [
     { label: '热门电影', value: '热门' },
     { label: '最新电影', value: '最新' },
+    { label: '经典电影', value: '经典' },
     { label: '豆瓣高分', value: '豆瓣高分' },
     { label: '冷门佳片', value: '冷门佳片' },
   ];
 
-  // 电影的二级选择器选项
+  // 电影的二级选择器选项 - 基于豆瓣API测试结果更新
   const movieSecondaryOptions: SelectorOption[] = [
     { label: '全部', value: '全部' },
     { label: '华语', value: '华语' },
     { label: '欧美', value: '欧美' },
-    { label: '韩国', value: '韩国' },
-    { label: '日本', value: '日本' },
+    { label: '动作片', value: '动作' },
+    { label: '喜剧片', value: '喜剧' },
+    { label: '爱情片', value: '爱情' },
+    { label: '科幻片', value: '科幻' },
+    { label: '悬疑片', value: '悬疑' },
+    { label: '恐怖片', value: '恐怖' },
+    { label: '治愈系', value: '治愈' },
+    { label: '动画片', value: '动画' },
+    { label: '伦理', value: '伦理' },
   ];
 
-  // 电视剧选择器选项
+  // 电视剧选择器选项 - 基于豆瓣API测试结果更新
   const tvOptions: SelectorOption[] = [
-    { label: '全部', value: 'tv' },
-    { label: '国产', value: 'tv_domestic' },
-    { label: '欧美', value: 'tv_american' },
-    { label: '日本', value: 'tv_japanese' },
-    { label: '韩国', value: 'tv_korean' },
-    { label: '动漫', value: 'tv_animation' },
-    { label: '纪录片', value: 'tv_documentary' },
+    { label: '热门剧集', value: '热门' },
+    { label: '美剧', value: '美剧' },
+    { label: '英剧', value: '英剧' },
+    { label: '韩剧', value: '韩剧' },
+    { label: '日剧', value: '日剧' },
+    { label: '国产剧', value: '国产剧' },
+    { label: '港剧', value: '港剧' },
+    { label: '日本动画', value: '日本动画' },
+    { label: '综艺', value: '综艺' },
+    { label: '纪录片', value: '纪录片' },
   ];
 
   // 综艺选择器选项

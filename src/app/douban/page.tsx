@@ -34,7 +34,7 @@ function DoubanPageClient() {
   });
   const [secondarySelection, setSecondarySelection] = useState<string>(() => {
     if (type === 'movie') return '全部';
-    if (type === 'tv') return 'tv';
+    if (type === 'tv') return '热门';
     if (type === 'show') return 'show';
     return '全部';
   });
@@ -63,7 +63,7 @@ function DoubanPageClient() {
       setSecondarySelection('全部');
     } else if (type === 'tv') {
       setPrimarySelection('');
-      setSecondarySelection('tv');
+      setSecondarySelection('热门');
     } else if (type === 'show') {
       setPrimarySelection('');
       setSecondarySelection('show');
