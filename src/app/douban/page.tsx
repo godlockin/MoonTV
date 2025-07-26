@@ -18,12 +18,7 @@ function DoubanPageClient() {
   const searchParams = useSearchParams();
   const [doubanData, setDoubanData] = useState<DoubanItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [selectorsReady, setSelectorsReady] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const loadingRef = useRef<HTMLDivElement>(null);
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const type = searchParams.get('type') || 'movie';
@@ -84,40 +79,32 @@ function DoubanPageClient() {
   const skeletonData = Array.from({ length: 25 }, (_, index) => index);
 
   // 生成API请求参数的辅助函数
-  const getRequestParams = useCallback(
-    (pageStart: number) => {
-      // 当type为tv或show时，kind统一为'tv'，category使用type本身
-      if (type === 'tv' || type === 'show') {
-        return {
-          kind: 'tv' as const,
-          category: type,
-          type: secondarySelection,
-          pageLimit: 25,
-          pageStart,
-        };
-      }
-
-      // 电影类型保持原逻辑
+  const getRequestParams = useCallback(() => {
+    // 当type为tv或show时，kind统一为'tv'，category使用type本身
+    if (type === 'tv' || type === 'show') {
       return {
-        kind: type as 'tv' | 'movie',
-        category: primarySelection,
+        kind: 'tv' as const,
+        category: type,
         type: secondarySelection,
-        pageLimit: 25,
-        pageStart,
       };
-    },
-    [type, primarySelection, secondarySelection]
-  );
+    }
+
+    // 电影类型保持原逻辑
+    return {
+      kind: type as 'tv' | 'movie',
+      category: primarySelection,
+      type: secondarySelection,
+    };
+  }, [type, primarySelection, secondarySelection]);
 
   // 防抖的数据加载函数
   const loadInitialData = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await getDoubanCategories(getRequestParams(0));
+      const data = await getDoubanCategories(getRequestParams());
 
       if (data.code === 200) {
         setDoubanData(data.list);
-        setHasMore(data.list.length === 25);
         setLoading(false);
       } else {
         throw new Error(data.message || '获取数据失败');
@@ -136,9 +123,6 @@ function DoubanPageClient() {
 
     // 重置页面状态
     setDoubanData([]);
-    setCurrentPage(0);
-    setHasMore(true);
-    setIsLoadingMore(false);
 
     // 清除之前的防抖定时器
     if (debounceTimeoutRef.current) {
@@ -164,65 +148,6 @@ function DoubanPageClient() {
     loadInitialData,
   ]);
 
-  // 单独处理 currentPage 变化（加载更多）
-  useEffect(() => {
-    if (currentPage > 0) {
-      const fetchMoreData = async () => {
-        try {
-          setIsLoadingMore(true);
-
-          const data = await getDoubanCategories(
-            getRequestParams(currentPage * 25)
-          );
-
-          if (data.code === 200) {
-            setDoubanData((prev) => [...prev, ...data.list]);
-            setHasMore(data.list.length === 25);
-          } else {
-            throw new Error(data.message || '获取数据失败');
-          }
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setIsLoadingMore(false);
-        }
-      };
-
-      fetchMoreData();
-    }
-  }, [currentPage, type, primarySelection, secondarySelection]);
-
-  // 设置滚动监听
-  useEffect(() => {
-    // 如果没有更多数据或正在加载，则不设置监听
-    if (!hasMore || isLoadingMore || loading) {
-      return;
-    }
-
-    // 确保 loadingRef 存在
-    if (!loadingRef.current) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoadingMore) {
-          setCurrentPage((prev) => prev + 1);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(loadingRef.current);
-    observerRef.current = observer;
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [hasMore, isLoadingMore, loading]);
-
   // 处理选择器变化
   const handlePrimaryChange = useCallback(
     (value: string) => {
@@ -232,7 +157,7 @@ function DoubanPageClient() {
         setPrimarySelection(value);
       }
     },
-    [primarySelection]
+    [primarySelection],
   );
 
   const handleSecondaryChange = useCallback(
@@ -243,7 +168,7 @@ function DoubanPageClient() {
         setSecondarySelection(value);
       }
     },
-    [secondarySelection]
+    [secondarySelection],
   );
 
   const getPageTitle = () => {
@@ -309,32 +234,6 @@ function DoubanPageClient() {
                   </div>
                 ))}
           </div>
-
-          {/* 加载更多指示器 */}
-          {hasMore && !loading && (
-            <div
-              ref={(el) => {
-                if (el && el.offsetParent !== null) {
-                  (
-                    loadingRef as React.MutableRefObject<HTMLDivElement | null>
-                  ).current = el;
-                }
-              }}
-              className='flex justify-center mt-12 py-8'
-            >
-              {isLoadingMore && (
-                <div className='flex items-center gap-2'>
-                  <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-green-500'></div>
-                  <span className='text-gray-600'>加载中...</span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* 没有更多数据提示 */}
-          {!hasMore && doubanData.length > 0 && (
-            <div className='text-center text-gray-500 py-8'>已加载全部内容</div>
-          )}
 
           {/* 空状态 */}
           {!loading && doubanData.length === 0 && (

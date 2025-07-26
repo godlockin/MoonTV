@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Use the correct Node.js version from Trae
+export PATH="/Users/chenchen/.trae/sdks/versions/node/current:$PATH"
 npx lint-staged

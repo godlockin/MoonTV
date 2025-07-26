@@ -39,32 +39,64 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     width: number;
   }>({ left: 0, width: 0 });
 
-  // 电影的一级选择器选项 - 基于豆瓣API测试结果更新
+  // 电影的一级选择器选项 - 基于豆瓣API验证的标签扩展
   const moviePrimaryOptions: SelectorOption[] = [
     { label: '热门电影', value: '热门' },
     { label: '最新电影', value: '最新' },
     { label: '经典电影', value: '经典' },
     { label: '豆瓣高分', value: '豆瓣高分' },
     { label: '冷门佳片', value: '冷门佳片' },
+    { label: '文艺电影', value: '文艺' },
   ];
 
-  // 电影的二级选择器选项 - 基于豆瓣API测试结果更新
+  // 电影的二级选择器选项 - 基于豆瓣API验证的标签大幅扩展
   const movieSecondaryOptions: SelectorOption[] = [
     { label: '全部', value: '全部' },
+    // 地区分类
     { label: '华语', value: '华语' },
     { label: '欧美', value: '欧美' },
-    { label: '动作片', value: '动作' },
+    { label: '韩国', value: '韩国' },
+    { label: '日本', value: '日本' },
+    { label: '中国大陆', value: '中国大陆' },
+    { label: '美国', value: '美国' },
+    { label: '中国香港', value: '中国香港' },
+    { label: '中国台湾', value: '中国台湾' },
+    { label: '英国', value: '英国' },
+    { label: '法国', value: '法国' },
+    { label: '德国', value: '德国' },
+    { label: '意大利', value: '意大利' },
+    { label: '西班牙', value: '西班牙' },
+    { label: '印度', value: '印度' },
+    { label: '泰国', value: '泰国' },
+    { label: '俄罗斯', value: '俄罗斯' },
+    { label: '加拿大', value: '加拿大' },
+    { label: '澳大利亚', value: '澳大利亚' },
+    // 类型分类
     { label: '喜剧片', value: '喜剧' },
     { label: '爱情片', value: '爱情' },
+    { label: '动作片', value: '动作' },
     { label: '科幻片', value: '科幻' },
-    { label: '悬疑片', value: '悬疑' },
-    { label: '恐怖片', value: '恐怖' },
-    { label: '治愈系', value: '治愈' },
     { label: '动画片', value: '动画' },
-    { label: '伦理', value: '伦理' },
+    { label: '悬疑片', value: '悬疑' },
+    { label: '犯罪片', value: '犯罪' },
+    { label: '惊悚片', value: '惊悚' },
+    { label: '冒险片', value: '冒险' },
+    { label: '音乐片', value: '音乐' },
+    { label: '历史片', value: '历史' },
+    { label: '奇幻片', value: '奇幻' },
+    { label: '恐怖片', value: '恐怖' },
+    { label: '战争片', value: '战争' },
+    { label: '传记片', value: '传记' },
+    { label: '歌舞片', value: '歌舞' },
+    { label: '武侠片', value: '武侠' },
+    { label: '灾难片', value: '灾难' },
+    { label: '西部片', value: '西部' },
+    { label: '纪录片', value: '纪录片' },
+    { label: '短片', value: '短片' },
+    { label: '治愈系', value: '治愈' },
   ];
 
-  // 电视剧选择器选项 - 基于豆瓣API测试结果更新
+  // 电视剧选择器选项 - 基于豆瓣API验证的标签扩展
   const tvOptions: SelectorOption[] = [
     { label: '热门剧集', value: '热门' },
     { label: '美剧', value: '美剧' },
@@ -73,16 +105,31 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     { label: '日剧', value: '日剧' },
     { label: '国产剧', value: '国产剧' },
     { label: '港剧', value: '港剧' },
+    { label: '台剧', value: '台剧' },
+    { label: '泰剧', value: '泰剧' },
     { label: '日本动画', value: '日本动画' },
     { label: '综艺', value: '综艺' },
     { label: '纪录片', value: '纪录片' },
+    { label: '真人秀', value: '真人秀' },
   ];
 
-  // 综艺选择器选项
+  // 综艺选择器选项 - 基于豆瓣API验证的标签扩展
   const showOptions: SelectorOption[] = [
-    { label: '全部', value: 'show' },
-    { label: '国内', value: 'show_domestic' },
-    { label: '国外', value: 'show_foreign' },
+    { label: '热门综艺', value: '热门' },
+    { label: '脱口秀', value: '脱口秀' },
+    { label: '真人秀', value: '真人秀' },
+    { label: '音乐', value: '音乐' },
+    { label: '访谈', value: '访谈' },
+    { label: '播报', value: '播报' },
+    { label: '纪实', value: '纪实' },
+    { label: '选秀', value: '选秀' },
+    { label: '益智', value: '益智' },
+    { label: '情感', value: '情感' },
+    { label: '美食', value: '美食' },
+    { label: '旅游', value: '旅游' },
+    { label: '时尚', value: '时尚' },
+    { label: '财经', value: '财经' },
+    { label: '求职', value: '求职' },
   ];
 
   // 更新指示器位置的通用函数

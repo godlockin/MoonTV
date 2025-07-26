@@ -4,8 +4,6 @@ interface DoubanCategoriesParams {
   kind: 'tv' | 'movie';
   category: string;
   type: string;
-  pageLimit?: number;
-  pageStart?: number;
 }
 
 interface DoubanCategoryApiResponse {
@@ -29,7 +27,7 @@ interface DoubanCategoryApiResponse {
  */
 async function fetchWithTimeout(
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<Response> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
@@ -81,9 +79,9 @@ export function shouldUseDoubanClient(): boolean {
  * 浏览器端豆瓣分类数据获取函数
  */
 export async function fetchDoubanCategories(
-  params: DoubanCategoriesParams
+  params: DoubanCategoriesParams,
 ): Promise<DoubanResult> {
-  const { kind, category, type, pageLimit = 20, pageStart = 0 } = params;
+  const { kind, category, type } = params;
 
   // 验证参数
   if (!['tv', 'movie'].includes(kind)) {
@@ -94,15 +92,7 @@ export async function fetchDoubanCategories(
     throw new Error('category 和 type 参数不能为空');
   }
 
-  if (pageLimit < 1 || pageLimit > 100) {
-    throw new Error('pageLimit 必须在 1-100 之间');
-  }
-
-  if (pageStart < 0) {
-    throw new Error('pageStart 不能小于 0');
-  }
-
-  const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=${pageStart}&limit=${pageLimit}&category=${category}&type=${type}`;
+  const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=0&limit=200&category=${category}&type=${type}`;
 
   try {
     const response = await fetchWithTimeout(target);
@@ -136,16 +126,16 @@ export async function fetchDoubanCategories(
  * 统一的豆瓣分类数据获取函数，根据代理设置选择使用服务端 API 或客户端代理获取
  */
 export async function getDoubanCategories(
-  params: DoubanCategoriesParams
+  params: DoubanCategoriesParams,
 ): Promise<DoubanResult> {
   if (shouldUseDoubanClient()) {
     // 使用客户端代理获取（当设置了代理 URL 时）
     return fetchDoubanCategories(params);
   } else {
     // 使用服务端 API（当没有设置代理 URL 时）
-    const { kind, category, type, pageLimit = 20, pageStart = 0 } = params;
+    const { kind, category, type } = params;
     const response = await fetch(
-      `/api/douban/categories?kind=${kind}&category=${category}&type=${type}&limit=${pageLimit}&start=${pageStart}`
+      `/api/douban/categories?kind=${kind}&category=${category}&type=${type}`,
     );
 
     if (!response.ok) {
