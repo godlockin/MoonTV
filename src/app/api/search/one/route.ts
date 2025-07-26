@@ -17,9 +17,11 @@ export async function GET(request: Request) {
       { result: null, error: '缺少必要参数: q 或 resourceId' },
       {
         headers: {
-          'Cache-Control': `public, max-age=${cacheTime}`,
+          'Cache-Control': `public, max-age=${cacheTime}, s-maxage=${cacheTime}`,
+          'CDN-Cache-Control': `public, s-maxage=${cacheTime}`,
+          'Vercel-CDN-Cache-Control': `public, s-maxage=${cacheTime}`,
         },
-      }
+      },
     );
   }
 
@@ -34,7 +36,7 @@ export async function GET(request: Request) {
           error: `未找到指定的视频源: ${resourceId}`,
           result: null,
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -48,16 +50,18 @@ export async function GET(request: Request) {
           error: '未找到结果',
           result: null,
         },
-        { status: 404 }
+        { status: 404 },
       );
     } else {
       return NextResponse.json(
         { results: result },
         {
           headers: {
-            'Cache-Control': `public, max-age=${cacheTime}`,
+            'Cache-Control': `public, max-age=${cacheTime}, s-maxage=${cacheTime}`,
+            'CDN-Cache-Control': `public, s-maxage=${cacheTime}`,
+            'Vercel-CDN-Cache-Control': `public, s-maxage=${cacheTime}`,
           },
-        }
+        },
       );
     }
   } catch (error) {
@@ -66,7 +70,7 @@ export async function GET(request: Request) {
         error: '搜索失败',
         result: null,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

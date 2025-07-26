@@ -17,7 +17,7 @@ const STORAGE_TYPE =
 // 生成签名
 async function generateSignature(
   data: string,
-  secret: string
+  secret: string,
 ): Promise<string> {
   const encoder = new TextEncoder();
   const keyData = encoder.encode(secret);
@@ -29,7 +29,7 @@ async function generateSignature(
     keyData,
     { name: 'HMAC', hash: 'SHA-256' },
     false,
-    ['sign']
+    ['sign'],
   );
 
   // 生成签名
@@ -44,6 +44,7 @@ async function generateSignature(
 // 生成认证Cookie（带签名）
 async function generateAuthCookie(username: string): Promise<string> {
   const authData: any = {
+    role: 'user',
     username,
     timestamp: Date.now(),
   };
@@ -62,7 +63,7 @@ export async function POST(req: NextRequest) {
     if (STORAGE_TYPE === 'localstorage') {
       return NextResponse.json(
         { error: '当前模式不支持注册' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 

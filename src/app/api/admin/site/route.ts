@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       {
         error: '不支持本地存储进行管理员配置',
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -34,12 +34,14 @@ export async function POST(request: NextRequest) {
       SearchDownstreamMaxPage,
       SiteInterfaceCacheTime,
       ImageProxy,
+      DoubanProxy,
     } = body as {
       SiteName: string;
       Announcement: string;
       SearchDownstreamMaxPage: number;
       SiteInterfaceCacheTime: number;
       ImageProxy: string;
+      DoubanProxy: string;
     };
 
     // 参数校验
@@ -48,7 +50,8 @@ export async function POST(request: NextRequest) {
       typeof Announcement !== 'string' ||
       typeof SearchDownstreamMaxPage !== 'number' ||
       typeof SiteInterfaceCacheTime !== 'number' ||
-      typeof ImageProxy !== 'string'
+      typeof ImageProxy !== 'string' ||
+      typeof DoubanProxy !== 'string'
     ) {
       return NextResponse.json({ error: '参数格式错误' }, { status: 400 });
     }
@@ -60,7 +63,7 @@ export async function POST(request: NextRequest) {
     if (username !== process.env.USERNAME) {
       // 管理员
       const user = adminConfig.UserConfig.Users.find(
-        (u) => u.username === username
+        (u) => u.username === username,
       );
       if (!user || user.role !== 'admin') {
         return NextResponse.json({ error: '权限不足' }, { status: 401 });
@@ -74,6 +77,7 @@ export async function POST(request: NextRequest) {
       SearchDownstreamMaxPage,
       SiteInterfaceCacheTime,
       ImageProxy,
+      DoubanProxy,
     };
 
     // 写入数据库
@@ -87,7 +91,7 @@ export async function POST(request: NextRequest) {
         headers: {
           'Cache-Control': 'no-store', // 不缓存结果
         },
-      }
+      },
     );
   } catch (error) {
     console.error('更新站点配置失败:', error);
@@ -96,7 +100,7 @@ export async function POST(request: NextRequest) {
         error: '更新站点配置失败',
         details: (error as Error).message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
