@@ -3,4 +3,13 @@
 
 # Use the correct Node.js version from Trae to avoid compatibility issues
 export PATH="/Users/chenchen/.trae/sdks/versions/node/current:$PATH"
+
+# 生成版本号
+npx pnpm gen:version
+
+# 自动添加修改的版本文件
+git add src/lib/version.ts
+git add VERSION.txt
+
+# 运行代码检查
 npx lint-staged
