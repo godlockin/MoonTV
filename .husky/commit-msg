@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Fix Node.js PATH for Trae AI environment
+export PATH="/Users/chenchen/.trae/sdks/versions/node/current:$PATH"
+
 npx --no-install commitlint --edit "$1"

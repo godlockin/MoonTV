@@ -1,7 +1,7 @@
 /* eslint-disable no-console, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
 import { AdminConfig } from './admin.types';
-import { Favorite, IStorage, PlayRecord } from './types';
+import { Favorite, IStorage, PlayRecord, SkipConfig } from './types';
 
 // 搜索历史最大条数
 const SEARCH_HISTORY_LIMIT = 20;
@@ -55,7 +55,7 @@ export class D1Storage implements IStorage {
   // 播放记录相关
   async getPlayRecord(
     userName: string,
-    key: string
+    key: string,
   ): Promise<PlayRecord | null> {
     try {
       const db = await this.getDatabase();
@@ -87,7 +87,7 @@ export class D1Storage implements IStorage {
   async setPlayRecord(
     userName: string,
     key: string,
-    record: PlayRecord
+    record: PlayRecord,
   ): Promise<void> {
     try {
       const db = await this.getDatabase();
@@ -97,7 +97,7 @@ export class D1Storage implements IStorage {
           INSERT OR REPLACE INTO play_records 
           (username, key, title, source_name, cover, year, index_episode, total_episodes, play_time, total_time, save_time, search_title)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `
+        `,
         )
         .bind(
           userName,
@@ -111,7 +111,7 @@ export class D1Storage implements IStorage {
           record.play_time,
           record.total_time,
           record.save_time,
-          record.search_title || null
+          record.search_title || null,
         )
         .run();
     } catch (err) {
@@ -121,13 +121,13 @@ export class D1Storage implements IStorage {
   }
 
   async getAllPlayRecords(
-    userName: string
+    userName: string,
   ): Promise<Record<string, PlayRecord>> {
     try {
       const db = await this.getDatabase();
       const result = await db
         .prepare(
-          'SELECT * FROM play_records WHERE username = ? ORDER BY save_time DESC'
+          'SELECT * FROM play_records WHERE username = ? ORDER BY save_time DESC',
         )
         .bind(userName)
         .all<any>();
@@ -198,7 +198,7 @@ export class D1Storage implements IStorage {
   async setFavorite(
     userName: string,
     key: string,
-    favorite: Favorite
+    favorite: Favorite,
   ): Promise<void> {
     try {
       const db = await this.getDatabase();
@@ -208,7 +208,7 @@ export class D1Storage implements IStorage {
           INSERT OR REPLACE INTO favorites 
           (username, key, title, source_name, cover, year, total_episodes, save_time)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `
+        `,
         )
         .bind(
           userName,
@@ -218,7 +218,7 @@ export class D1Storage implements IStorage {
           favorite.cover,
           favorite.year,
           favorite.total_episodes,
-          favorite.save_time
+          favorite.save_time,
         )
         .run();
     } catch (err) {
@@ -232,7 +232,7 @@ export class D1Storage implements IStorage {
       const db = await this.getDatabase();
       const result = await db
         .prepare(
-          'SELECT * FROM favorites WHERE username = ? ORDER BY save_time DESC'
+          'SELECT * FROM favorites WHERE username = ? ORDER BY save_time DESC',
         )
         .bind(userName)
         .all<any>();
@@ -340,6 +340,9 @@ export class D1Storage implements IStorage {
         db
           .prepare('DELETE FROM search_history WHERE username = ?')
           .bind(userName),
+        db
+          .prepare('DELETE FROM skip_configs WHERE username = ?')
+          .bind(userName),
       ];
 
       await db.batch(statements);
@@ -355,7 +358,7 @@ export class D1Storage implements IStorage {
       const db = await this.getDatabase();
       const result = await db
         .prepare(
-          'SELECT keyword FROM search_history WHERE username = ? ORDER BY created_at DESC LIMIT ?'
+          'SELECT keyword FROM search_history WHERE username = ? ORDER BY created_at DESC LIMIT ?',
         )
         .bind(userName, SEARCH_HISTORY_LIMIT)
         .all<{ keyword: string }>();
@@ -373,7 +376,7 @@ export class D1Storage implements IStorage {
       // 先删除可能存在的重复记录
       await db
         .prepare(
-          'DELETE FROM search_history WHERE username = ? AND keyword = ?'
+          'DELETE FROM search_history WHERE username = ? AND keyword = ?',
         )
         .bind(userName, keyword)
         .run();
@@ -395,7 +398,7 @@ export class D1Storage implements IStorage {
             ORDER BY created_at DESC 
             LIMIT ?
           )
-        `
+        `,
         )
         .bind(userName, userName, SEARCH_HISTORY_LIMIT)
         .run();
@@ -411,7 +414,7 @@ export class D1Storage implements IStorage {
       if (keyword) {
         await db
           .prepare(
-            'DELETE FROM search_history WHERE username = ? AND keyword = ?'
+            'DELETE FROM search_history WHERE username = ? AND keyword = ?',
           )
           .bind(userName, keyword)
           .run();
@@ -464,12 +467,120 @@ export class D1Storage implements IStorage {
       const db = await this.getDatabase();
       await db
         .prepare(
-          'INSERT OR REPLACE INTO admin_config (id, config) VALUES (1, ?)'
+          'INSERT OR REPLACE INTO admin_config (id, config) VALUES (1, ?)',
         )
         .bind(JSON.stringify(config))
         .run();
     } catch (err) {
       console.error('Failed to set admin config:', err);
+      throw err;
+    }
+  }
+
+  // ---------- 跳过片头片尾配置 ----------
+  async getSkipConfig(
+    userName: string,
+    source: string,
+    id: string,
+  ): Promise<SkipConfig | null> {
+    try {
+      const db = await this.getDatabase();
+      const result = await db
+        .prepare(
+          'SELECT * FROM skip_configs WHERE username = ? AND source = ? AND id_video = ?',
+        )
+        .bind(userName, source, id)
+        .first<any>();
+
+      if (!result) return null;
+
+      return {
+        enable: Boolean(result.enable),
+        intro_time: result.intro_time,
+        outro_time: result.outro_time,
+      };
+    } catch (err) {
+      console.error('Failed to get skip config:', err);
+      throw err;
+    }
+  }
+
+  async setSkipConfig(
+    userName: string,
+    source: string,
+    id: string,
+    config: SkipConfig,
+  ): Promise<void> {
+    try {
+      const db = await this.getDatabase();
+      await db
+        .prepare(
+          `
+          INSERT OR REPLACE INTO skip_configs 
+          (username, source, id_video, enable, intro_time, outro_time)
+          VALUES (?, ?, ?, ?, ?, ?)
+        `,
+        )
+        .bind(
+          userName,
+          source,
+          id,
+          config.enable ? 1 : 0,
+          config.intro_time,
+          config.outro_time,
+        )
+        .run();
+    } catch (err) {
+      console.error('Failed to set skip config:', err);
+      throw err;
+    }
+  }
+
+  async deleteSkipConfig(
+    userName: string,
+    source: string,
+    id: string,
+  ): Promise<void> {
+    try {
+      const db = await this.getDatabase();
+      await db
+        .prepare(
+          'DELETE FROM skip_configs WHERE username = ? AND source = ? AND id_video = ?',
+        )
+        .bind(userName, source, id)
+        .run();
+    } catch (err) {
+      console.error('Failed to delete skip config:', err);
+      throw err;
+    }
+  }
+
+  async getAllSkipConfigs(
+    userName: string,
+  ): Promise<{ [key: string]: SkipConfig }> {
+    try {
+      const db = await this.getDatabase();
+      const result = await db
+        .prepare(
+          'SELECT source, id_video, enable, intro_time, outro_time FROM skip_configs WHERE username = ?',
+        )
+        .bind(userName)
+        .all<any>();
+
+      const configs: { [key: string]: SkipConfig } = {};
+
+      result.results.forEach((row) => {
+        const key = `${row.source}+${row.id_video}`;
+        configs[key] = {
+          enable: Boolean(row.enable),
+          intro_time: row.intro_time,
+          outro_time: row.outro_time,
+        };
+      });
+
+      return configs;
+    } catch (err) {
+      console.error('Failed to get all skip configs:', err);
       throw err;
     }
   }
