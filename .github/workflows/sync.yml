@@ -29,6 +29,10 @@ jobs:
           upstream_sync_branch: main
           target_sync_branch: main
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_pull_args: '--allow-unrelated-histories --strategy=ours'
+          git_log_format_option: '--oneline'
+          git_push_args: '--no-verify'
+          git_commit_args: '--no-verify'
 
       - name: Sync check
         if: failure()
