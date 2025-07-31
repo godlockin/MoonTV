@@ -19,7 +19,12 @@ function DoubanPageClient() {
   const [doubanData, setDoubanData] = useState<DoubanItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [selectorsReady, setSelectorsReady] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const loadingRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const type = searchParams.get('type') || 'movie';
   const tag = searchParams.get('tag') || '';
@@ -113,7 +118,7 @@ function DoubanPageClient() {
           pageStart: 0,
         });
       } else {
-        data = await getDoubanCategories(getRequestParams(0));
+        data = await getDoubanCategories(getRequestParams());
       }
 
       if (data.code === 200) {
@@ -186,9 +191,7 @@ function DoubanPageClient() {
               pageStart: currentPage * 25,
             });
           } else {
-            data = await getDoubanCategories(
-              getRequestParams(currentPage * 25)
-            );
+            data = await getDoubanCategories(getRequestParams());
           }
 
           if (data.code === 200) {
