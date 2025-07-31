@@ -72,6 +72,9 @@ function PlayPageClient() {
     skipConfig.outro_time,
   ]);
 
+  // 跳过检查的时间间隔控制
+  const lastSkipCheckRef = useRef(0);
+
   // 去广告开关（从 localStorage 继承，默认 true）
   const [blockAdEnabled, setBlockAdEnabled] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -144,6 +147,8 @@ function PlayPageClient() {
   const resumeTimeRef = useRef<number | null>(null);
   // 上次使用的音量，默认 0.7
   const lastVolumeRef = useRef<number>(0.7);
+  // 上次使用的播放速率，默认 1.0
+  const lastPlaybackRateRef = useRef<number>(1.0);
 
   // 换源相关状态
   const [availableSources, setAvailableSources] = useState<SearchResult[]>([]);
@@ -473,13 +478,23 @@ function PlayPageClient() {
   };
 
   const formatTime = (seconds: number): string => {
-    if (seconds === 0) return '0秒';
-    const minutes = Math.floor(seconds / 60);
+    if (seconds === 0) return '00:00';
+
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.round(seconds % 60);
-    if (minutes === 0) {
-      return `${remainingSeconds}秒`;
+
+    if (hours === 0) {
+      // 不到一小时，格式为 00:00
+      return `${minutes.toString().padStart(2, '0')}:${remainingSeconds
+        .toString()
+        .padStart(2, '0')}`;
+    } else {
+      // 超过一小时，格式为 00:00:00
+      return `${hours.toString().padStart(2, '0')}:${minutes
+        .toString()
+        .padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
-    return `${minutes}分${remainingSeconds.toString().padStart(2, '0')}秒`;
   };
 
   class CustomHlsJsLoader extends Hls.DefaultConfig.loader {
@@ -1305,18 +1320,22 @@ function PlayPageClient() {
             html: '设置片尾',
             icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 6L7 18" stroke="#ffffff" stroke-width="2"/><path d="M7 12L15 12" stroke="#ffffff" stroke-width="2"/><circle cx="19" cy="12" r="2" fill="#ffffff"/></svg>',
             tooltip:
-              skipConfig.outro_time === 0
+              skipConfig.outro_time >= 0
                 ? '设置片尾时间'
-                : `${formatTime(skipConfig.outro_time)}`,
+                : `-${formatTime(-skipConfig.outro_time)}`,
             onClick: function () {
-              const currentTime = artPlayerRef.current?.currentTime || 0;
-              if (currentTime > 0) {
+              const outroTime =
+                -(
+                  artPlayerRef.current?.duration -
+                  artPlayerRef.current?.currentTime
+                ) || 0;
+              if (outroTime < 0) {
                 const newConfig = {
                   ...skipConfig,
-                  outro_time: currentTime,
+                  outro_time: outroTime,
                 };
                 handleSkipConfigChange(newConfig);
-                return `${formatTime(currentTime)}`;
+                return `-${formatTime(-outroTime)}`;
               }
             },
           },
@@ -1343,6 +1362,9 @@ function PlayPageClient() {
       artPlayerRef.current.on('video:volumechange', () => {
         lastVolumeRef.current = artPlayerRef.current.volume;
       });
+      artPlayerRef.current.on('video:ratechange', () => {
+        lastPlaybackRateRef.current = artPlayerRef.current.playbackRate;
+      });
 
       // 监听视频可播放事件，这时恢复播放进度更可靠
       artPlayerRef.current.on('video:canplay', () => {
@@ -1368,6 +1390,14 @@ function PlayPageClient() {
           ) {
             artPlayerRef.current.volume = lastVolumeRef.current;
           }
+          if (
+            Math.abs(
+              artPlayerRef.current.playbackRate - lastPlaybackRateRef.current
+            ) > 0.01 &&
+            isWebkit
+          ) {
+            artPlayerRef.current.playbackRate = lastPlaybackRateRef.current;
+          }
           artPlayerRef.current.notice.show = '';
         }, 0);
 
@@ -1381,6 +1411,11 @@ function PlayPageClient() {
 
         const currentTime = artPlayerRef.current.currentTime || 0;
         const duration = artPlayerRef.current.duration || 0;
+        const now = Date.now();
+
+        // 限制跳过检查频率为1.5秒一次
+        if (now - lastSkipCheckRef.current < 1500) return;
+        lastSkipCheckRef.current = now;
 
         // 跳过片头
         if (
@@ -1395,9 +1430,10 @@ function PlayPageClient() {
 
         // 跳过片尾
         if (
-          skipConfigRef.current.outro_time > 0 &&
+          skipConfigRef.current.outro_time < 0 &&
           duration > 0 &&
-          currentTime > skipConfigRef.current.outro_time
+          currentTime >
+            artPlayerRef.current.duration + skipConfigRef.current.outro_time
         ) {
           if (
             currentEpisodeIndexRef.current <
