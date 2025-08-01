@@ -5,12 +5,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthInfoFromCookie } from '@/lib/auth';
 import { getConfig } from '@/lib/config';
 import { getStorage } from '@/lib/db';
+import runtimeConfig from '@/lib/runtime';
 import { IStorage } from '@/lib/types';
 
 export const runtime = 'edge';
 
 // 支持的操作类型
-type Action = 'add' | 'disable' | 'enable' | 'delete' | 'sort';
+type Action =
+  | 'add'
+  | 'disable'
+  | 'enable'
+  | 'delete'
+  | 'sort'
+  | 'enable_all'
+  | 'reset_default';
 
 interface BaseBody {
   action?: Action;
@@ -23,7 +31,7 @@ export async function POST(request: NextRequest) {
       {
         error: '不支持本地存储进行管理员配置',
       },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -38,7 +46,15 @@ export async function POST(request: NextRequest) {
     const username = authInfo.username;
 
     // 基础校验
-    const ACTIONS: Action[] = ['add', 'disable', 'enable', 'delete', 'sort'];
+    const ACTIONS: Action[] = [
+      'add',
+      'disable',
+      'enable',
+      'delete',
+      'sort',
+      'enable_all',
+      'reset_default',
+    ];
     if (!username || !action || !ACTIONS.includes(action)) {
       return NextResponse.json({ error: '参数格式错误' }, { status: 400 });
     }
@@ -50,7 +66,7 @@ export async function POST(request: NextRequest) {
     // 权限与身份校验
     if (username !== process.env.USERNAME) {
       const userEntry = adminConfig.UserConfig.Users.find(
-        (u) => u.username === username
+        (u) => u.username === username,
       );
       if (!userEntry || userEntry.role !== 'admin') {
         return NextResponse.json({ error: '权限不足' }, { status: 401 });
@@ -120,7 +136,7 @@ export async function POST(request: NextRequest) {
         if (!Array.isArray(order)) {
           return NextResponse.json(
             { error: '排序列表格式错误' },
-            { status: 400 }
+            { status: 400 },
           );
         }
         const map = new Map(adminConfig.SourceConfig.map((s) => [s.key, s]));
@@ -139,6 +155,25 @@ export async function POST(request: NextRequest) {
         adminConfig.SourceConfig = newList;
         break;
       }
+      case 'enable_all': {
+        // 启用所有源
+        adminConfig.SourceConfig.forEach((source) => {
+          source.disabled = false;
+        });
+        break;
+      }
+      case 'reset_default': {
+        // 恢复默认状态（根据 config.json 中的 enabled 字段）
+        const fileConfig = runtimeConfig as any;
+
+        adminConfig.SourceConfig.forEach((source) => {
+          if (source.from === 'config' && fileConfig.api_site[source.key]) {
+            const originalSite = fileConfig.api_site[source.key];
+            source.disabled = originalSite.enabled === false;
+          }
+        });
+        break;
+      }
       default:
         return NextResponse.json({ error: '未知操作' }, { status: 400 });
     }
@@ -154,7 +189,7 @@ export async function POST(request: NextRequest) {
         headers: {
           'Cache-Control': 'no-store',
         },
-      }
+      },
     );
   } catch (error) {
     console.error('视频源管理操作失败:', error);
@@ -163,7 +198,7 @@ export async function POST(request: NextRequest) {
         error: '视频源管理操作失败',
         details: (error as Error).message,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

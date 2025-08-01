@@ -849,12 +849,34 @@ const VideoSourceConfig = ({
         <h4 className='text-sm font-medium text-gray-700 dark:text-gray-300'>
           视频源列表
         </h4>
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className='px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors'
-        >
-          {showAddForm ? '取消' : '添加视频源'}
-        </button>
+        <div className='flex items-center space-x-2'>
+          <button
+            onClick={() => {
+              callSourceApi({ action: 'enable_all' }).catch(() => {
+                console.error('一键全部开启失败');
+              });
+            }}
+            className='px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors'
+          >
+            一键全部开启
+          </button>
+          <button
+            onClick={() => {
+              callSourceApi({ action: 'reset_default' }).catch(() => {
+                console.error('恢复默认失败');
+              });
+            }}
+            className='px-3 py-1 bg-orange-600 hover:bg-orange-700 text-white text-sm rounded-lg transition-colors'
+          >
+            恢复默认
+          </button>
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className='px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors'
+          >
+            {showAddForm ? '取消' : '添加视频源'}
+          </button>
+        </div>
       </div>
 
       {showAddForm && (
@@ -1010,7 +1032,7 @@ const CategoryConfig = ({
         delay: 150, // 长按 150ms 后触发，避免与滚动冲突
         tolerance: 5,
       },
-    })
+    }),
   );
 
   // 初始化
@@ -1087,10 +1109,10 @@ const CategoryConfig = ({
     const { active, over } = event;
     if (!over || active.id === over.id) return;
     const oldIndex = categories.findIndex(
-      (c) => `${c.query}:${c.type}` === active.id
+      (c) => `${c.query}:${c.type}` === active.id,
     );
     const newIndex = categories.findIndex(
-      (c) => `${c.query}:${c.type}` === over.id
+      (c) => `${c.query}:${c.type}` === over.id,
     );
     setCategories((prev) => arrayMove(prev, oldIndex, newIndex));
     setOrderChanged(true);
@@ -1179,8 +1201,8 @@ const CategoryConfig = ({
               isD1Storage || isUpstashStorage
                 ? 'bg-gray-400 cursor-not-allowed text-white'
                 : !category.disabled
-                ? 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/60'
-                : 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/60'
+                  ? 'bg-red-100 dark:bg-red-900/40 text-red-800 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/60'
+                  : 'bg-green-100 dark:bg-green-900/40 text-green-800 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/60'
             } transition-colors`}
           >
             {!category.disabled ? '禁用' : '启用'}

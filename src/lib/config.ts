@@ -10,6 +10,7 @@ export interface ApiSite {
   api: string;
   name: string;
   detail?: string;
+  enabled?: boolean;
 }
 
 interface ConfigFileStruct {
@@ -96,7 +97,7 @@ async function initConfig() {
       if (adminConfig) {
         // 补全 SourceConfig
         const sourceConfigMap = new Map(
-          (adminConfig.SourceConfig || []).map((s) => [s.key, s])
+          (adminConfig.SourceConfig || []).map((s) => [s.key, s]),
         );
 
         apiSiteEntries.forEach(([key, site]) => {
@@ -128,7 +129,7 @@ async function initConfig() {
 
         // 补全 CustomCategories
         const customCategoriesMap = new Map(
-          adminConfig.CustomCategories.map((c) => [c.query + c.type, c])
+          adminConfig.CustomCategories.map((c) => [c.query + c.type, c]),
         );
 
         customCategories.forEach((category) => {
@@ -143,7 +144,7 @@ async function initConfig() {
 
         // 检查现有 CustomCategories 是否在 fileConfig.custom_category 中，如果不在则标记为 custom
         const customCategoriesKeys = new Set(
-          customCategories.map((c) => c.query + c.type)
+          customCategories.map((c) => c.query + c.type),
         );
         customCategoriesMap.forEach((category) => {
           if (!customCategoriesKeys.has(category.query + category.type)) {
@@ -258,7 +259,7 @@ async function initConfig() {
         api: site.api,
         detail: site.detail,
         from: 'config',
-        disabled: false,
+        disabled: site.enabled === false,
       })),
       CustomCategories:
         fileConfig.custom_category?.map((category) => ({
@@ -306,7 +307,7 @@ export async function getConfig(): Promise<AdminConfig> {
     fileConfig = runtimeConfig as unknown as ConfigFileStruct;
     const apiSiteEntries = Object.entries(fileConfig.api_site);
     const sourceConfigMap = new Map(
-      (adminConfig.SourceConfig || []).map((s) => [s.key, s])
+      (adminConfig.SourceConfig || []).map((s) => [s.key, s]),
     );
 
     apiSiteEntries.forEach(([key, site]) => {
@@ -316,7 +317,7 @@ export async function getConfig(): Promise<AdminConfig> {
         api: site.api,
         detail: site.detail,
         from: 'config',
-        disabled: false,
+        disabled: site.enabled === false,
       });
     });
 
@@ -334,7 +335,7 @@ export async function getConfig(): Promise<AdminConfig> {
     // 补全 CustomCategories
     const customCategories = fileConfig.custom_category || [];
     const customCategoriesMap = new Map(
-      adminConfig.CustomCategories.map((c) => [c.query + c.type, c])
+      adminConfig.CustomCategories.map((c) => [c.query + c.type, c]),
     );
 
     customCategories.forEach((category) => {
@@ -349,7 +350,7 @@ export async function getConfig(): Promise<AdminConfig> {
 
     // 检查现有 CustomCategories 是否在 fileConfig.custom_categories 中，如果不在则标记为 custom
     const customCategoriesKeys = new Set(
-      customCategories.map((c) => c.query + c.type)
+      customCategories.map((c) => c.query + c.type),
     );
     customCategoriesMap.forEach((category) => {
       if (!customCategoriesKeys.has(category.query + category.type)) {
@@ -452,7 +453,7 @@ export async function resetConfig() {
       api: site.api,
       detail: site.detail,
       from: 'config',
-      disabled: false,
+      disabled: site.enabled === false,
     })),
     CustomCategories:
       storageType === 'redis'
