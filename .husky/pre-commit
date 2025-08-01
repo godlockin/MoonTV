@@ -10,4 +10,4 @@ git add src/lib/version.ts
 git add VERSION.txt
 
 # 运行代码检查
-npx lint-staged
+PATH="/usr/local/opt/node@20/bin:$PATH" npx lint-staged
