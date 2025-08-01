@@ -1,11 +1,12 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-# Use the correct Node.js version from Trae to avoid compatibility issues
-export PATH="/Users/chenchen/.trae/sdks/versions/node/current:$PATH"
+# Use system Node.js version
+# export PATH="/Users/chenchen/.trae/sdks/versions/node/current:$PATH"
 
 # 生成版本号
-npx pnpm gen:version
+# 直接使用系统 Node.js 运行脚本
+/usr/local/opt/node@20/bin/node scripts/generate-version.js
 
 # 自动添加修改的版本文件
 git add src/lib/version.ts
