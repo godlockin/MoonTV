@@ -129,7 +129,7 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
     buttonRefs: React.MutableRefObject<(HTMLButtonElement | null)[]>,
     setIndicatorStyle: React.Dispatch<
       React.SetStateAction<{ left: number; width: number }>
-    >
+    >,
   ) => {
     if (
       activeIndex >= 0 &&
@@ -158,43 +158,44 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
   // 组件挂载时立即计算初始位置
   useEffect(() => {
     // 主选择器初始位置
-    if (primaryOptions.length > 0) {
+    if (primaryOptions.length > 0 && primaryContainerRef.current) {
       const activeIndex = primaryOptions.findIndex(
-        (opt) => opt.value === (primarySelection || primaryOptions[0].value)
+        (opt) => opt.value === (primarySelection || primaryOptions[0].value),
       );
       updateIndicatorPosition(
         activeIndex,
-        primaryContainerRef,
+        primaryContainerRef as React.RefObject<HTMLDivElement>,
         primaryButtonRefs,
-        setPrimaryIndicatorStyle
+        setPrimaryIndicatorStyle,
       );
     }
 
     // 副选择器初始位置
-    if (secondaryOptions.length > 0) {
+    if (secondaryOptions.length > 0 && secondaryContainerRef.current) {
       const activeIndex = secondaryOptions.findIndex(
-        (opt) => opt.value === (secondarySelection || secondaryOptions[0].value)
+        (opt) =>
+          opt.value === (secondarySelection || secondaryOptions[0].value),
       );
       updateIndicatorPosition(
         activeIndex,
-        secondaryContainerRef,
+        secondaryContainerRef as React.RefObject<HTMLDivElement>,
         secondaryButtonRefs,
-        setSecondaryIndicatorStyle
+        setSecondaryIndicatorStyle,
       );
     }
   }, [primaryOptions, secondaryOptions]); // 当选项变化时重新计算
 
   // 监听主选择器变化
   useEffect(() => {
-    if (primaryOptions.length > 0) {
+    if (primaryOptions.length > 0 && primaryContainerRef.current) {
       const activeIndex = primaryOptions.findIndex(
-        (opt) => opt.value === primarySelection
+        (opt) => opt.value === primarySelection,
       );
       const cleanup = updateIndicatorPosition(
         activeIndex,
-        primaryContainerRef,
+        primaryContainerRef as React.RefObject<HTMLDivElement>,
         primaryButtonRefs,
-        setPrimaryIndicatorStyle
+        setPrimaryIndicatorStyle,
       );
       return cleanup;
     }
@@ -202,15 +203,15 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
 
   // 监听副选择器变化
   useEffect(() => {
-    if (secondaryOptions.length > 0) {
+    if (secondaryOptions.length > 0 && secondaryContainerRef.current) {
       const activeIndex = secondaryOptions.findIndex(
-        (opt) => opt.value === secondarySelection
+        (opt) => opt.value === secondarySelection,
       );
       const cleanup = updateIndicatorPosition(
         activeIndex,
-        secondaryContainerRef,
+        secondaryContainerRef as React.RefObject<HTMLDivElement>,
         secondaryButtonRefs,
-        setSecondaryIndicatorStyle
+        setSecondaryIndicatorStyle,
       );
       return cleanup;
     }
@@ -221,7 +222,7 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
     options: { label: string; value: string }[],
     activeValue: string | undefined,
     onChange: (value: string) => void,
-    isPrimary = false
+    isPrimary = false,
   ) => {
     const containerRef = isPrimary
       ? primaryContainerRef
@@ -289,7 +290,7 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
               primaryOptions,
               primarySelection || primaryOptions[0]?.value,
               onPrimaryChange,
-              true
+              true,
             )}
           </div>
         </div>
@@ -305,7 +306,7 @@ const DoubanCustomSelector: React.FC<DoubanCustomSelectorProps> = ({
                 secondaryOptions,
                 secondarySelection || secondaryOptions[0]?.value,
                 onSecondaryChange,
-                false
+                false,
               )}
             </div>
           </div>
