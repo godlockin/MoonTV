@@ -109,6 +109,14 @@ export async function fetchDoubanCategories(
       list: list,
     };
   } catch (error) {
+    // 触发全局错误提示
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('globalError', {
+          detail: { message: '获取豆瓣分类数据失败' },
+        }),
+      );
+    }
     throw new Error(`获取豆瓣分类数据失败: ${(error as Error).message}`);
   }
 }
@@ -130,6 +138,14 @@ export async function getDoubanCategories(
     );
 
     if (!response.ok) {
+      // 触发全局错误提示
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('globalError', {
+            detail: { message: '获取豆瓣分类数据失败' },
+          }),
+        );
+      }
       throw new Error('获取豆瓣分类数据失败');
     }
 
@@ -145,7 +161,7 @@ interface DoubanListParams {
 }
 
 export async function getDoubanList(
-  params: DoubanListParams
+  params: DoubanListParams,
 ): Promise<DoubanResult> {
   const { tag, type, pageLimit = 20, pageStart = 0 } = params;
   if (shouldUseDoubanClient()) {
@@ -153,10 +169,18 @@ export async function getDoubanList(
     return fetchDoubanList(params);
   } else {
     const response = await fetch(
-      `/api/douban?tag=${tag}&type=${type}&pageSize=${pageLimit}&pageStart=${pageStart}`
+      `/api/douban?tag=${tag}&type=${type}&pageSize=${pageLimit}&pageStart=${pageStart}`,
     );
 
     if (!response.ok) {
+      // 触发全局错误提示
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(
+          new CustomEvent('globalError', {
+            detail: { message: '获取豆瓣列表数据失败' },
+          }),
+        );
+      }
       throw new Error('获取豆瓣列表数据失败');
     }
 
@@ -165,7 +189,7 @@ export async function getDoubanList(
 }
 
 export async function fetchDoubanList(
-  params: DoubanListParams
+  params: DoubanListParams,
 ): Promise<DoubanResult> {
   const { tag, type, pageLimit = 20, pageStart = 0 } = params;
 
@@ -212,6 +236,14 @@ export async function fetchDoubanList(
       list: list,
     };
   } catch (error) {
+    // 触发全局错误提示
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(
+        new CustomEvent('globalError', {
+          detail: { message: '获取豆瓣列表数据失败' },
+        }),
+      );
+    }
     throw new Error(`获取豆瓣分类数据失败: ${(error as Error).message}`);
   }
 }
