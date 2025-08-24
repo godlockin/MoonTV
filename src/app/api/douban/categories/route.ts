@@ -95,7 +95,20 @@ export async function GET(request: Request) {
   const kind = searchParams.get('kind') || 'movie';
   const category = searchParams.get('category');
   const type = searchParams.get('type');
-  const pageLimit = 200; // 固定页面大小为200
+  const page = parseInt(searchParams.get('page') || '1', 10); // 获取页码，默认为1
+  const pageLimit = parseInt(searchParams.get('pageLimit') || '20', 10); // 每页数量，默认20
+
+  // 验证分页参数
+  if (page < 1) {
+    return NextResponse.json({ error: '页码必须大于0' }, { status: 400 });
+  }
+
+  if (pageLimit < 1 || pageLimit > 100) {
+    return NextResponse.json(
+      { error: '每页数量必须在1-100之间' },
+      { status: 400 },
+    );
+  }
 
   // 验证参数
   if (!kind) {
@@ -208,8 +221,11 @@ export async function GET(request: Request) {
     tag = kind === 'movie' ? '热门' : '热门';
   }
 
-  // 统一使用豆瓣搜索API
-  const target = `https://movie.douban.com/j/search_subjects?type=${kind}&tag=${encodeURIComponent(tag)}&sort=recommend&page_limit=${pageLimit}&page_start=0`;
+  // 计算分页起始位置
+  const pageStart = (page - 1) * pageLimit;
+
+  // 统一使用豆瓣搜索API，支持分页
+  const target = `https://movie.douban.com/j/search_subjects?type=${kind}&tag=${encodeURIComponent(tag)}&sort=recommend&page_limit=${pageLimit}&page_start=${pageStart}`;
 
   try {
     // 调用豆瓣 API
@@ -231,6 +247,12 @@ export async function GET(request: Request) {
       code: 200,
       message: '获取成功',
       list: list,
+      pagination: {
+        page: page,
+        pageLimit: pageLimit,
+        total: list.length,
+        hasMore: list.length === pageLimit, // 如果返回的数据量等于请求的数量，可能还有更多数据
+      },
     };
 
     const cacheTime = await getCacheTime();

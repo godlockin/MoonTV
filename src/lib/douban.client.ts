@@ -70,9 +70,9 @@ export function shouldUseDoubanClient(): boolean {
  * 浏览器端豆瓣分类数据获取函数
  */
 export async function fetchDoubanCategories(
-  params: DoubanCategoriesParams,
+  params: DoubanCategoriesParamsWithPagination,
 ): Promise<DoubanResult> {
-  const { kind, category, type } = params;
+  const { kind, category, type, page = 1, pageLimit = 20 } = params;
 
   // 验证参数
   if (!['tv', 'movie'].includes(kind)) {
@@ -83,7 +83,8 @@ export async function fetchDoubanCategories(
     throw new Error('category 和 type 参数不能为空');
   }
 
-  const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=0&limit=200&category=${category}&type=${type}`;
+  const start = (page - 1) * pageLimit;
+  const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=${start}&limit=${pageLimit}&category=${category}&type=${type}`;
 
   try {
     const response = await fetchWithTimeout(target);
@@ -107,6 +108,13 @@ export async function fetchDoubanCategories(
       code: 200,
       message: '获取成功',
       list: list,
+      pagination: {
+        page,
+        pageLimit,
+        total: doubanData.total,
+        hasMore:
+          list.length === pageLimit && page * pageLimit < doubanData.total,
+      },
     };
   } catch (error) {
     // 触发全局错误提示
@@ -124,17 +132,22 @@ export async function fetchDoubanCategories(
 /**
  * 统一的豆瓣分类数据获取函数，根据代理设置选择使用服务端 API 或客户端代理获取
  */
+interface DoubanCategoriesParamsWithPagination extends DoubanCategoriesParams {
+  page?: number;
+  pageLimit?: number;
+}
+
 export async function getDoubanCategories(
-  params: DoubanCategoriesParams,
+  params: DoubanCategoriesParamsWithPagination,
 ): Promise<DoubanResult> {
   if (shouldUseDoubanClient()) {
     // 使用客户端代理获取（当设置了代理 URL 时）
     return fetchDoubanCategories(params);
   } else {
     // 使用服务端 API（当没有设置代理 URL 时）
-    const { kind, category, type } = params;
+    const { kind, category, type, page = 1, pageLimit = 20 } = params;
     const response = await fetch(
-      `/api/douban/categories?kind=${kind}&category=${category}&type=${type}`,
+      `/api/douban/categories?kind=${kind}&category=${category}&type=${type}&page=${page}&pageLimit=${pageLimit}`,
     );
 
     if (!response.ok) {
