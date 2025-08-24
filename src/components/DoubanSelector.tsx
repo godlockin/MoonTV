@@ -46,13 +46,21 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     { label: '经典电影', value: '经典' },
     { label: '豆瓣高分', value: '豆瓣高分' },
     { label: '冷门佳片', value: '冷门佳片' },
-    { label: '文艺电影', value: '文艺' },
+    { label: '历史电影', value: '历史' },
+    { label: '动作电影', value: '动作' },
+    { label: '喜剧电影', value: '喜剧' },
+    { label: '爱情电影', value: '爱情' },
+    { label: '科幻电影', value: '科幻' },
+    { label: '悬疑电影', value: '悬疑' },
+    { label: '恐怖电影', value: '恐怖' },
+    { label: '治愈电影', value: '治愈' },
+    { label: '动画电影', value: '动画' },
   ];
 
-  // 电影的二级选择器选项 - 基于豆瓣API验证的标签大幅扩展
+  // 电影的二级选择器选项 - 优化地区分类，保留最常用的选项
   const movieSecondaryOptions: SelectorOption[] = [
     { label: '全部', value: '全部' },
-    // 地区分类
+    // 主要地区分类
     { label: '华语', value: '华语' },
     { label: '欧美', value: '欧美' },
     { label: '韩国', value: '韩国' },
@@ -60,40 +68,10 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     { label: '中国大陆', value: '中国大陆' },
     { label: '美国', value: '美国' },
     { label: '中国香港', value: '中国香港' },
-    { label: '中国台湾', value: '中国台湾' },
     { label: '英国', value: '英国' },
     { label: '法国', value: '法国' },
-    { label: '德国', value: '德国' },
-    { label: '意大利', value: '意大利' },
-    { label: '西班牙', value: '西班牙' },
     { label: '印度', value: '印度' },
     { label: '泰国', value: '泰国' },
-    { label: '俄罗斯', value: '俄罗斯' },
-    { label: '加拿大', value: '加拿大' },
-    { label: '澳大利亚', value: '澳大利亚' },
-    // 类型分类
-    { label: '喜剧片', value: '喜剧' },
-    { label: '爱情片', value: '爱情' },
-    { label: '动作片', value: '动作' },
-    { label: '科幻片', value: '科幻' },
-    { label: '动画片', value: '动画' },
-    { label: '悬疑片', value: '悬疑' },
-    { label: '犯罪片', value: '犯罪' },
-    { label: '惊悚片', value: '惊悚' },
-    { label: '冒险片', value: '冒险' },
-    { label: '音乐片', value: '音乐' },
-    { label: '历史片', value: '历史' },
-    { label: '奇幻片', value: '奇幻' },
-    { label: '恐怖片', value: '恐怖' },
-    { label: '战争片', value: '战争' },
-    { label: '传记片', value: '传记' },
-    { label: '歌舞片', value: '歌舞' },
-    { label: '武侠片', value: '武侠' },
-    { label: '灾难片', value: '灾难' },
-    { label: '西部片', value: '西部' },
-    { label: '纪录片', value: '纪录片' },
-    { label: '短片', value: '短片' },
-    { label: '治愈系', value: '治愈' },
   ];
 
   // 电视剧选择器选项 - 基于豆瓣API验证的标签扩展
