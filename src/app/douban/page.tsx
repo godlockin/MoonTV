@@ -120,7 +120,7 @@ function DoubanPageClient() {
   }, [type, customCategories]);
 
   // 生成骨架屏数据
-  const skeletonData = Array.from({ length: 25 }, (_, index) => index);
+  const skeletonData = Array.from({ length: 100 }, (_, index) => index);
 
   // 生成API请求参数的辅助函数
   const getRequestParams = useCallback(() => {
@@ -158,7 +158,7 @@ function DoubanPageClient() {
           data = await getDoubanList({
             tag: selectedCategory.query,
             type: selectedCategory.type,
-            pageLimit: 25,
+            pageLimit: 100,
             pageStart: 0,
           });
         } else {
@@ -168,7 +168,7 @@ function DoubanPageClient() {
         data = await getDoubanCategories({
           ...getRequestParams(),
           page: 1,
-          pageLimit: 25,
+          pageLimit: 100,
         });
       }
 
@@ -178,7 +178,7 @@ function DoubanPageClient() {
         if (data.pagination) {
           setHasMore(data.pagination.hasMore);
         } else {
-          setHasMore(data.list.length === 25);
+          setHasMore(data.list.length === 100);
         }
         setCurrentPage(1); // 重置当前页码
         setLoading(false);
@@ -254,8 +254,8 @@ function DoubanPageClient() {
               data = await getDoubanList({
                 tag: selectedCategory.query,
                 type: selectedCategory.type,
-                pageLimit: 25,
-                pageStart: (currentPage - 1) * 25, // 修正分页计算
+                pageLimit: 100,
+                pageStart: (currentPage - 1) * 100, // 修正分页计算
               });
             } else {
               throw new Error('没有找到对应的分类');
@@ -264,7 +264,7 @@ function DoubanPageClient() {
             data = await getDoubanCategories({
               ...getRequestParams(),
               page: currentPage,
-              pageLimit: 25,
+              pageLimit: 100,
             });
           }
 
@@ -274,7 +274,7 @@ function DoubanPageClient() {
             if (data.pagination) {
               setHasMore(data.pagination.hasMore);
             } else {
-              setHasMore(data.list.length === 25);
+              setHasMore(data.list.length === 100);
             }
           } else {
             throw new Error(data.message || '获取数据失败');
