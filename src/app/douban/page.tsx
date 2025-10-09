@@ -3,9 +3,10 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
+import { DOUBAN_PAGE_LIMIT } from '@/lib/constants';
+const DOUBAN_SKELETON_COUNT = 18;
 import { getDoubanCategories, getDoubanList } from '@/lib/douban.client';
 import { DoubanItem, DoubanResult } from '@/lib/types';
 
@@ -120,7 +121,10 @@ function DoubanPageClient() {
   }, [type, customCategories]);
 
   // 生成骨架屏数据
-  const skeletonData = Array.from({ length: 100 }, (_, index) => index);
+  const skeletonData = Array.from(
+    { length: DOUBAN_SKELETON_COUNT },
+    (_, index) => index,
+  );
 
   // 生成API请求参数的辅助函数
   const getRequestParams = useCallback(() => {
@@ -158,7 +162,7 @@ function DoubanPageClient() {
           data = await getDoubanList({
             tag: selectedCategory.query,
             type: selectedCategory.type,
-            pageLimit: 100,
+            pageLimit: DOUBAN_PAGE_LIMIT,
             pageStart: 0,
           });
         } else {
@@ -168,7 +172,7 @@ function DoubanPageClient() {
         data = await getDoubanCategories({
           ...getRequestParams(),
           page: 1,
-          pageLimit: 100,
+          pageLimit: DOUBAN_PAGE_LIMIT,
         });
       }
 
@@ -178,7 +182,7 @@ function DoubanPageClient() {
         if (data.pagination) {
           setHasMore(data.pagination.hasMore);
         } else {
-          setHasMore(data.list.length === 100);
+          setHasMore(data.list.length === DOUBAN_PAGE_LIMIT);
         }
         setCurrentPage(1); // 重置当前页码
         setLoading(false);
@@ -254,8 +258,8 @@ function DoubanPageClient() {
               data = await getDoubanList({
                 tag: selectedCategory.query,
                 type: selectedCategory.type,
-                pageLimit: 100,
-                pageStart: (currentPage - 1) * 100, // 修正分页计算
+                pageLimit: DOUBAN_PAGE_LIMIT,
+                pageStart: (currentPage - 1) * DOUBAN_PAGE_LIMIT, // 修正分页计算
               });
             } else {
               throw new Error('没有找到对应的分类');
@@ -264,7 +268,7 @@ function DoubanPageClient() {
             data = await getDoubanCategories({
               ...getRequestParams(),
               page: currentPage,
-              pageLimit: 100,
+              pageLimit: DOUBAN_PAGE_LIMIT,
             });
           }
 
@@ -274,7 +278,7 @@ function DoubanPageClient() {
             if (data.pagination) {
               setHasMore(data.pagination.hasMore);
             } else {
-              setHasMore(data.list.length === 100);
+              setHasMore(data.list.length === DOUBAN_PAGE_LIMIT);
             }
           } else {
             throw new Error(data.message || '获取数据失败');
