@@ -1,1 +1,1 @@
-export const DOUBAN_PAGE_LIMIT = 200;
+export const DOUBAN_PAGE_LIMIT = 100;
