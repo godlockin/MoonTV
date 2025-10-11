@@ -339,6 +339,89 @@
       "api": "http://zuidazy.me/api.php/provide/vod/",
       "name": "最大|点播",
       "enabled": true
+    },
+    "iqiyi": {
+      "api": "https://www.iqiyizyapi.com/api.php/provide/vod",
+      "name": "iqiyi资源",
+      "enabled": true
+    },
+    "hwba": {
+      "api": "https://cjhwba.com/api.php/provide/vod",
+      "name": "华为吧资源",
+      "enabled": true
+    },
+    "subo": {
+      "api": "https://subocaiji.com/api.php/provide/vod",
+      "name": "速播资源",
+      "enabled": true
+    },
+    "fczy": {
+      "api": "https://api.fczy888.me/api.php/provide/vod",
+      "name": "蜂巢资源",
+      "enabled": true
+    },
+    "lebo": {
+      "api": "https://lbapi9.com/api.php/provide/vod",
+      "name": "AV-乐播资源",
+      "enabled": true,
+      "adult": true
+    },
+    "semao": {
+      "api": "https://api.sexnguon.com/api.php/provide/vod",
+      "name": "AV-色猫资源",
+      "enabled": true,
+      "adult": true
+    },
+    "naixiang": {
+      "api": "https://naixxzy.com/api.php/provide/vod",
+      "name": "AV-奶香香",
+      "enabled": true,
+      "adult": true
+    },
+    "aosika": {
+      "api": "https://aosikazy.com/api.php/provide/vod",
+      "name": "奥斯卡资源",
+      "enabled": true
+    },
+    "aiduanju": {
+      "api": "https://www.aiduanju.cc/api.php/provide/vod",
+      "name": "爱短剧.cc",
+      "enabled": true
+    },
+    "xingba": {
+      "api": "https://xingba111.com/api.php/provide/vod",
+      "name": "杏吧资源",
+      "enabled": true
+    },
+    "shayu": {
+      "api": "https://shayuapi.com/api.php/provide/vod",
+      "name": "AV-鲨鱼资源",
+      "enabled": true,
+      "adult": true
+    },
+    "baipiao": {
+      "api": "https://www.kxgav.com/api.php/provide/vod",
+      "name": "AV-白嫖资源",
+      "enabled": true,
+      "adult": true
+    },
+    "fanhao": {
+      "api": "http://fhapi9.com/api.php/provide/vod",
+      "name": "AV-番号资源",
+      "enabled": true,
+      "adult": true
+    },
+    "huangav": {
+      "api": "https://www.pgxdy.com/api.php/provide/vod",
+      "name": "AV-黄AV资源",
+      "enabled": true,
+      "adult": true
+    },
+    "senanguo": {
+      "api": "https://api.sexnguon.com/api.php/provide/vod",
+      "name": "AV-色南国",
+      "enabled": true,
+      "adult": true
     }
   },
   "cache_time": 7200
