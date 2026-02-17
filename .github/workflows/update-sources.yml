@@ -1,0 +1,27 @@
+name: Update Sources
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Every day at 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  update-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Install deps
+        run: bun install
+      - name: Run orchestrator
+        run: bun run tsx src/sync/orchestrator.ts --update
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add sources.json
+          git commit -m "auto: update video sources" || echo "No changes to commit"
+          git push
