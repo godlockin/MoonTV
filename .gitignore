@@ -44,4 +44,15 @@ sitemap-*.xml
 src/lib/runtime.ts
 public/manifest.json
 public/sw.js
-public/workbox-*.js.worktrees
+public/workbox-*.js
+sources.json
+
+# package manager locks (project uses pnpm)
+bun.lock
+package-lock.json
+yarn.lock
+
+# IDE
+.claude/
+.idea/
+.vscode/settings.local.json
