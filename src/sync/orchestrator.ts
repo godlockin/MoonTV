@@ -1,6 +1,4 @@
-// Orchestrator: loads all plugins, merges/dedupes results, normalizes, healthchecks, writes unified sources.json
-import * as fs from 'fs';
-
+// Orchestrator: loads all plugins, merges/dedupes results, normalizes, healthchecks
 import { doubanAdapter } from './adapters/doubanAdapter';
 import { githubRegistryCrawler } from './crawlers/githubRegistryCrawler';
 import { defaultSources } from './defaultSources';
@@ -14,7 +12,19 @@ import {
 const crawlers: SourceCrawler[] = [githubRegistryCrawler];
 const adapters: SourceAdapter[] = [doubanAdapter];
 
-export async function runOrchestration(log = false) {
+export interface SyncResult {
+  sources: StandardizedSource[];
+  stats: {
+    total: number;
+    active: number;
+    failed: number;
+    newDiscovered: number;
+  };
+}
+
+export async function runOrchestration(
+  log = false,
+): Promise<StandardizedSource[]> {
   // Discover sources via crawlers
   const discovered = (
     await Promise.all(crawlers.map((c) => c.discover()))
@@ -46,8 +56,31 @@ export async function runOrchestration(log = false) {
     src.health = src.active ? 'healthy' : 'failing';
   }
 
-  // Write out
-  fs.writeFileSync('sources.json', JSON.stringify(normalized, null, 2));
+  // Write to file (Node.js environment only, skip in Edge Runtime)
+  try {
+    // Check if we're in Node.js by checking for process.versions.node
+    const isNode =
+      typeof globalThis !== 'undefined' &&
+      typeof (
+        globalThis as typeof globalThis & {
+          process?: { versions?: { node?: string } };
+        }
+      ).process !== 'undefined' &&
+      (
+        globalThis as typeof globalThis & {
+          process?: { versions?: { node?: string } };
+        }
+      ).process?.versions?.node !== undefined;
+
+    if (isNode) {
+      // Use dynamic import to avoid webpack bundling fs in Edge Runtime
+      const fs = await import('fs');
+      fs.writeFileSync('sources.json', JSON.stringify(normalized, null, 2));
+    }
+  } catch {
+    // Ignore file write errors in Edge Runtime or if fs is not available
+  }
+
   // eslint-disable-next-line no-console
   if (log) console.log(normalized);
   return normalized;

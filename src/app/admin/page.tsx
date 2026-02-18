@@ -25,6 +25,7 @@ import {
   ChevronDown,
   ChevronUp,
   FolderOpen,
+  RefreshCw,
   Settings,
   Users,
   Video,
@@ -627,6 +628,113 @@ const UserConfig = ({ config, role, refreshConfig }: UserConfigProps) => {
             })()}
           </table>
         </div>
+      </div>
+    </div>
+  );
+};
+
+// 同步配置组件
+const SyncConfig = ({
+  refreshConfig,
+}: {
+  refreshConfig: () => Promise<void>;
+}) => {
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<{
+    lastRun: number | null;
+    isRunning: boolean;
+    stats: { total: number; new: number; failed: number } | null;
+  }>({ lastRun: null, isRunning: false, stats: null });
+
+  // 获取同步状态
+  const fetchSyncStatus = useCallback(async () => {
+    try {
+      const response = await fetch('/api/admin/sync');
+      if (response.ok) {
+        const data = await response.json();
+        setSyncStatus(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch sync status:', err);
+    }
+  }, []);
+
+  // 组件加载时获取状态
+  useEffect(() => {
+    fetchSyncStatus();
+    // 每 10 秒刷新一次状态
+    const interval = setInterval(fetchSyncStatus, 10000);
+    return () => clearInterval(interval);
+  }, [fetchSyncStatus]);
+
+  // 触发同步
+  const handleSync = async () => {
+    if (isSyncing) return;
+
+    setIsSyncing(true);
+    try {
+      const response = await fetch('/api/admin/sync', {
+        method: 'POST',
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        await showSuccess(`同步完成！发现 ${data.stats?.total || 0} 个源`);
+        await refreshConfig();
+        await fetchSyncStatus();
+      } else {
+        showError(data.error || '同步失败');
+      }
+    } catch (err) {
+      showError('同步请求失败');
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  return (
+    <div className='space-y-4'>
+      {/* 同步状态 */}
+      <div className='bg-gray-50 dark:bg-gray-800 rounded-lg p-4'>
+        <div className='flex items-center justify-between'>
+          <div>
+            <h3 className='text-sm font-medium text-gray-900 dark:text-gray-100'>
+              视频源同步
+            </h3>
+            <p className='text-xs text-gray-500 dark:text-gray-400 mt-1'>
+              {syncStatus.isRunning
+                ? '正在同步中...'
+                : syncStatus.lastRun
+                  ? `上次同步: ${new Date(syncStatus.lastRun).toLocaleString()}`
+                  : '尚未执行同步'}
+            </p>
+            {syncStatus.stats && (
+              <p className='text-xs text-gray-500 dark:text-gray-400 mt-1'>
+                总计: {syncStatus.stats.total} | 新增: {syncStatus.stats.new} |
+                失败: {syncStatus.stats.failed}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={handleSync}
+            disabled={isSyncing || syncStatus.isRunning}
+            className='flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white text-sm rounded-lg transition-colors'
+          >
+            <RefreshCw size={16} className={isSyncing ? 'animate-spin' : ''} />
+            {isSyncing ? '同步中...' : '立即同步'}
+          </button>
+        </div>
+      </div>
+
+      {/* 说明 */}
+      <div className='text-xs text-gray-500 dark:text-gray-400 space-y-1'>
+        <p>同步功能会从以下注册表获取最新的视频源：</p>
+        <ul className='list-disc list-inside pl-2 space-y-0.5'>
+          <li>GitHub IPTV 组织公开的 M3U 列表</li>
+          <li>其他社区维护的视频源注册表</li>
+        </ul>
+        <p className='mt-2'>注意：同步仅添加新发现的源，不会覆盖现有配置。</p>
       </div>
     </div>
   );
@@ -1718,6 +1826,7 @@ function AdminPageClient() {
     videoSource: false,
     siteConfig: false,
     categoryConfig: false,
+    syncConfig: false,
   });
 
   // 获取管理员配置
@@ -1861,6 +1970,21 @@ function AdminPageClient() {
                 role={role}
                 refreshConfig={fetchConfig}
               />
+            </CollapsibleTab>
+
+            {/* 同步配置标签 */}
+            <CollapsibleTab
+              title='源同步'
+              icon={
+                <RefreshCw
+                  size={20}
+                  className='text-gray-600 dark:text-gray-400'
+                />
+              }
+              isExpanded={expandedTabs.syncConfig}
+              onToggle={() => toggleTab('syncConfig')}
+            >
+              <SyncConfig refreshConfig={fetchConfig} />
             </CollapsibleTab>
 
             {/* 视频源配置标签 */}
