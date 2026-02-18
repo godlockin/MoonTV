@@ -39,11 +39,20 @@ export async function runOrchestration(log = false) {
   return normalized;
 }
 
+import { validateEnv } from './validateEnv';
+
 if (require.main === module) {
+  try {
+    validateEnv();
+  } catch (e: unknown) {
+    console.error(JSON.stringify({ type: 'fatal', error: (e instanceof Error ? e.message : String(e)), at: 'startup' }));
+    process.exit(1);
+  }
   const argv = process.argv.slice(2);
   const log = argv.includes('--log');
-  runOrchestration(log).catch(e => {
-    console.error(e);
+  runOrchestration(log).catch((e: unknown) => {
+    const errObj = e instanceof Error ? { message: e.message, stack: e.stack } : { value: e };
+    console.error(JSON.stringify({ type: 'runOrchestration-fatal', error: errObj, at: 'orchestrator' }));
     process.exit(1);
   });
 }
