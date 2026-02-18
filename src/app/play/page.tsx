@@ -529,7 +529,7 @@ function PlayPageClient() {
         await saveSkipConfig(
           currentSourceRef.current,
           currentIdRef.current,
-          newConfig
+          newConfig,
         );
       }
       console.log('跳过片头片尾配置已保存:', newConfig);
@@ -1467,7 +1467,7 @@ function PlayPageClient() {
           }
           if (
             Math.abs(
-              artPlayerRef.current.playbackRate - lastPlaybackRateRef.current
+              artPlayerRef.current.playbackRate - lastPlaybackRateRef.current,
             ) > 0.01 &&
             isWebkit
           ) {

@@ -30,7 +30,7 @@ let fileContent = fs.readFileSync(versionFilePath, 'utf8');
 // 使用正则表达式替换 CURRENT_VERSION 的值
 const updatedContent = fileContent.replace(
   /const CURRENT_VERSION = '.*?'/,
-  `const CURRENT_VERSION = '${currentVersion}'`
+  `const CURRENT_VERSION = '${currentVersion}'`,
 );
 
 // 写入更新后的内容

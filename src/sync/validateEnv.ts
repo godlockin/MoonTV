@@ -11,10 +11,14 @@ export function validateEnv(env: NodeJS.ProcessEnv = process.env): RequiredEnv {
   if (errors.length) {
     const msg = `Startup failed due to config errors:\n${errors.join('\n')}`;
     // Structure log (future: replace with logger)
-    console.error(JSON.stringify({ type: 'config-error', errors, at: 'validateEnv' }));
+    // eslint-disable-next-line no-console
+    console.error(
+      JSON.stringify({ type: 'config-error', errors, at: 'validateEnv' }),
+    );
     throw new Error(msg);
   }
   return {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     NODE_ENV: env.NODE_ENV!,
     // Add other env/config fields here
   };

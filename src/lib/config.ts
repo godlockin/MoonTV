@@ -5,6 +5,72 @@ import { getStorage } from '@/lib/db';
 import { AdminConfig } from './admin.types';
 import runtimeConfig from './runtime';
 
+/**
+ * 统一环境变量配置及默认值
+ */
+export interface EnvConfig {
+  SITE_NAME: string;
+  ANNOUNCEMENT: string;
+  NEXT_PUBLIC_ENABLE_REGISTER: boolean;
+  NEXT_PUBLIC_SEARCH_MAX_PAGE: number;
+  CACHE_TIME: number;
+  NEXT_PUBLIC_IMAGE_PROXY: string;
+  NEXT_PUBLIC_DOUBAN_PROXY: string;
+  NEXT_PUBLIC_DISABLE_YELLOW_FILTER: boolean;
+  NEXT_PUBLIC_STORAGE_TYPE: string; // e.g. localstorage/redis
+  USERNAME: string;
+  DOCKER_ENV: boolean;
+}
+
+const defaultEnv: EnvConfig = {
+  SITE_NAME: 'MoonTV',
+  ANNOUNCEMENT:
+    '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本网站不存储任何视频资源，不对内容的准确性、合法性、完整性负责。',
+  NEXT_PUBLIC_ENABLE_REGISTER: false,
+  NEXT_PUBLIC_SEARCH_MAX_PAGE: 50,
+  CACHE_TIME: 7200,
+  NEXT_PUBLIC_IMAGE_PROXY: '',
+  NEXT_PUBLIC_DOUBAN_PROXY: '',
+  NEXT_PUBLIC_DISABLE_YELLOW_FILTER: false,
+  NEXT_PUBLIC_STORAGE_TYPE: 'localstorage',
+  USERNAME: '',
+  DOCKER_ENV: false,
+};
+
+/**
+ * 读取并类型化所有配置，优先取 process.env, 否则用默认值。
+ */
+export function getEnvConfig(): EnvConfig {
+  return {
+    SITE_NAME: process.env.SITE_NAME || defaultEnv.SITE_NAME,
+    ANNOUNCEMENT: process.env.ANNOUNCEMENT || defaultEnv.ANNOUNCEMENT,
+    NEXT_PUBLIC_ENABLE_REGISTER:
+      process.env.NEXT_PUBLIC_ENABLE_REGISTER === 'true' ||
+      defaultEnv.NEXT_PUBLIC_ENABLE_REGISTER,
+    NEXT_PUBLIC_SEARCH_MAX_PAGE: process.env.NEXT_PUBLIC_SEARCH_MAX_PAGE
+      ? Number(process.env.NEXT_PUBLIC_SEARCH_MAX_PAGE)
+      : defaultEnv.NEXT_PUBLIC_SEARCH_MAX_PAGE,
+    CACHE_TIME: process.env.CACHE_TIME
+      ? Number(process.env.CACHE_TIME)
+      : defaultEnv.CACHE_TIME,
+    NEXT_PUBLIC_IMAGE_PROXY:
+      process.env.NEXT_PUBLIC_IMAGE_PROXY || defaultEnv.NEXT_PUBLIC_IMAGE_PROXY,
+    NEXT_PUBLIC_DOUBAN_PROXY:
+      process.env.NEXT_PUBLIC_DOUBAN_PROXY ||
+      defaultEnv.NEXT_PUBLIC_DOUBAN_PROXY,
+    NEXT_PUBLIC_DISABLE_YELLOW_FILTER:
+      process.env.NEXT_PUBLIC_DISABLE_YELLOW_FILTER === 'true' ||
+      defaultEnv.NEXT_PUBLIC_DISABLE_YELLOW_FILTER,
+    NEXT_PUBLIC_STORAGE_TYPE:
+      process.env.NEXT_PUBLIC_STORAGE_TYPE ||
+      defaultEnv.NEXT_PUBLIC_STORAGE_TYPE,
+    USERNAME: process.env.USERNAME || defaultEnv.USERNAME,
+    DOCKER_ENV: process.env.DOCKER_ENV === 'true',
+  };
+}
+
+export const envConfig: EnvConfig = getEnvConfig();
+
 export interface ApiSite {
   key: string;
   api: string;
@@ -54,7 +120,7 @@ async function initConfig() {
     return;
   }
 
-  if (process.env.DOCKER_ENV === 'true') {
+  if (envConfig.DOCKER_ENV) {
     // eslint-disable-next-line @typescript-eslint/no-implied-eval
     const _require = eval('require') as NodeRequire;
     const fs = _require('fs') as typeof import('fs');
@@ -68,7 +134,7 @@ async function initConfig() {
     // 默认使用编译时生成的配置
     fileConfig = runtimeConfig as unknown as ConfigFileStruct;
   }
-  const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+  const storageType = envConfig.NEXT_PUBLIC_STORAGE_TYPE;
   if (storageType !== 'localstorage') {
     // 数据库存储，读取并补全管理员配置
     const storage = getStorage();
@@ -167,7 +233,7 @@ async function initConfig() {
           }
         });
         // 站长
-        const ownerUser = process.env.USERNAME;
+        const ownerUser = envConfig.USERNAME;
         if (ownerUser) {
           adminConfig!.UserConfig.Users = adminConfig!.UserConfig.Users.filter(
             (u) => u.username !== ownerUser,
@@ -183,7 +249,7 @@ async function initConfig() {
           username: uname,
           role: 'user',
         }));
-        const ownerUser = process.env.USERNAME;
+        const ownerUser = envConfig.USERNAME;
         if (ownerUser) {
           allUsers = allUsers.filter((u) => u.username !== ownerUser);
           allUsers.unshift({
@@ -193,20 +259,18 @@ async function initConfig() {
         }
         adminConfig = {
           SiteConfig: {
-            SiteName: process.env.SITE_NAME || 'MoonTV',
+            SiteName: envConfig.SITE_NAME,
             Announcement:
-              process.env.ANNOUNCEMENT ||
+              envConfig.ANNOUNCEMENT ||
               '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。',
-            SearchDownstreamMaxPage:
-              Number(process.env.NEXT_PUBLIC_SEARCH_MAX_PAGE) || 50,
-            SiteInterfaceCacheTime: fileConfig.cache_time || 7200,
-            ImageProxy: process.env.NEXT_PUBLIC_IMAGE_PROXY || '',
-            DoubanProxy: process.env.NEXT_PUBLIC_DOUBAN_PROXY || '',
-            DisableYellowFilter:
-              process.env.NEXT_PUBLIC_DISABLE_YELLOW_FILTER === 'true',
+            SearchDownstreamMaxPage: envConfig.NEXT_PUBLIC_SEARCH_MAX_PAGE,
+            SiteInterfaceCacheTime: envConfig.CACHE_TIME,
+            ImageProxy: envConfig.NEXT_PUBLIC_IMAGE_PROXY,
+            DoubanProxy: envConfig.NEXT_PUBLIC_DOUBAN_PROXY,
+            DisableYellowFilter: envConfig.NEXT_PUBLIC_DISABLE_YELLOW_FILTER,
           },
           UserConfig: {
-            AllowRegister: process.env.NEXT_PUBLIC_ENABLE_REGISTER === 'true',
+            AllowRegister: envConfig.NEXT_PUBLIC_ENABLE_REGISTER,
             Users: allUsers as any,
           },
           SourceConfig: apiSiteEntries.map(([key, site]) => ({
@@ -241,20 +305,19 @@ async function initConfig() {
     // 本地存储直接使用文件配置
     cachedConfig = {
       SiteConfig: {
-        SiteName: process.env.SITE_NAME || 'MoonTV',
+        SiteName: envConfig.SITE_NAME,
         Announcement:
-          process.env.ANNOUNCEMENT ||
+          envConfig.ANNOUNCEMENT ||
           '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。',
         SearchDownstreamMaxPage:
           Number(process.env.NEXT_PUBLIC_SEARCH_MAX_PAGE) || 5,
-        SiteInterfaceCacheTime: fileConfig.cache_time || 7200,
-        ImageProxy: process.env.NEXT_PUBLIC_IMAGE_PROXY || '',
-        DoubanProxy: process.env.NEXT_PUBLIC_DOUBAN_PROXY || '',
-        DisableYellowFilter:
-          process.env.NEXT_PUBLIC_DISABLE_YELLOW_FILTER === 'true',
+        SiteInterfaceCacheTime: envConfig.CACHE_TIME,
+        ImageProxy: envConfig.NEXT_PUBLIC_IMAGE_PROXY,
+        DoubanProxy: envConfig.NEXT_PUBLIC_DOUBAN_PROXY,
+        DisableYellowFilter: envConfig.NEXT_PUBLIC_DISABLE_YELLOW_FILTER,
       },
       UserConfig: {
-        AllowRegister: process.env.NEXT_PUBLIC_ENABLE_REGISTER === 'true',
+        AllowRegister: envConfig.NEXT_PUBLIC_ENABLE_REGISTER,
         Users: [],
       },
       SourceConfig: Object.entries(fileConfig.api_site).map(([key, site]) => ({
@@ -278,7 +341,7 @@ async function initConfig() {
 }
 
 export async function getConfig(): Promise<AdminConfig> {
-  const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+  const storageType = envConfig.NEXT_PUBLIC_STORAGE_TYPE;
   if (process.env.DOCKER_ENV === 'true' || storageType === 'localstorage') {
     await initConfig();
     return cachedConfig;
@@ -296,18 +359,16 @@ export async function getConfig(): Promise<AdminConfig> {
     }
 
     // 合并一些环境变量配置
-    adminConfig.SiteConfig.SiteName = process.env.SITE_NAME || 'MoonTV';
+    adminConfig.SiteConfig.SiteName = envConfig.SITE_NAME;
     adminConfig.SiteConfig.Announcement =
-      process.env.ANNOUNCEMENT ||
+      envConfig.ANNOUNCEMENT ||
       '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。';
     adminConfig.UserConfig.AllowRegister =
-      process.env.NEXT_PUBLIC_ENABLE_REGISTER === 'true';
-    adminConfig.SiteConfig.ImageProxy =
-      process.env.NEXT_PUBLIC_IMAGE_PROXY || '';
-    adminConfig.SiteConfig.DoubanProxy =
-      process.env.NEXT_PUBLIC_DOUBAN_PROXY || '';
+      envConfig.NEXT_PUBLIC_ENABLE_REGISTER;
+    adminConfig.SiteConfig.ImageProxy = envConfig.NEXT_PUBLIC_IMAGE_PROXY;
+    adminConfig.SiteConfig.DoubanProxy = envConfig.NEXT_PUBLIC_DOUBAN_PROXY;
     adminConfig.SiteConfig.DisableYellowFilter =
-      process.env.NEXT_PUBLIC_DISABLE_YELLOW_FILTER === 'true';
+      envConfig.NEXT_PUBLIC_DISABLE_YELLOW_FILTER;
 
     // 合并文件中的源信息
     fileConfig = runtimeConfig as unknown as ConfigFileStruct;
@@ -358,7 +419,7 @@ export async function getConfig(): Promise<AdminConfig> {
       disabled: false,
     }));
 
-    const ownerUser = process.env.USERNAME || '';
+    const ownerUser = envConfig.USERNAME || '';
     // 检查配置中的站长用户是否和 USERNAME 匹配，如果不匹配则降级为普通用户
     let containOwner = false;
     adminConfig.UserConfig.Users.forEach((user) => {
@@ -387,7 +448,7 @@ export async function getConfig(): Promise<AdminConfig> {
 }
 
 export async function resetConfig() {
-  const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
+  const storageType = envConfig.NEXT_PUBLIC_STORAGE_TYPE;
   const storage = getStorage();
   // 获取所有用户名，用于补全 Users
   let userNames: string[] = [];
@@ -399,7 +460,7 @@ export async function resetConfig() {
     }
   }
 
-  if (process.env.DOCKER_ENV === 'true') {
+  if (envConfig.DOCKER_ENV) {
     // eslint-disable-next-line @typescript-eslint/no-implied-eval
     const _require = eval('require') as NodeRequire;
     const fs = _require('fs') as typeof import('fs');
@@ -420,7 +481,7 @@ export async function resetConfig() {
     username: uname,
     role: 'user',
   }));
-  const ownerUser = process.env.USERNAME;
+  const ownerUser = envConfig.USERNAME;
   if (ownerUser) {
     allUsers = allUsers.filter((u) => u.username !== ownerUser);
     allUsers.unshift({
@@ -430,20 +491,19 @@ export async function resetConfig() {
   }
   const adminConfig = {
     SiteConfig: {
-      SiteName: process.env.SITE_NAME || 'MoonTV',
+      SiteName: envConfig.SITE_NAME,
       Announcement:
-        process.env.ANNOUNCEMENT ||
+        envConfig.ANNOUNCEMENT ||
         '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。',
       SearchDownstreamMaxPage:
         Number(process.env.NEXT_PUBLIC_SEARCH_MAX_PAGE) || 5,
-      SiteInterfaceCacheTime: fileConfig.cache_time || 7200,
-      ImageProxy: process.env.NEXT_PUBLIC_IMAGE_PROXY || '',
-      DoubanProxy: process.env.NEXT_PUBLIC_DOUBAN_PROXY || '',
-      DisableYellowFilter:
-        process.env.NEXT_PUBLIC_DISABLE_YELLOW_FILTER === 'true',
+      SiteInterfaceCacheTime: envConfig.CACHE_TIME,
+      ImageProxy: envConfig.NEXT_PUBLIC_IMAGE_PROXY,
+      DoubanProxy: envConfig.NEXT_PUBLIC_DOUBAN_PROXY,
+      DisableYellowFilter: envConfig.NEXT_PUBLIC_DISABLE_YELLOW_FILTER,
     },
     UserConfig: {
-      AllowRegister: process.env.NEXT_PUBLIC_ENABLE_REGISTER === 'true',
+      AllowRegister: envConfig.NEXT_PUBLIC_ENABLE_REGISTER,
       Users: allUsers as any,
     },
     SourceConfig: apiSiteEntries.map(([key, site]) => ({

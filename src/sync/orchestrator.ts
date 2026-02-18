@@ -1,17 +1,24 @@
 // Orchestrator: loads all plugins, merges/dedupes results, normalizes, healthchecks, writes unified sources.json
-import { defaultSources } from './defaultSources';
-import { SourceCrawler, SourceAdapter, RawSourceConfig, StandardizedSource } from './types';
-
-import { githubRegistryCrawler } from './crawlers/githubRegistryCrawler';
-import { doubanAdapter } from './adapters/doubanAdapter';
 import * as fs from 'fs';
+
+import { doubanAdapter } from './adapters/doubanAdapter';
+import { githubRegistryCrawler } from './crawlers/githubRegistryCrawler';
+import { defaultSources } from './defaultSources';
+import {
+  RawSourceConfig,
+  SourceAdapter,
+  SourceCrawler,
+  StandardizedSource,
+} from './types';
 
 const crawlers: SourceCrawler[] = [githubRegistryCrawler];
 const adapters: SourceAdapter[] = [doubanAdapter];
 
 export async function runOrchestration(log = false) {
   // Discover sources via crawlers
-  const discovered = (await Promise.all(crawlers.map(c => c.discover()))).flat();
+  const discovered = (
+    await Promise.all(crawlers.map((c) => c.discover()))
+  ).flat();
   const allRaw: RawSourceConfig[] = [...defaultSources, ...discovered];
 
   // Deduplicate by id
@@ -19,22 +26,29 @@ export async function runOrchestration(log = false) {
   for (const src of allRaw) mergedMap.set(src.id, src);
   const merged = Array.from(mergedMap.values());
 
-  // Normalize
-  const normalized: StandardizedSource[] = merged.map(raw => {
-    const adapter = adapters.find(a => a.supports(raw));
-    if (!adapter) throw new Error(`No adapter found for ${raw.id}`);
-    return adapter.toStandard(raw);
-  });
+  // Normalize (skip sources without adapters)
+  const normalized: StandardizedSource[] = [];
+  for (const raw of merged) {
+    const adapter = adapters.find((a) => a.supports(raw));
+    if (!adapter) {
+      // eslint-disable-next-line no-console
+      console.warn(`No adapter found for ${raw.id}, skipping`);
+      continue;
+    }
+    normalized.push(adapter.toStandard(raw));
+  }
 
   // Healthcheck
   for (const src of normalized) {
-    const adapter = adapters.find(a => a.supports(src));
-    src.active = adapter && adapter.healthcheck ? await adapter.healthcheck(src) : true;
+    const adapter = adapters.find((a) => a.supports(src));
+    src.active =
+      adapter && adapter.healthcheck ? await adapter.healthcheck(src) : true;
     src.health = src.active ? 'healthy' : 'failing';
   }
 
   // Write out
   fs.writeFileSync('sources.json', JSON.stringify(normalized, null, 2));
+  // eslint-disable-next-line no-console
   if (log) console.log(normalized);
   return normalized;
 }
@@ -45,14 +59,31 @@ if (require.main === module) {
   try {
     validateEnv();
   } catch (e: unknown) {
-    console.error(JSON.stringify({ type: 'fatal', error: (e instanceof Error ? e.message : String(e)), at: 'startup' }));
+    // eslint-disable-next-line no-console
+    console.error(
+      JSON.stringify({
+        type: 'fatal',
+        error: e instanceof Error ? e.message : String(e),
+        at: 'startup',
+      }),
+    );
     process.exit(1);
   }
   const argv = process.argv.slice(2);
   const log = argv.includes('--log');
   runOrchestration(log).catch((e: unknown) => {
-    const errObj = e instanceof Error ? { message: e.message, stack: e.stack } : { value: e };
-    console.error(JSON.stringify({ type: 'runOrchestration-fatal', error: errObj, at: 'orchestrator' }));
+    const errObj =
+      e instanceof Error
+        ? { message: e.message, stack: e.stack }
+        : { value: e };
+    // eslint-disable-next-line no-console
+    console.error(
+      JSON.stringify({
+        type: 'runOrchestration-fatal',
+        error: errObj,
+        at: 'orchestrator',
+      }),
+    );
     process.exit(1);
   });
 }

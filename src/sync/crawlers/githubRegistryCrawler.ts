@@ -1,4 +1,4 @@
-import { SourceCrawler, RawSourceConfig } from '../types';
+import { RawSourceConfig, SourceCrawler } from '../types';
 
 export const githubRegistryCrawler: SourceCrawler = {
   name: 'githubRegistry',

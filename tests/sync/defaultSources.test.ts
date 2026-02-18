@@ -2,7 +2,7 @@ import { defaultSources } from '../../src/sync/defaultSources';
 
 describe('defaultSources', () => {
   it('should contain only unique IDs', () => {
-    const ids = defaultSources.map(s => s.id);
+    const ids = defaultSources.map((s) => s.id);
     const set = new Set(ids);
     expect(set.size).toBe(ids.length);
   });

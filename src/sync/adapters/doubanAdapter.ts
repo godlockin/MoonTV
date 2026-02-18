@@ -1,4 +1,4 @@
-import { SourceAdapter, RawSourceConfig, StandardizedSource } from '../types';
+import { RawSourceConfig, SourceAdapter, StandardizedSource } from '../types';
 
 export const doubanAdapter: SourceAdapter = {
   name: 'douban',
@@ -10,16 +10,14 @@ export const doubanAdapter: SourceAdapter = {
 
   toStandard(raw: RawSourceConfig): StandardizedSource {
     return {
-      id: raw.id,
-      url: raw.url,
       provider: 'douban',
       active: true,
       ...raw,
     };
   },
 
-  async healthcheck(source: StandardizedSource): Promise<boolean> {
+  async healthcheck(_source: StandardizedSource): Promise<boolean> {
     // Faked healthcheck: always returns true for now
     return true;
-  }
+  },
 };

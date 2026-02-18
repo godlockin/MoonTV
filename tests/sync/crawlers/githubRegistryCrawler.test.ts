@@ -11,7 +11,12 @@ describe('githubRegistryCrawler', () => {
 
   it('handles fetch failure', async () => {
     // Could monkey-patch/fake the method to simulate failure case
-    const badCrawler = { ...githubRegistryCrawler, discover: async () => { throw new Error('fail'); } };
+    const badCrawler = {
+      ...githubRegistryCrawler,
+      discover: async () => {
+        throw new Error('fail');
+      },
+    };
     await expect(badCrawler.discover()).rejects.toThrow('fail');
   });
 });

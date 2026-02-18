@@ -17,7 +17,7 @@ interface ApiSearchItem {
 
 export async function searchFromApi(
   apiSite: ApiSite,
-  query: string
+  query: string,
 ): Promise<SearchResult[]> {
   try {
     const apiBaseUrl = apiSite.api;
@@ -114,7 +114,7 @@ export async function searchFromApi(
             const pageController = new AbortController();
             const pageTimeoutId = setTimeout(
               () => pageController.abort(),
-              8000
+              8000,
             );
 
             const pageResponse = await fetch(pageUrl, {
@@ -192,7 +192,7 @@ const M3U8_PATTERN = /(https?:\/\/[^"'\s]+?\.m3u8)/g;
 
 export async function getDetailFromApi(
   apiSite: ApiSite,
-  id: string
+  id: string,
 ): Promise<SearchResult> {
   if (apiSite.detail) {
     return handleSpecialSourceDetail(id, apiSite);
@@ -241,7 +241,7 @@ export async function getDetailFromApi(
         })
         .filter(
           (url: string) =>
-            url && (url.startsWith('http://') || url.startsWith('https://'))
+            url && (url.startsWith('http://') || url.startsWith('https://')),
         );
     }
   }
@@ -271,7 +271,7 @@ export async function getDetailFromApi(
 
 async function handleSpecialSourceDetail(
   id: string,
-  apiSite: ApiSite
+  apiSite: ApiSite,
 ): Promise<SearchResult> {
   const detailUrl = `${apiSite.detail}/index.php/vod/detail/id/${id}.html`;
 
@@ -316,7 +316,7 @@ async function handleSpecialSourceDetail(
 
   // 提取描述
   const descMatch = html.match(
-    /<div[^>]*class=["']sketch["'][^>]*>([\s\S]*?)<\/div>/
+    /<div[^>]*class=["']sketch["'][^>]*>([\s\S]*?)<\/div>/,
   );
   const descText = descMatch ? cleanHtmlTags(descMatch[1]) : '';
 

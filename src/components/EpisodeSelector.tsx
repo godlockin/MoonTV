@@ -64,10 +64,10 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
 
   // 存储每个源的视频信息
   const [videoInfoMap, setVideoInfoMap] = useState<Map<string, VideoInfo>>(
-    new Map()
+    new Map(),
   );
   const [attemptedSources, setAttemptedSources] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
 
   // 使用 ref 来避免闭包问题
@@ -86,7 +86,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
   // 主要的 tab 状态：'episodes' 或 'sources'
   // 当只有一集时默认展示 "换源"，并隐藏 "选集" 标签
   const [activeTab, setActiveTab] = useState<'episodes' | 'sources'>(
-    totalEpisodes > 1 ? 'episodes' : 'sources'
+    totalEpisodes > 1 ? 'episodes' : 'sources',
   );
 
   // 当前分页索引（0 开始）
@@ -134,7 +134,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
           loadSpeed: '未知',
           pingTime: 0,
           hasError: true,
-        })
+        }),
       );
     }
   }, []);
@@ -278,27 +278,27 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
         setCurrentPage(index);
       }
     },
-    [descending, pageCount]
+    [descending, pageCount],
   );
 
   const handleEpisodeClick = useCallback(
     (episodeNumber: number) => {
       onChange?.(episodeNumber);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleSourceClick = useCallback(
     (source: SearchResult) => {
       onSourceChange?.(source.source, source.id, source.title);
     },
-    [onSourceChange]
+    [onSourceChange],
   );
 
   const currentStart = currentPage * episodesPerPage + 1;
   const currentEnd = Math.min(
     currentStart + episodesPerPage - 1,
-    totalEpisodes
+    totalEpisodes,
   );
 
   return (
@@ -395,7 +395,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
             {(() => {
               const len = currentEnd - currentStart + 1;
               const episodes = Array.from({ length: len }, (_, i) =>
-                descending ? currentEnd - i : currentStart + i
+                descending ? currentEnd - i : currentStart + i,
               );
               return episodes;
             })().map((episodeNumber) => {
@@ -533,16 +533,16 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                                 } else {
                                   // 根据分辨率设置不同颜色：2K、4K为紫色，1080p、720p为绿色，其他为黄色
                                   const isUltraHigh = ['4K', '2K'].includes(
-                                    videoInfo.quality
+                                    videoInfo.quality,
                                   );
                                   const isHigh = ['1080p', '720p'].includes(
-                                    videoInfo.quality
+                                    videoInfo.quality,
                                   );
                                   const textColorClasses = isUltraHigh
                                     ? 'text-purple-600 dark:text-purple-400'
                                     : isHigh
-                                    ? 'text-green-600 dark:text-green-400'
-                                    : 'text-yellow-600 dark:text-yellow-400';
+                                      ? 'text-green-600 dark:text-green-400'
+                                      : 'text-yellow-600 dark:text-yellow-400';
 
                                   return (
                                     <div
@@ -606,7 +606,7 @@ const EpisodeSelector: React.FC<EpisodeSelectorProps> = ({
                     onClick={() => {
                       if (videoTitle) {
                         router.push(
-                          `/search?q=${encodeURIComponent(videoTitle)}`
+                          `/search?q=${encodeURIComponent(videoTitle)}`,
                         );
                       }
                     }}

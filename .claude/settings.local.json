@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git worktree add:*)",
+      "Bash(bun install)",
+      "Bash(bun test)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git worktree prune:*)",
+      "WebSearch",
+      "Bash(git pull:*)",
+      "Bash(find:*)",
+      "Bash(cloc:*)",
+      "Bash(pnpm install:*)",
+      "Bash(timeout 30 pnpm dev:*)",
+      "Bash(pnpm gen:runtime:*)",
+      "Bash(pnpm gen:manifest:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm test:*)",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm lint:fix:*)",
+      "Bash(pnpm lint:strict:*)"
+    ]
+  }
+}
