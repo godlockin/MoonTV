@@ -24,9 +24,11 @@ import { CSS } from '@dnd-kit/utilities';
 import {
   ChevronDown,
   ChevronUp,
+  Download,
   FolderOpen,
   RefreshCw,
   Settings,
+  Upload,
   Users,
   Video,
 } from 'lucide-react';
@@ -904,6 +906,103 @@ const VideoSourceConfig = ({
       });
   };
 
+  // 导出视频源配置
+  const handleExport = () => {
+    const exportData = {
+      version: '1.0',
+      exportTime: new Date().toISOString(),
+      sources: sources.map((s) => ({
+        key: s.key,
+        name: s.name,
+        api: s.api,
+        detail: s.detail,
+        disabled: s.disabled,
+      })),
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: 'application/json',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `moontv-sources-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showSuccess('导出成功');
+  };
+
+  // 导入视频源配置
+  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const content = e.target?.result as string;
+        const data = JSON.parse(content);
+
+        // 验证数据格式
+        if (!data.sources || !Array.isArray(data.sources)) {
+          throw new Error('Invalid file format: sources array not found');
+        }
+
+        // 验证每个源的必要字段
+        const validSources = data.sources.filter(
+          (s: DataSource) => s.key && s.name && s.api,
+        );
+
+        if (validSources.length === 0) {
+          throw new Error('No valid sources found in file');
+        }
+
+        // 确认导入
+        const confirmed = window.confirm(
+          `确认导入 ${validSources.length} 个视频源？\n注意：将跳过已存在的源。`,
+        );
+
+        if (!confirmed) return;
+
+        // 逐个导入新源
+        let importedCount = 0;
+        const existingKeys = new Set(sources.map((s) => s.key));
+
+        for (const source of validSources) {
+          if (existingKeys.has(source.key)) {
+            continue; // 跳过已存在的源
+          }
+
+          try {
+            await callSourceApi({
+              action: 'add',
+              key: source.key,
+              name: source.name,
+              api: source.api,
+              detail: source.detail,
+            });
+            importedCount++;
+          } catch {
+            console.error('Failed to import source:', source.key);
+          }
+        }
+
+        showSuccess(`成功导入 ${importedCount} 个视频源`);
+      } catch (err) {
+        showError(
+          err instanceof Error ? err.message : '导入失败：文件格式错误',
+        );
+      }
+    };
+
+    reader.readAsText(file);
+    // 清空 input 值，允许重复选择同一文件
+    event.target.value = '';
+  };
+
   // 可拖拽行封装 (dnd-kit)
   const DraggableRow = ({ source }: { source: DataSource }) => {
     const { attributes, listeners, setNodeRef, transform, transition } =
@@ -992,11 +1091,33 @@ const VideoSourceConfig = ({
   return (
     <div className='space-y-6'>
       {/* 添加视频源表单 */}
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between flex-wrap gap-2'>
         <h4 className='text-sm font-medium text-gray-700 dark:text-gray-300'>
           视频源列表
         </h4>
-        <div className='flex items-center space-x-2'>
+        <div className='flex items-center flex-wrap gap-2'>
+          <button
+            onClick={handleExport}
+            className='flex items-center gap-1 px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-lg transition-colors'
+            title='导出视频源配置'
+          >
+            <Download size={14} />
+            导出
+          </button>
+          <label
+            className='flex items-center gap-1 px-3 py-1 bg-cyan-600 hover:bg-cyan-700 text-white text-sm rounded-lg transition-colors cursor-pointer'
+            title='导入视频源配置'
+          >
+            <Upload size={14} />
+            导入
+            <input
+              type='file'
+              accept='.json'
+              onChange={handleImport}
+              className='hidden'
+            />
+          </label>
+          <div className='w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1' />
           <button
             onClick={() => {
               callSourceApi({ action: 'enable_all' }).catch(() => {
