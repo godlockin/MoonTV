@@ -643,7 +643,13 @@ const SyncConfig = ({
   const [syncStatus, setSyncStatus] = useState<{
     lastRun: number | null;
     isRunning: boolean;
-    stats: { total: number; new: number; failed: number } | null;
+    stats: {
+      total: number;
+      new: number;
+      failed: number;
+      byRegistry?: Record<string, number>;
+      qualityDistribution?: { high: number; medium: number; low: number };
+    } | null;
   }>({ lastRun: null, isRunning: false, stats: null });
 
   // 获取同步状态
@@ -710,10 +716,26 @@ const SyncConfig = ({
                   : '尚未执行同步'}
             </p>
             {syncStatus.stats && (
-              <p className='text-xs text-gray-500 dark:text-gray-400 mt-1'>
-                总计: {syncStatus.stats.total} | 新增: {syncStatus.stats.new} |
-                失败: {syncStatus.stats.failed}
-              </p>
+              <div className='mt-2 space-y-1'>
+                <p className='text-xs text-gray-500 dark:text-gray-400'>
+                  总计: {syncStatus.stats.total} | 新增: {syncStatus.stats.new}{' '}
+                  | 失败: {syncStatus.stats.failed}
+                </p>
+                {syncStatus.stats.qualityDistribution && (
+                  <p className='text-xs text-gray-500 dark:text-gray-400'>
+                    质量分布:
+                    <span className='text-green-600 ml-1'>
+                      高({syncStatus.stats.qualityDistribution.high})
+                    </span>
+                    <span className='text-yellow-600 ml-1'>
+                      中({syncStatus.stats.qualityDistribution.medium})
+                    </span>
+                    <span className='text-red-600 ml-1'>
+                      低({syncStatus.stats.qualityDistribution.low})
+                    </span>
+                  </p>
+                )}
+              </div>
             )}
           </div>
           <button
@@ -731,10 +753,26 @@ const SyncConfig = ({
       <div className='text-xs text-gray-500 dark:text-gray-400 space-y-1'>
         <p>同步功能会从以下注册表获取最新的视频源：</p>
         <ul className='list-disc list-inside pl-2 space-y-0.5'>
-          <li>GitHub IPTV 组织公开的 M3U 列表</li>
-          <li>其他社区维护的视频源注册表</li>
+          <li>iptv-org - 全球最大的 IPTV 列表（国际/中国）</li>
+          <li>fanmingming - 国内 IPTV 直播源</li>
+          <li>yuechan - 多平台直播源</li>
+          <li>joevess - 影视 IPTV 聚合</li>
+          <li>kimwang1978 - TVBox 直播源集合</li>
         </ul>
-        <p className='mt-2'>注意：同步仅添加新发现的源，不会覆盖现有配置。</p>
+        <div className='mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded'>
+          <p className='text-blue-700 dark:text-blue-300'>
+            <strong>质量评分机制：</strong>
+          </p>
+          <ul className='list-disc list-inside pl-2 mt-1'>
+            <li>可访问性检测（HEAD 请求测试）</li>
+            <li>响应速度评分（小于1秒 +30分，小于3秒 +20分）</li>
+            <li>多源验证（出现次数越多越可靠）</li>
+          </ul>
+        </div>
+        <p className='mt-2'>
+          <strong>注意：</strong>
+          同步仅添加新发现的源，不会覆盖现有配置。低质量源会自动标记为禁用。
+        </p>
       </div>
     </div>
   );

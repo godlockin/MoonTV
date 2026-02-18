@@ -1,0 +1,172 @@
+name: Scheduled Video Source Sync
+
+on:
+  schedule:
+    # 每天凌晨 3 点执行同步
+    - cron: '0 3 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '部署环境'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  sync:
+    name: Sync Video Sources
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate runtime config
+        run: pnpm gen:runtime
+
+      - name: Run video source sync
+        id: sync
+        run: |
+          echo "Starting video source synchronization..."
+          pnpm tsx src/sync/orchestrator.ts --log > sync-output.log 2>&1 || true
+          echo "Sync completed"
+
+          # 提取统计信息
+          if [ -f sources.json ]; then
+            total_sources=$(cat sources.json | jq '. | length' || echo "0")
+            healthy_sources=$(cat sources.json | jq '[.[] | select(.active == true)] | length' || echo "0")
+            echo "total=$total_sources" >> $GITHUB_OUTPUT
+            echo "healthy=$healthy_sources" >> $GITHUB_OUTPUT
+          fi
+        env:
+          NODE_ENV: production
+
+      - name: Upload sync artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-results
+          path: |
+            sources.json
+            sync-output.log
+          retention-days: 7
+
+      - name: Create sync report
+        id: report
+        if: always()
+        run: |
+          # 生成同步报告
+          cat > sync-report.md << 'EOF'
+          ## 视频源同步报告
+
+          **执行时间:** ${{ github.event.schedule || '手动触发' }}
+          **工作流:** ${{ github.run_id }}
+
+          ### 同步统计
+
+          - 总源数: ${{ steps.sync.outputs.total || 'N/A' }}
+          - 健康源数: ${{ steps.sync.outputs.healthy || 'N/A' }}
+
+          ### 详细日志
+
+          查看附件 `sync-results` 获取完整的 sources.json 和同步日志。
+
+          ---
+
+          由 GitHub Actions 自动生成
+          EOF
+
+      - name: Comment on commit (if manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('sync-report.md', 'utf8');
+
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: report
+            });
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 视频源同步失败',
+              body: `同步工作流在 ${{ github.run_id }} 中失败，请检查日志。`,
+              labels: ['sync', 'automated', 'bug']
+            });
+
+  # 可选：自动部署到 Cloudflare Pages
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: sync
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event.inputs.environment == 'production')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download sync artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: sync-results
+          path: ./sync-results
+
+      - name: Copy synced sources
+        run: |
+          if [ -f ./sync-results/sources.json ]; then
+            cp ./sync-results/sources.json ./public/sources.json
+            echo "Synced sources copied to public directory"
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=moontv --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

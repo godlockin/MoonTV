@@ -22,6 +22,19 @@ export interface SyncResult {
   };
 }
 
+export interface OrchestrationResult {
+  sources: StandardizedSource[];
+  stats: {
+    total: number;
+    byRegistry: Record<string, number>;
+    qualityDistribution: {
+      high: number; // score >= 80
+      medium: number; // score 40-79
+      low: number; // score < 40
+    };
+  };
+}
+
 export async function runOrchestration(
   log = false,
 ): Promise<StandardizedSource[]> {
@@ -30,6 +43,13 @@ export async function runOrchestration(
     await Promise.all(crawlers.map((c) => c.discover()))
   ).flat();
   const allRaw: RawSourceConfig[] = [...defaultSources, ...discovered];
+
+  // Track by registry for stats
+  const byRegistry: Record<string, number> = {};
+  for (const src of discovered) {
+    const provider = src.provider || 'unknown';
+    byRegistry[provider] = (byRegistry[provider] || 0) + 1;
+  }
 
   // Deduplicate by id
   const mergedMap = new Map<string, RawSourceConfig>();
@@ -48,6 +68,17 @@ export async function runOrchestration(
     normalized.push(adapter.toStandard(raw));
   }
 
+  // Calculate quality distribution
+  let high = 0,
+    medium = 0,
+    low = 0;
+  for (const src of normalized) {
+    const score = (src as RawSourceConfig).qualityScore || 0;
+    if (score >= 80) high++;
+    else if (score >= 40) medium++;
+    else low++;
+  }
+
   // Healthcheck
   for (const src of normalized) {
     const adapter = adapters.find((a) => a.supports(src));
@@ -55,6 +86,21 @@ export async function runOrchestration(
       adapter && adapter.healthcheck ? await adapter.healthcheck(src) : true;
     src.health = src.active ? 'healthy' : 'failing';
   }
+
+  // Log stats
+  const result: OrchestrationResult = {
+    sources: normalized,
+    stats: {
+      total: normalized.length,
+      byRegistry,
+      qualityDistribution: { high, medium, low },
+    },
+  };
+  // eslint-disable-next-line no-console
+  console.log(
+    '[Orchestrator] Sync result:',
+    JSON.stringify(result.stats, null, 2),
+  );
 
   // Write to file (Node.js environment only, skip in Edge Runtime)
   try {

@@ -6,8 +6,12 @@
 export interface RawSourceConfig {
   id: string;
   url: string;
+  name?: string;
   note?: string;
   region?: string;
+  provider?: string;
+  qualityScore?: number;
+  checkedAt?: string;
   [key: string]: unknown;
 }
 

@@ -15,6 +15,12 @@ const syncState = {
     total: number;
     new: number;
     failed: number;
+    byRegistry: Record<string, number>;
+    qualityDistribution: {
+      high: number;
+      medium: number;
+      low: number;
+    };
   } | null,
 };
 
@@ -72,11 +78,30 @@ export async function POST(_request: Request) {
         }
       }
 
+      // 计算质量分布
+      const qualityDistribution = { high: 0, medium: 0, low: 0 };
+      const byRegistry: Record<string, number> = {};
+
+      for (const source of sources) {
+        // 按注册表统计
+        const provider =
+          (source as { provider?: string }).provider || 'unknown';
+        byRegistry[provider] = (byRegistry[provider] || 0) + 1;
+
+        // 质量分布
+        const score = (source as { qualityScore?: number }).qualityScore || 0;
+        if (score >= 80) qualityDistribution.high++;
+        else if (score >= 40) qualityDistribution.medium++;
+        else qualityDistribution.low++;
+      }
+
       syncState.lastRun = Date.now();
       syncState.lastResult = {
         total: sources.length,
         new: sources.filter((s) => s.active).length,
         failed: sources.filter((s) => !s.active).length,
+        byRegistry,
+        qualityDistribution,
       };
 
       return NextResponse.json({
