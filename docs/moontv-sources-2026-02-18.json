@@ -1,0 +1,502 @@
+{
+  "version": "1.0",
+  "exportTime": "2026-02-18T11:13:39.257Z",
+  "sources": [
+    {
+      "key": "dyttzy",
+      "name": "电影天堂资源",
+      "api": "http://caiji.dyttzyapi.com/api.php/provide/vod",
+      "detail": "http://caiji.dyttzyapi.com",
+      "disabled": false
+    },
+    {
+      "key": "heimuer",
+      "name": "黑木耳",
+      "api": "https://json.heimuer.xyz/api.php/provide/vod",
+      "detail": "https://heimuer.tv",
+      "disabled": false
+    },
+    {
+      "key": "ruyi",
+      "name": "如意资源",
+      "api": "http://cj.rycjapi.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "bfzy",
+      "name": "暴风资源",
+      "api": "https://bfzyapi.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "tyyszy",
+      "name": "天涯资源",
+      "api": "https://tyyszy.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "ffzy",
+      "name": "非凡影视",
+      "api": "http://ffzy5.tv/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "zy360",
+      "name": "360资源",
+      "api": "https://360zy.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "maotaizy",
+      "name": "茅台资源",
+      "api": "https://caiji.maotaizy.cc/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "wolong",
+      "name": "卧龙资源",
+      "api": "https://wolongzyw.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "jisu",
+      "name": "极速资源",
+      "api": "https://jszyapi.com/api.php/provide/vod",
+      "detail": "https://jszyapi.com",
+      "disabled": false
+    },
+    {
+      "key": "dbzy",
+      "name": "豆瓣资源",
+      "api": "https://dbzy.tv/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "mozhua",
+      "name": "魔爪资源",
+      "api": "https://mozhuazy.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "mdzy",
+      "name": "魔都资源",
+      "api": "https://www.mdzyapi.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "zuid",
+      "name": "最大资源",
+      "api": "https://api.zuidapi.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "yinghua",
+      "name": "樱花资源",
+      "api": "https://m3u8.apiyhzy.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "wujin",
+      "name": "无尽资源",
+      "api": "https://api.wujinapi.me/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "wwzy",
+      "name": "旺旺短剧",
+      "api": "https://wwzy.tv/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "ikun",
+      "name": "iKun资源",
+      "api": "https://ikunzyapi.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "lzi",
+      "name": "量子资源站",
+      "api": "https://cj.lziapi.com/api.php/provide/vod/",
+      "disabled": true
+    },
+    {
+      "key": "xiaomaomi",
+      "name": "小猫咪资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/?ac=list",
+      "disabled": false
+    },
+    {
+      "key": "baidu",
+      "name": "百度云资源",
+      "api": "https://api.apibdzy.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "bilibili",
+      "name": "B站视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/bilibili",
+      "disabled": false
+    },
+    {
+      "key": "bwzy",
+      "name": "百万资源",
+      "api": "https://api.bwzyz.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "ckzy",
+      "name": "CK资源",
+      "api": "https://ckzy.me/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "feifan",
+      "name": "电影天堂",
+      "api": "http://caiji.dyttzyapi.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "funshion",
+      "name": "风行视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/funshion",
+      "disabled": false
+    },
+    {
+      "key": "huangcang",
+      "name": "黄色仓库",
+      "api": "https://hsckzy888.com",
+      "detail": "https://hsckzy888.com",
+      "disabled": true
+    },
+    {
+      "key": "jkun",
+      "name": "jkun资源",
+      "api": "https://jkunzyapi.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "jkun1",
+      "name": "jkun资源1",
+      "api": "https://jkunzy.live",
+      "disabled": true
+    },
+    {
+      "key": "letv",
+      "name": "乐视视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/letv",
+      "disabled": false
+    },
+    {
+      "key": "lsb",
+      "name": "lsb资源",
+      "api": "https://apilsbzy1.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "m1905",
+      "name": "1905电影资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/m1905",
+      "disabled": false
+    },
+    {
+      "key": "mgtv",
+      "name": "芒果视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/mgtv",
+      "disabled": false
+    },
+    {
+      "key": "migu",
+      "name": "咪咕视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/migu",
+      "disabled": false
+    },
+    {
+      "key": "pptv",
+      "name": "PPTV视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/pptv",
+      "disabled": false
+    },
+    {
+      "key": "qiyi",
+      "name": "奇艺视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/qiyi",
+      "disabled": false
+    },
+    {
+      "key": "r155",
+      "name": "155资源",
+      "api": "https://155api.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "sohu",
+      "name": "搜狐视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/sohu",
+      "disabled": false
+    },
+    {
+      "key": "souav",
+      "name": "souav资源",
+      "api": "https://api.souavzy.vip/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "tengxun",
+      "name": "腾讯视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/qq",
+      "disabled": false
+    },
+    {
+      "key": "wasu",
+      "name": "华数TV资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/wasu",
+      "disabled": false
+    },
+    {
+      "key": "xigua",
+      "name": "西瓜视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/xigua",
+      "disabled": false
+    },
+    {
+      "key": "xmm",
+      "name": "小猫咪独立资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/xmm",
+      "disabled": false
+    },
+    {
+      "key": "youku",
+      "name": "优酷视频资源",
+      "api": "http://zy.xmm.hk/api.php/provide/vod/from/youku",
+      "disabled": false
+    },
+    {
+      "key": "yutu",
+      "name": "玉兔资源",
+      "api": "https://apiyutu.com/api.php/providedao/vod/?ac=list",
+      "disabled": true
+    },
+    {
+      "key": "huaweibavod",
+      "name": "华为吧|点播",
+      "api": "https://hw8.live/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "fujuvod",
+      "name": "腐剧|点播",
+      "api": "http://www.fuju2024.cc:8013/ruifenglb_api.php/provide/vod/",
+      "disabled": true
+    },
+    {
+      "key": "jinyingvod",
+      "name": "金鹰|点播",
+      "api": "https://jinyingzy.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "okvod",
+      "name": "OK|点播",
+      "api": "https://okzyw9.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "baopianvod",
+      "name": "宝片|点播",
+      "api": "https://zpsps.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "xiaohuangrenvod",
+      "name": "小黄人|点播",
+      "api": "https://iqyi.xiaohuangrentv.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "niuniuvod",
+      "name": "牛牛|点播",
+      "api": "https://api.niuniuzy.me/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "yayavod",
+      "name": "丫丫|点播",
+      "api": "https://cj.yayazy.net/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "yingtuvod",
+      "name": "影图|点播",
+      "api": "https://cj.vodimg.top/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "ukuvod",
+      "name": "U酷|点播",
+      "api": "https://api.ukuapi.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "haohuavod",
+      "name": "豪华|点播",
+      "api": "https://hhzyapi.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "suonivod",
+      "name": "索尼|点播",
+      "api": "https://suoniapi.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "baofengvod",
+      "name": "暴风|点播",
+      "api": "https://bfzyapi.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "hongniuvod",
+      "name": "红牛|点播",
+      "api": "https://www.hongniuzy2.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "kuaichevod",
+      "name": "快车|点播",
+      "api": "https://caiji.kczyapi.com/api.php/provide/vod/from/kcm3u8/",
+      "disabled": false
+    },
+    {
+      "key": "shandianvod",
+      "name": "闪电|点播",
+      "api": "http://sdzyapi.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "wolongvod",
+      "name": "卧龙|点播",
+      "api": "https://collect.wolongzyw.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "huyavod",
+      "name": "虎牙|点播",
+      "api": "https://www.huyaapi.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "piaolingvod",
+      "name": "飘零|点播",
+      "api": "https://p2100.net/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "subovod",
+      "name": "速博|点播",
+      "api": "https://subocaiji.com/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "moduvod",
+      "name": "魔都|点播",
+      "api": "https://caiji.moduapi.cc/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "zuidadianbo",
+      "name": "最大|点播",
+      "api": "http://zuidazy.me/api.php/provide/vod/",
+      "disabled": false
+    },
+    {
+      "key": "iqiyi",
+      "name": "iqiyi资源",
+      "api": "https://www.iqiyizyapi.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "hwba",
+      "name": "华为吧资源",
+      "api": "https://cjhwba.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "subo",
+      "name": "速播资源",
+      "api": "https://subocaiji.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "fczy",
+      "name": "蜂巢资源",
+      "api": "https://api.fczy888.me/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "lebo",
+      "name": "AV-乐播资源",
+      "api": "https://lbapi9.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "semao",
+      "name": "AV-色猫资源",
+      "api": "https://api.sexnguon.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "naixiang",
+      "name": "AV-奶香香",
+      "api": "https://naixxzy.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "aosika",
+      "name": "奥斯卡资源",
+      "api": "https://aosikazy.com/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "aiduanju",
+      "name": "爱短剧.cc",
+      "api": "https://www.aiduanju.cc/api.php/provide/vod",
+      "disabled": false
+    },
+    {
+      "key": "xingba",
+      "name": "杏吧资源",
+      "api": "https://xingba111.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "shayu",
+      "name": "AV-鲨鱼资源",
+      "api": "https://shayuapi.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "baipiao",
+      "name": "AV-白嫖资源",
+      "api": "https://www.kxgav.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "fanhao",
+      "name": "AV-番号资源",
+      "api": "http://fhapi9.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "huangav",
+      "name": "AV-黄AV资源",
+      "api": "https://www.pgxdy.com/api.php/provide/vod",
+      "disabled": true
+    },
+    {
+      "key": "senanguo",
+      "name": "AV-色南国",
+      "api": "https://api.sexnguon.com/api.php/provide/vod",
+      "disabled": true
+    }
+  ]
+}
