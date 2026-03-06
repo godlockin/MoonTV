@@ -119,8 +119,8 @@ export async function runOrchestration(
       ).process?.versions?.node !== undefined;
 
     if (isNode) {
-      // Use dynamic import to avoid webpack bundling fs in Edge Runtime
-      const fs = await import('fs');
+      // Use dynamic import with webpackIgnore to avoid bundling fs in Edge Runtime
+      const fs = await import(/* webpackIgnore: true */ 'fs');
       fs.writeFileSync('sources.json', JSON.stringify(normalized, null, 2));
     }
   } catch {
