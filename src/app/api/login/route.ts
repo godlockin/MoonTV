@@ -126,11 +126,38 @@ export async function POST(req: NextRequest) {
     // 数据库 / redis 模式——校验用户名并尝试连接数据库
     const { username, password } = await req.json();
 
-    if (!username || typeof username !== 'string') {
-      return NextResponse.json({ error: '用户名不能为空' }, { status: 400 });
-    }
+    // 允许只使用密码登录（兼容客户端未显示用户名输入框的情况）
+    // 如果提供了密码且与 PASSWORD 环境变量匹配，直接放行
     if (!password || typeof password !== 'string') {
       return NextResponse.json({ error: '密码不能为空' }, { status: 400 });
+    }
+
+    // 如果没有提供用户名，检查是否可以用环境变量密码登录
+    if (!username || typeof username !== 'string') {
+      const envPassword = process.env.PASSWORD;
+      if (envPassword && password === envPassword) {
+        // 环境变量密码验证成功
+        const response = NextResponse.json({ ok: true });
+        const cookieValue = await generateAuthCookie(
+          undefined,
+          password,
+          'user',
+          true
+        );
+        const expires = new Date();
+        expires.setDate(expires.getDate() + 7);
+
+        response.cookies.set('auth', cookieValue, {
+          path: '/',
+          expires,
+          sameSite: 'lax',
+          httpOnly: false,
+          secure: false,
+        });
+
+        return response;
+      }
+      return NextResponse.json({ error: '密码错误' }, { status: 401 });
     }
 
     // 可能是站长，直接读环境变量
