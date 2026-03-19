@@ -76,7 +76,9 @@ function LoginPageClient() {
   const [loading, setLoading] = useState(false);
   // 初始状态为 null 表示"加载中"，此时显示用户名输入框确保不会漏填
   // 只有明确知道是 localstorage 时才隐藏用户名输入框
-  const [shouldAskUsername, setShouldAskUsername] = useState<boolean | null>(null);
+  const [shouldAskUsername, setShouldAskUsername] = useState<boolean | null>(
+    null
+  );
   const [enableRegister, setEnableRegister] = useState(false);
   const { siteName } = useSite();
 
@@ -84,7 +86,9 @@ function LoginPageClient() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storageType = (window as any).RUNTIME_CONFIG?.STORAGE_TYPE;
-      setShouldAskUsername(storageType && storageType !== 'localstorage');
+      // 默认值为 'localstorage'，只有明确不是 localstorage 时才要求用户名
+      const isNotLocalStorage = storageType && storageType !== 'localstorage';
+      setShouldAskUsername(isNotLocalStorage);
       setEnableRegister(
         Boolean((window as any).RUNTIME_CONFIG?.ENABLE_REGISTER)
       );
@@ -96,13 +100,15 @@ function LoginPageClient() {
     setError(null);
 
     // shouldAskUsername 为 null 时（配置加载中），安全起见要求用户名
-    const usernameRequired = shouldAskUsername === null || shouldAskUsername;
-    if (!password || (usernameRequired && !username)) return;
+    const usernameRequired = shouldAskUsername === true;
+    if (!password || (usernameRequired && !username)) {
+      return;
+    }
 
     try {
       setLoading(true);
       // shouldAskUsername 为 null 时也发送用户名
-      const usernameRequired = shouldAskUsername === null || shouldAskUsername;
+      const usernameRequired = shouldAskUsername === true;
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -165,8 +171,8 @@ function LoginPageClient() {
           {siteName}
         </h1>
         <form onSubmit={handleSubmit} className='space-y-8'>
-          {/* 当 shouldAskUsername 为 null（加载中）或 true 时显示用户名输入框 */}
-          {(shouldAskUsername === null || shouldAskUsername) && (
+          {/* 只有当 shouldAskUsername 为 true 时才显示用户名输入框 */}
+          {shouldAskUsername && (
             <div>
               <label htmlFor='username' className='sr-only'>
                 用户名
@@ -216,7 +222,7 @@ function LoginPageClient() {
               <button
                 type='submit'
                 disabled={
-                  !password || loading || ((shouldAskUsername === null || shouldAskUsername) && !username)
+                  !password || loading || (shouldAskUsername && !username)
                 }
                 className='flex-1 inline-flex justify-center rounded-lg bg-green-600 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:from-green-600 hover:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50'
               >
@@ -227,7 +233,7 @@ function LoginPageClient() {
             <button
               type='submit'
               disabled={
-                !password || loading || ((shouldAskUsername === null || shouldAskUsername) && !username)
+                !password || loading || (shouldAskUsername && !username)
               }
               className='inline-flex w-full justify-center rounded-lg bg-green-600 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 hover:from-green-600 hover:to-blue-600 disabled:cursor-not-allowed disabled:opacity-50'
             >
