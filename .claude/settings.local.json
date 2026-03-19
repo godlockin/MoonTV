@@ -30,7 +30,11 @@
       "Bash(wrangler pages deployment create --project-name moontv --branch main)",
       "Bash(pnpm build)",
       "Bash(pnpm install)",
-      "Bash(git commit --no-verify -m \"$\\(cat <<''EOF''\nfix: 修复Cloudflare Pages构建失败的问题\n\n在 Edge Runtime 中使用动态导入 fs 模块时，Webpack 仍然尝试\n解析它导致构建失败。添加 webpackIgnore 注释来避免这个问题。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit --no-verify -m \"$\\(cat <<''EOF''\nfix: 修复Cloudflare Pages构建失败的问题\n\n在 Edge Runtime 中使用动态导入 fs 模块时，Webpack 仍然尝试\n解析它导致构建失败。添加 webpackIgnore 注释来避免这个问题。\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git pull:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   }
 }
