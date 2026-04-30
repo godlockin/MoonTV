@@ -10,8 +10,6 @@ const path = require('path');
 const projectRoot = path.resolve(__dirname, '..');
 
 // Paths
-const configPath = path.join(projectRoot, 'config.json');
-const bakConfigPath = path.join(projectRoot, 'config_bak.json');
 const libDir = path.join(projectRoot, 'src', 'lib');
 const oldRuntimePath = path.join(libDir, 'runtime.ts');
 const newRuntimePath = path.join(libDir, 'runtime.ts');
@@ -22,44 +20,66 @@ if (fs.existsSync(oldRuntimePath)) {
   console.log('旧的 runtime.ts 已删除');
 }
 
-// Read and parse config.json
-let rawConfig;
-try {
-  rawConfig = fs.readFileSync(configPath, 'utf8');
-} catch (err) {
-  console.error(`无法读取 ${configPath}:`, err);
-  process.exit(1);
-}
+let config = {
+  api_site: {},
+  cache_time: 7200
+};
 
-let config;
+// 遍历根目录下所有的 config*.json
 try {
-  config = JSON.parse(rawConfig);
-} catch (err) {
-  console.error('config.json 不是有效的 JSON:', err);
-  process.exit(1);
-}
+  const files = fs.readdirSync(projectRoot);
+  const configFiles = files.filter(file => file.startsWith('config') && file.endsWith('.json'));
+  
+  // 确保 config.json 排在第一个，作为基础配置
+  configFiles.sort((a, b) => {
+    if (a === 'config.json') return -1;
+    if (b === 'config.json') return 1;
+    return a.localeCompare(b);
+  });
 
-// 尝试合并 config_bak.json 中的 api_site (如果存在的话)
-try {
-  if (fs.existsSync(bakConfigPath)) {
-    const rawBakConfig = fs.readFileSync(bakConfigPath, 'utf8');
-    const bakConfig = JSON.parse(rawBakConfig);
-    if (bakConfig && bakConfig.api_site) {
-      if (!config.api_site) {
-        config.api_site = {};
-      }
-      // 合并逻辑：以 config_bak.json 中的配置作为补充，如果不覆盖原 config.json 的已有 key
-      // 或直接把两个对象合起来（保留所有）
-      for (const [key, value] of Object.entries(bakConfig.api_site)) {
-        if (!config.api_site[key]) {
-          config.api_site[key] = value;
+  for (const file of configFiles) {
+    const filePath = path.join(projectRoot, file);
+    try {
+      const rawContent = fs.readFileSync(filePath, 'utf8');
+      const parsedConfig = JSON.parse(rawContent);
+      
+      // 对于基础的 config.json，我们提取它的根级别配置
+      if (file === 'config.json') {
+        for (const [k, v] of Object.entries(parsedConfig)) {
+          if (k !== 'api_site') {
+            config[k] = v;
+          }
         }
       }
-      console.log(`成功合并 config_bak.json 中的 API 节点，总计 ${Object.keys(config.api_site).length} 个资源节点`);
+
+      // 提取并合并 api_site
+      if (parsedConfig && parsedConfig.api_site) {
+        if (!config.api_site) {
+          config.api_site = {};
+        }
+        
+        let mergedCount = 0;
+        for (const [key, value] of Object.entries(parsedConfig.api_site)) {
+          if (!config.api_site[key]) {
+            config.api_site[key] = value;
+            mergedCount++;
+          }
+        }
+        
+        if (file !== 'config.json') {
+          console.log(`从 ${file} 成功补充合并了 ${mergedCount} 个新的资源节点`);
+        }
+      }
+    } catch (err) {
+      console.warn(`解析 ${file} 失败，跳过该文件:`, err.message);
     }
   }
+  
+  console.log(`所有配置文件解析合并完成，总计包含 ${Object.keys(config.api_site || {}).length} 个资源节点`);
+
 } catch (err) {
-  console.warn('解析 config_bak.json 失败或该文件不存在，跳过合并:', err.message);
+  console.error('读取项目根目录文件失败:', err);
+  process.exit(1);
 }
 
 // Prepare TypeScript file content
