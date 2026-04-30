@@ -21,11 +21,11 @@ export function getImageProxyUrl(): string | null {
     return localImageProxy.trim() ? localImageProxy.trim() : null;
   }
 
-  // 如果未设置，则使用全局对象
+  // 如果未设置，则使用默认的内置代理
   const serverImageProxy = (window as any).RUNTIME_CONFIG?.IMAGE_PROXY;
   return serverImageProxy && serverImageProxy.trim()
     ? serverImageProxy.trim()
-    : null;
+    : '/api/image-proxy?url=';
 }
 
 /**

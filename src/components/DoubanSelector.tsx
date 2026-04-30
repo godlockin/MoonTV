@@ -45,16 +45,30 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     { label: '最新电影', value: '最新' },
     { label: '豆瓣高分', value: '豆瓣高分' },
     { label: '冷门佳片', value: '冷门佳片' },
+    { label: '更多类型', value: '类型' },
   ];
 
   // 电影的二级选择器选项
-  const movieSecondaryOptions: SelectorOption[] = [
-    { label: '全部', value: '全部' },
-    { label: '华语', value: '华语' },
-    { label: '欧美', value: '欧美' },
-    { label: '韩国', value: '韩国' },
-    { label: '日本', value: '日本' },
-  ];
+  const getMovieSecondaryOptions = (primary: string): SelectorOption[] => {
+    if (primary === '类型') {
+      return [
+        { label: '喜剧', value: '喜剧' },
+        { label: '动作', value: '动作' },
+        { label: '科幻', value: '科幻' },
+        { label: '爱情', value: '爱情' },
+        { label: '悬疑', value: '悬疑' },
+        { label: '恐怖', value: '恐怖' },
+        { label: '动画', value: '动画' },
+      ];
+    }
+    return [
+      { label: '全部', value: '全部' },
+      { label: '华语', value: '华语' },
+      { label: '欧美', value: '欧美' },
+      { label: '韩国', value: '韩国' },
+      { label: '日本', value: '日本' },
+    ];
+  };
 
   // 电视剧选择器选项
   const tvOptions: SelectorOption[] = [
@@ -126,9 +140,9 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     // 副选择器初始位置
     let secondaryActiveIndex = -1;
     if (type === 'movie') {
-      secondaryActiveIndex = movieSecondaryOptions.findIndex(
-        (opt) =>
-          opt.value === (secondarySelection || movieSecondaryOptions[0].value)
+      const options = getMovieSecondaryOptions(primarySelection || '热门');
+      secondaryActiveIndex = options.findIndex(
+        (opt) => opt.value === (secondarySelection || options[0].value)
       );
     } else if (type === 'tv') {
       secondaryActiveIndex = tvOptions.findIndex(
@@ -172,10 +186,13 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
     let options: SelectorOption[] = [];
 
     if (type === 'movie') {
-      activeIndex = movieSecondaryOptions.findIndex(
+      const currentSecondaryOptions = getMovieSecondaryOptions(
+        primarySelection || '热门'
+      );
+      activeIndex = currentSecondaryOptions.findIndex(
         (opt) => opt.value === secondarySelection
       );
-      options = movieSecondaryOptions;
+      options = currentSecondaryOptions;
     } else if (type === 'tv') {
       activeIndex = tvOptions.findIndex(
         (opt) => opt.value === secondarySelection
@@ -280,8 +297,9 @@ const DoubanSelector: React.FC<DoubanSelectorProps> = ({
             </span>
             <div className='overflow-x-auto'>
               {renderCapsuleSelector(
-                movieSecondaryOptions,
-                secondarySelection || movieSecondaryOptions[0].value,
+                getMovieSecondaryOptions(primarySelection || '热门'),
+                secondarySelection ||
+                  getMovieSecondaryOptions(primarySelection || '热门')[0].value,
                 onSecondaryChange,
                 false
               )}

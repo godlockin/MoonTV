@@ -25,6 +25,16 @@ interface DoubanCategoryApiResponse {
   }>;
 }
 
+interface DoubanSearchSubjectsResponse {
+  subjects: Array<{
+    id: string;
+    title: string;
+    cover: string;
+    rate: string;
+    [key: string]: unknown;
+  }>;
+}
+
 /**
  * 带超时的 fetch 请求
  */
@@ -229,15 +239,15 @@ export async function fetchDoubanList(
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const doubanData: DoubanCategoryApiResponse = await response.json();
+    const doubanData: DoubanSearchSubjectsResponse = await response.json();
 
     // 转换数据格式
-    const list: DoubanItem[] = doubanData.items.map((item) => ({
+    const list: DoubanItem[] = (doubanData.subjects || []).map((item) => ({
       id: item.id,
       title: item.title,
-      poster: item.pic?.normal || item.pic?.large || '',
-      rate: item.rating?.value ? item.rating.value.toFixed(1) : '',
-      year: item.card_subtitle?.match(/(\d{4})/)?.[1] || '',
+      poster: item.cover || '',
+      rate: item.rate || '',
+      year: '',
     }));
 
     return {

@@ -95,11 +95,11 @@ export async function GET(request: Request) {
     const doubanData = await fetchDoubanData(target);
 
     // 转换数据格式
-    const list: DoubanItem[] = doubanData.subjects.map((item) => ({
+    const list: DoubanItem[] = (doubanData.subjects || []).map((item) => ({
       id: item.id,
       title: item.title,
-      poster: item.cover,
-      rate: item.rate,
+      poster: item.cover || '',
+      rate: item.rate || '',
       year: '',
     }));
 

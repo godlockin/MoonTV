@@ -171,6 +171,13 @@ function DoubanPageClient() {
         } else {
           throw new Error('没有找到对应的分类');
         }
+      } else if (type === 'movie' && primarySelection === '类型') {
+        data = await getDoubanList({
+          tag: secondarySelection,
+          type: 'movie',
+          pageLimit: 25,
+          pageStart: 0,
+        });
       } else {
         data = await getDoubanCategories(getRequestParams(0));
       }
@@ -256,6 +263,13 @@ function DoubanPageClient() {
             } else {
               throw new Error('没有找到对应的分类');
             }
+          } else if (type === 'movie' && primarySelection === '类型') {
+            data = await getDoubanList({
+              tag: secondarySelection,
+              type: 'movie',
+              pageLimit: 25,
+              pageStart: currentPage * 25,
+            });
           } else {
             data = await getDoubanCategories(
               getRequestParams(currentPage * 25)
@@ -337,6 +351,13 @@ function DoubanPageClient() {
           }
         } else {
           setPrimarySelection(value);
+          if (type === 'movie') {
+            if (value === '类型') {
+              setSecondarySelection('喜剧');
+            } else {
+              setSecondarySelection('全部');
+            }
+          }
         }
       }
     },
