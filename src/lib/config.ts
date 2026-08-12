@@ -48,21 +48,86 @@ export const API_CONFIG = {
 let fileConfig: ConfigFileStruct;
 let cachedConfig: AdminConfig;
 
+/**
+ * Docker 模式: 读取 cwd 下所有 config*.json 并合并
+ * - config.json 第一, 提供根级配置 (cache_time / custom_category)
+ * - 其余按字母序, 仅追加 api_site (既存 key 不覆盖)
+ * - 与 scripts/convert-config.js 的构建期合并逻辑保持一致
+ *
+ * 注: `eval('require')` 是绕过 Next.js Edge Runtime 静态分析的传统手法
+ *     (webpack 会试图把 require 静态解析, 用 eval 强制延后到运行时)
+ *     本函数只在 DOCKER_ENV=true (Node.js 进程) 路径被调用, 不会在 Edge 命中
+ */
+function loadDockerConfig(): ConfigFileStruct {
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval, no-eval
+  const _require = eval('require') as NodeRequire;
+  const fs = _require('fs') as typeof import('fs');
+  const path = _require('path') as typeof import('path');
+
+  const cwd = process.cwd();
+  const allFiles = fs.readdirSync(cwd);
+  const configFiles = allFiles
+    .filter((f: string) => f.startsWith('config') && f.endsWith('.json'))
+    .sort((a: string, b: string) => {
+      if (a === 'config.json') return -1;
+      if (b === 'config.json') return 1;
+      return a.localeCompare(b);
+    });
+
+  const merged: ConfigFileStruct = {
+    api_site: {},
+  };
+
+  for (const file of configFiles) {
+    const filePath = path.join(cwd, file);
+    let parsed: ConfigFileStruct;
+    try {
+      const raw = fs.readFileSync(filePath, 'utf-8');
+      parsed = JSON.parse(raw) as ConfigFileStruct;
+    } catch (err) {
+      console.warn(`[config] 解析 ${file} 失败, 跳过:`, err);
+      continue;
+    }
+
+    // config.json 提供根级配置 (除 api_site 外)
+    if (file === 'config.json') {
+      for (const [k, v] of Object.entries(parsed)) {
+        if (k !== 'api_site') {
+          (merged as unknown as Record<string, unknown>)[k] = v;
+        }
+      }
+    }
+
+    // 合并 api_site (按 key 去重, 不覆盖)
+    if (parsed.api_site) {
+      let added = 0;
+      for (const [key, value] of Object.entries(parsed.api_site)) {
+        if (!merged.api_site[key]) {
+          merged.api_site[key] = value;
+          added++;
+        }
+      }
+      if (file !== 'config.json' && added > 0) {
+        console.log(`[config] 从 ${file} 补充 ${added} 个资源节点`);
+      }
+    }
+  }
+
+  console.log(
+    `[config] Docker 模式加载完成, 共 ${
+      Object.keys(merged.api_site).length
+    } 个资源节点`
+  );
+  return merged;
+}
+
 async function initConfig() {
   if (cachedConfig) {
     return;
   }
 
   if (process.env.DOCKER_ENV === 'true') {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval
-    const _require = eval('require') as NodeRequire;
-    const fs = _require('fs') as typeof import('fs');
-    const path = _require('path') as typeof import('path');
-
-    const configPath = path.join(process.cwd(), 'config.json');
-    const raw = fs.readFileSync(configPath, 'utf-8');
-    fileConfig = JSON.parse(raw) as ConfigFileStruct;
-    console.log('load dynamic config success');
+    fileConfig = loadDockerConfig();
   } else {
     // 默认使用编译时生成的配置
     fileConfig = runtimeConfig as unknown as ConfigFileStruct;
@@ -399,15 +464,7 @@ export async function resetConfig() {
   }
 
   if (process.env.DOCKER_ENV === 'true') {
-    // eslint-disable-next-line @typescript-eslint/no-implied-eval
-    const _require = eval('require') as NodeRequire;
-    const fs = _require('fs') as typeof import('fs');
-    const path = _require('path') as typeof import('path');
-
-    const configPath = path.join(process.cwd(), 'config.json');
-    const raw = fs.readFileSync(configPath, 'utf-8');
-    fileConfig = JSON.parse(raw) as ConfigFileStruct;
-    console.log('load dynamic config success');
+    fileConfig = loadDockerConfig();
   } else {
     // 默认使用编译时生成的配置
     fileConfig = runtimeConfig as unknown as ConfigFileStruct;
