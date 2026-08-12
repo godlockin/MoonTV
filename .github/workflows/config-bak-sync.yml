@@ -190,11 +190,39 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "无 config.json 变更, 不创建 PR"
           else
+            # 守护 1: 用 jq 准确计算新增顶层 key 数
+            # 比较 git HEAD (旧) 和 staged (新) 的 api_site 顶层 key 差集
+            BEFORE_KEYS=$(git show HEAD:config.json | jq -r '.api_site | keys[]' 2>/dev/null | sort -u)
+            AFTER_KEYS=$(git show :config.json | jq -r '.api_site | keys[]' 2>/dev/null | sort -u)
+            NEW_COUNT=$(comm -13 <(echo "$BEFORE_KEYS") <(echo "$AFTER_KEYS") | wc -l | tr -d ' ')
+            echo "new_count=$NEW_COUNT" >> $GITHUB_OUTPUT
+            echo "新增 $NEW_COUNT 个 api_site 顶层 key"
+            # 阈值 50: 超过则仅创建 PR 不 auto-merge, 主公手动审
+            if [ "$NEW_COUNT" -gt 50 ]; then
+              echo "new_too_many=true" >> $GITHUB_OUTPUT
+              echo "⚠ 新增 > 50 阈值, auto-merge 关闭, 仅创建 PR"
+            else
+              echo "new_too_many=false" >> $GITHUB_OUTPUT
+            fi
+            # 守护 2: 既存 key 不允许被改值 (只能新增)
+            MODIFIED=$(comm -12 <(echo "$BEFORE_KEYS") <(echo "$AFTER_KEYS") | while read k; do
+              BEFORE_VAL=$(git show HEAD:config.json | jq -c ".api_site[\"$k\"]")
+              AFTER_VAL=$(git show :config.json | jq -c ".api_site[\"$k\"]")
+              if [ "$BEFORE_VAL" != "$AFTER_VAL" ]; then echo "$k"; fi
+            done | wc -l | tr -d ' ')
+            echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
+            if [ "$MODIFIED" -gt 0 ]; then
+              echo "modified_existing=true" >> $GITHUB_OUTPUT
+              echo "❌ 既存 key 被修改 ($MODIFIED 个), 禁止 auto-merge"
+            else
+              echo "modified_existing=false" >> $GITHUB_OUTPUT
+            fi
             echo "has_changes=true" >> $GITHUB_OUTPUT
             git diff --cached --stat config.json
           fi
 
       - name: Create PR
+        id: create-pr
         if: needs.detect.outputs.dry_run != 'true' && steps.check.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
         with:
@@ -206,4 +234,39 @@ jobs:
           labels: |
             automated
             config
+            auto-merge
           delete-branch: true
+
+      - name: Enable auto-merge
+        if: needs.detect.outputs.dry_run != 'true' && steps.check.outputs.has_changes == 'true' && steps.check.outputs.new_too_many == 'false' && steps.check.outputs.modified_existing == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 等待 PR 创建完成 (peter-evans 是异步)
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            PR_URL=$(gh pr list --head "auto/config-sync-${{ github.run_id }}" --json url -q '.[0].url' 2>/dev/null || true)
+            if [ -n "$PR_URL" ]; then
+              echo "PR found: $PR_URL"
+              break
+            fi
+            echo "等待 PR 创建... ($i/10)"
+            sleep 3
+          done
+          if [ -z "$PR_URL" ]; then
+            echo "❌ 未找到 PR, 跳过 auto-merge"
+            exit 0
+          fi
+          # 三重守护 (job-level 已过滤, 此处冗余作为防御)
+          TITLE=$(gh pr view "$PR_URL" --json title -q '.title')
+          if [[ ! "$TITLE" =~ ^chore\(config\):\ 每日同步 ]]; then
+            echo "❌ PR 标题不匹配白名单, 跳过 auto-merge: $TITLE"
+            exit 0
+          fi
+          FILES=$(gh pr view "$PR_URL" --json files -q '[.[].path] | join(",")')
+          if [ "$FILES" != "config.json" ]; then
+            echo "❌ PR 改了非 config.json 文件, 跳过 auto-merge: $FILES"
+            exit 0
+          fi
+          echo "✅ 全部守护通过 (新增 ≤50 + 既存未改 + 仅 config.json + 标题白名单), 开启 auto-merge"
+          gh pr merge "$PR_URL" --auto --squash --delete-branch
+

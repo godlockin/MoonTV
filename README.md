@@ -280,7 +280,7 @@ MoonTV 支持标准的苹果 CMS V10 API 格式。
 
 ### 自动同步 config.json
 
-项目自带 GitHub Action [`.github/workflows/config-bak-sync.yml`](.github/workflows/config-bak-sync.yml) 每天 04:00 UTC 拉取开源仓库 ( [`tushen6/Tomorrow`](https://github.com/tushen6/Tomorrow) caiji.json, 2167+ stars) 中的 macCMS V10 API 资源,健康检测后自动提交 PR。
+项目自带 GitHub Action [`.github/workflows/config-bak-sync.yml`](.github/workflows/config-bak-sync.yml) 每天 04:00 UTC 拉取开源仓库 ( [`tushen6/Tomorrow`](https://github.com/tushen6/Tomorrow) caiji.json, 2167+ stars) 中的 macCMS V10 API 资源,健康检测后**自动 PR + 自动 merge**。
 
 **核心规则：**
 
@@ -289,10 +289,28 @@ MoonTV 支持标准的苹果 CMS V10 API 格式。
 - **既存节点 (config.json 中已有的) 完全不被检测/修改/删除** (按 api URL 严格匹配去重)
 - **通过检测的新节点追加到 `config.json`** (尾部追加, 不重排既有 key)
 - **写入前自动备份** 到 `.github/sync-backups/config.json.YYYY-MM-DD.json` (gitignore,失败可回滚)
+- **自动创建 PR + 自动 merge** (squash), 全流程零干预
+
+**Auto-merge 守护条件 (全部满足才自动合):**
+
+| 条件                      | 阈值                         | 失败时行为            |
+| ------------------------- | ---------------------------- | --------------------- |
+| 新增 api_site 顶层 key 数 | ≤ 50                         | 仅创建 PR, 主公手动审 |
+| 既存 key 值未被修改       | 必须为 0                     | 仅创建 PR, 主公手动审 |
+| PR 标题白名单             | `^chore\(config\): 每日同步` | 跳过 auto-merge       |
+| PR 改动的文件             | 仅 `config.json`             | 跳过 auto-merge       |
+| 备份文件已创建            | 必须存在                     | 跳过 auto-merge       |
+
 - 自动生成 PR 标题: `chore(config): 每日同步 - 补充新的健康 API 资源节点`
 - PR Body 包含同步报告 (通过/失败/既存/新增统计 + diff)
 - 也可手动触发: 在 GitHub Actions 页面 "Run workflow" 选择 dry-run 或实际写入
 - 第三方 Action 已锁定 SHA, 防止 supply chain 篡改
+
+**⚠️ 首次启用 auto-merge 需要主公在 GitHub Repo Settings 开启:**
+
+Settings → General → Pull Requests → ✅ **Allow auto-merge**
+
+(本仓库的 config-sync.yml 用 `gh pr merge --auto` 命令, 需要这个开关才会真正 merge)
 
 **数据源切换:** `pnpm tsx src/sync/config-sync.ts --source <url>` 或在 CI 中修改 `config-sync.ts` 的 `DEFAULT_SOURCE_URL` 常量。
 
