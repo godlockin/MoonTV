@@ -236,30 +236,37 @@ networks:
 
 **问题**：Cloudflare Workers 的出口 IP 段被豆瓣封禁，导致部署在 Cloudflare Pages 上时 `/api/douban/*` 全部失败（首页分类、Top250 等无数据）。
 
-**解决**：部署一个豆瓣代理到 **非 Cloudflare** 平台（Deno Deploy 免费即可），再配置环境变量。
+**解决**：把豆瓣代理部署到 **非 Cloudflare** 平台，再配置环境变量。
 
-项目已附带可直接使用的代理：[`deploy/douban-proxy.deno.ts`](deploy/douban-proxy.deno.ts)
+项目已附带可直接部署的 Vercel 代理：[`deploy/douban-proxy-vercel/`](deploy/douban-proxy-vercel/)
 
-**部署步骤（3 步，全免费）：**
+**部署步骤（免费）：**
 
-1. 打开 [dash.deno.com](https://dash.deno.com) → **New Playground**
-2. 把 `deploy/douban-proxy.deno.ts` 内容整段粘贴 → **Save & Deploy**
-3. 复制分配的地址（形如 `https://xxx-yyy-123.deno.dev`）
+```bash
+cd deploy/douban-proxy-vercel
+npx vercel --prod
+```
+
+首次会提示登录并创建项目，框架选 **Other**，一路回车即可。
+（也可在 [vercel.com/new](https://vercel.com/new) 网页导入本仓库，**Root Directory** 填 `deploy/douban-proxy-vercel`；这会创建独立于 MoonTV 主站的第二个项目，互不影响。）
 
 **配置环境变量**（Cloudflare Pages → Settings → Environment variables）：
 
 ```
-DOUBAN_SERVER_PROXY = https://xxx.deno.dev/?url=
+DOUBAN_SERVER_PROXY = https://douban-proxy-xxx.vercel.app/?url=
 ```
 
 > 末尾必须是 `?url=`，服务端会拼接 `encodeURIComponent(目标URL)`。
 > 也可同时配 `NEXT_PUBLIC_DOUBAN_PROXY`（同样格式）让浏览器端也走代理。
+> 配好后需 **Retry deployment** 使其生效。
 
-**代理安全**：仅允许 `douban.com` / `doubanio.com` 及其子域，拒绝后缀伪造（如 `douban.com.evil.com`）和内网地址，不会成为开放代理。
+**代理安全**：仅允许 `douban.com` / `doubanio.com` 及其子域，拒绝后缀伪造（如 `douban.com.evil.com`）和内网地址，仅接受 GET，不会成为开放代理。
 
-**未配置时的行为**：豆瓣接口返回 `200 + 空列表 + 提示文案`（优雅降级），页面不再弹 500 错误，只是没有豆瓣推荐数据。
+**未配置时的行为**：豆瓣接口返回 `200 + 空列表 + 提示文案`（优雅降级），页面不再弹 500 错误，只是没有豆瓣推荐数据，搜索和播放不受影响。
 
-**健康检查**：`curl https://xxx.deno.dev/health`
+**健康检查**：`curl https://douban-proxy-xxx.vercel.app/health`
+
+详细说明见 [`deploy/douban-proxy-vercel/README.md`](deploy/douban-proxy-vercel/README.md)。
 
 ## 配置说明
 

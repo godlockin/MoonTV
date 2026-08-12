@@ -5,13 +5,14 @@
  *       直连 m.douban.com / movie.douban.com 会 403 / 超时。
  *
  * 策略 (按顺序尝试):
- *   1. 若配置了 DOUBAN_SERVER_PROXY, 走该代理 (推荐: Deno Deploy / VPS, 非 Cloudflare)
+ *   1. 若配置了 DOUBAN_SERVER_PROXY, 走该代理 (推荐: Vercel / VPS, 非 Cloudflare)
  *   2. 直连豆瓣 (本地开发 / Vercel Node runtime 可用)
  *   3. 全部失败 → 抛 DoubanUnavailableError, 由 route 层降级为 200 + 空 list
  *
  * 环境变量:
- *   DOUBAN_SERVER_PROXY  服务端代理 URL 前缀, 形如 https://xxx.deno.dev/?url=
+ *   DOUBAN_SERVER_PROXY  服务端代理 URL 前缀, 形如 https://xxx.vercel.app/?url=
  *                        (末尾需能直接拼接 encodeURIComponent(目标URL))
+ *                        部署见 deploy/douban-proxy-vercel/
  */
 
 const USER_AGENT =
