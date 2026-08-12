@@ -46,3 +46,6 @@ public/manifest.json
 
 # custom backup configs
 config_bak.json
+
+# daily sync backups
+/.github/sync-backups/

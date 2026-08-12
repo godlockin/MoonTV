@@ -1,0 +1,209 @@
+name: Sync config.json
+
+# 定期探测候选 API 资源, 通过健康检测后追加到 config.json (git 跟踪的唯一权威)
+# - 既存资源节点完全不被检测/修改/删除 (按 api URL 严格匹配去重)
+# - config_bak.json 仅本地暂存, 不在本 workflow 范围内
+
+on:
+  schedule:
+    # 每天 04:00 UTC (=北京时间 12:00)
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '干跑模式 (不写 config.json, 只生成报告)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+env:
+  NODE_VERSION: '20'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# 第三方 action SHA 锁定 (防 supply chain 篡改)
+# 验证命令: curl -s https://api.github.com/repos/<owner>/<repo>/git/refs/tags/<tag> | jq -r '.object.sha'
+jobs:
+  detect:
+    name: 探测 + 健康检测 + 写入
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      total: ${{ steps.summary.outputs.total }}
+      passed: ${{ steps.summary.outputs.passed }}
+      failed: ${{ steps.summary.outputs.failed }}
+      existed: ${{ steps.summary.outputs.existed }}
+      new: ${{ steps.summary.outputs.new }}
+      dry_run: ${{ steps.dry.outputs.dry_run }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0c17529a66aca453f9227af23103ed11469b1e47 # v4.0.0
+        with:
+          version: latest
+          run_install: false
+
+      - name: Install tsx
+        run: pnpm add -D tsx
+
+      - name: Determine mode
+        id: dry
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "dry_run=true" >> $GITHUB_OUTPUT
+          else
+            echo "dry_run=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run config-sync
+        id: sync
+        run: |
+          if [ "${{ steps.dry.outputs.dry_run }}" = "true" ]; then
+            echo "[mode] DRY-RUN"
+            pnpm tsx src/sync/config-sync.ts --dry-run
+          else
+            echo "[mode] LIVE (will write config.json)"
+            pnpm tsx src/sync/config-sync.ts
+          fi
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: config-sync-${{ github.run_id }}
+          path: |
+            sync-report.md
+            sources-report.json
+          retention-days: 14
+
+      - name: Read summary
+        id: summary
+        if: always() && hashFiles('sources-report.json') != ''
+        run: |
+          total=$(jq -r '.totalCandidates // 0' sources-report.json)
+          passed=$(jq -r '.passed // 0' sources-report.json)
+          failed=$(jq -r '.failed // 0' sources-report.json)
+          existed=$(jq -r '.alreadyExisted // 0' sources-report.json)
+          new=$(jq -r '.newlyAdded | length // 0' sources-report.json)
+          {
+            echo "total=$total"
+            echo "passed=$passed"
+            echo "failed=$failed"
+            echo "existed=$existed"
+            echo "new=$new"
+          } >> $GITHUB_OUTPUT
+
+  create-pr:
+    name: 提交 PR
+    needs: detect
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@0c17529a66aca453f9227af23103ed11469b1e47 # v4.0.0
+        with:
+          version: latest
+          run_install: false
+
+      - name: Install tsx
+        run: pnpm add -D tsx
+
+      - name: Download artifacts
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: config-sync-${{ github.run_id }}
+          path: ./artifacts
+
+      - name: Render PR body to file
+        env:
+          TOTAL: ${{ needs.detect.outputs.total }}
+          PASSED: ${{ needs.detect.outputs.passed }}
+          FAILED: ${{ needs.detect.outputs.failed }}
+          EXISTED: ${{ needs.detect.outputs.existed }}
+          NEW: ${{ needs.detect.outputs.new }}
+        run: |
+          {
+            echo '## config.json 自动同步报告'
+            echo ''
+            echo '由 [`.github/workflows/config-bak-sync.yml`](.github/workflows/config-bak-sync.yml) 自动生成。'
+            echo ''
+            echo '### 统计'
+            echo ''
+            echo "- 候选总数: ${TOTAL}"
+            echo "- 健康通过: ${PASSED}"
+            echo "- 检测失败: ${FAILED}"
+            echo "- 既存跳过: ${EXISTED}"
+            echo "- **本次新增: ${NEW}**"
+            echo ''
+            echo '### 说明'
+            echo ''
+            echo '- 仅追加通过 `2/3 连续成功 + JSON 有效` 检测的新节点到 `config.json`'
+            echo '- **既存节点 (config.json 中已有的) 完全不被检测/修改**'
+            echo '- `config_bak.json` 仅本地暂存用, 不在本 workflow 范围内'
+            echo ''
+            echo '<details>'
+            echo '<summary>📋 详细同步报告</summary>'
+            echo ''
+            echo '```'
+            cat ./artifacts/sync-report.md
+            echo '```'
+            echo '</details>'
+            echo ''
+            echo '### Review Checklist'
+            echo ''
+            echo '- [ ] 确认新增节点 API 域名无明显违规'
+            echo '- [ ] 确认新增节点 `name` 显示名无误'
+            echo '- [ ] 确认未触碰既存节点'
+          } > pr-body.md
+
+      - name: Check git diff for config.json
+        id: check
+        if: needs.detect.outputs.dry_run != 'true'
+        run: |
+          git add config.json
+          if git diff --cached --quiet config.json; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "无 config.json 变更, 不创建 PR"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            git diff --cached --stat config.json
+          fi
+
+      - name: Create PR
+        if: needs.detect.outputs.dry_run != 'true' && steps.check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: auto/config-sync-${{ github.run_id }}
+          title: 'chore(config): 每日同步 - 补充新的健康 API 资源节点'
+          commit-message: 'chore(config): 每日同步 - 自动补充通过健康检测的 API 资源节点'
+          body-path: pr-body.md
+          labels: |
+            automated
+            config
+          delete-branch: true

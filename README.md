@@ -157,10 +157,18 @@ services:
       - '3000:3000'
     environment:
       - PASSWORD=your_password
-    # 如需自定义配置，可挂载文件
+    # 如需自定义配置，可挂载文件 (支持同时挂载 config.json + config_bak.json)
     # volumes:
     #   - ./config.json:/app/config.json:ro
+    #   - ./config_bak.json:/app/config_bak.json:ro
 ```
+
+> **Docker 部署说明**: 容器启动时会自动读取 cwd 下所有 `config*.json` 文件并合并。
+>
+> - `config.json` 提供根级配置 (`cache_time` / `custom_category`) 和"主用"API 节点
+> - `config_bak.json` (以及其他 `config*.json`) 仅追加 `api_site`, 已存在的 key **不会被覆盖**
+> - 与构建期 (`pnpm gen:runtime`) 的合并逻辑保持完全一致
+> - 推荐同时挂载主配置和备份配置, 或将 GitHub Action 自动生成的 PR merge 后用新镜像部署
 
 ### Redis 版本（推荐，多账户数据隔离，跨设备同步）
 
@@ -269,6 +277,37 @@ custom_category 支持的自定义分类已知如下：
 MoonTV 支持标准的苹果 CMS V10 API 格式。
 
 修改后 **无需重新构建**，服务会在启动时读取一次。
+
+### 自动同步 config.json
+
+项目自带 GitHub Action [`.github/workflows/config-bak-sync.yml`](.github/workflows/config-bak-sync.yml) 每天 04:00 UTC 拉取开源仓库 ( [`tushen6/Tomorrow`](https://github.com/tushen6/Tomorrow) caiji.json, 2167+ stars) 中的 macCMS V10 API 资源,健康检测后自动提交 PR。
+
+**核心规则：**
+
+- **每天 04:00 UTC 拉取开源源** (`caiji.json` ~43 条 vod API 候选)
+- **2/3 连续成功 + JSON 协议有效** 才算健康
+- **既存节点 (config.json 中已有的) 完全不被检测/修改/删除** (按 api URL 严格匹配去重)
+- **通过检测的新节点追加到 `config.json`** (尾部追加, 不重排既有 key)
+- **写入前自动备份** 到 `.github/sync-backups/config.json.YYYY-MM-DD.json` (gitignore,失败可回滚)
+- 自动生成 PR 标题: `chore(config): 每日同步 - 补充新的健康 API 资源节点`
+- PR Body 包含同步报告 (通过/失败/既存/新增统计 + diff)
+- 也可手动触发: 在 GitHub Actions 页面 "Run workflow" 选择 dry-run 或实际写入
+- 第三方 Action 已锁定 SHA, 防止 supply chain 篡改
+
+**数据源切换:** `pnpm tsx src/sync/config-sync.ts --source <url>` 或在 CI 中修改 `config-sync.ts` 的 `DEFAULT_SOURCE_URL` 常量。
+
+**本地调试:**
+
+```bash
+# 干跑模式 (不修改 config.json, 只生成 sync-report.md)
+pnpm sync:config:dry
+
+# 实际写入
+pnpm sync:config
+
+# 验证脚本 (不调网络, 只验证去重/key 生成逻辑)
+pnpm verify:config-sync
+```
 
 ## 管理员配置
 
