@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import { getCacheTime } from '@/lib/config';
+import {
+  DoubanUnavailableError,
+  fetchDoubanJson,
+  hasServerProxy,
+} from '@/lib/douban.server';
 import { DoubanItem, DoubanResult } from '@/lib/types';
 
 interface DoubanCategoryApiResponse {
@@ -17,41 +22,6 @@ interface DoubanCategoryApiResponse {
       value: number;
     };
   }>;
-}
-
-async function fetchDoubanData(
-  url: string
-): Promise<DoubanCategoryApiResponse> {
-  // 添加超时控制
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
-
-  // 设置请求选项，包括信号和头部
-  const fetchOptions = {
-    signal: controller.signal,
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-      Referer: 'https://movie.douban.com/',
-      Accept: 'application/json, text/plain, */*',
-      Origin: 'https://movie.douban.com',
-    },
-  };
-
-  try {
-    // 尝试直接访问豆瓣API
-    const response = await fetch(url, fetchOptions);
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    clearTimeout(timeoutId);
-    throw error;
-  }
 }
 
 export const runtime = 'edge';
@@ -98,11 +68,10 @@ export async function GET(request: Request) {
   const target = `https://m.douban.com/rexxar/api/v2/subject/recent_hot/${kind}?start=${pageStart}&limit=${pageLimit}&category=${category}&type=${type}`;
 
   try {
-    // 调用豆瓣 API
-    const doubanData = await fetchDoubanData(target);
+    const doubanData = await fetchDoubanJson<DoubanCategoryApiResponse>(target);
 
     // 转换数据格式
-    const list: DoubanItem[] = doubanData.items.map((item) => ({
+    const list: DoubanItem[] = (doubanData.items || []).map((item) => ({
       id: item.id,
       title: item.title,
       poster: item.pic?.normal || item.pic?.large || '',
@@ -125,6 +94,22 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
+    // 豆瓣不可用 → 优雅降级: 返回 200 + 空 list, 前端不弹错误
+    if (error instanceof DoubanUnavailableError) {
+      const hint = hasServerProxy()
+        ? '豆瓣数据源暂不可用（代理与直连均失败）'
+        : '豆瓣数据源暂不可用，请配置 DOUBAN_SERVER_PROXY 环境变量';
+      const response: DoubanResult = {
+        code: 200,
+        message: hint,
+        list: [],
+      };
+      return NextResponse.json(response, {
+        // 失败结果只短暂缓存，便于上游恢复后快速生效
+        headers: { 'Cache-Control': 'public, max-age=60, s-maxage=60' },
+      });
+    }
+
     return NextResponse.json(
       { error: '获取豆瓣数据失败', details: (error as Error).message },
       { status: 500 }

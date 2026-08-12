@@ -229,7 +229,37 @@ networks:
 | NEXT_PUBLIC_SEARCH_MAX_PAGE       | 搜索接口可拉取的最大页数                     | 1-50                             | 5                                                                                                                          |
 | NEXT_PUBLIC_IMAGE_PROXY           | 默认的浏览器端图片代理                       | url prefix                       | (空)                                                                                                                       |
 | NEXT_PUBLIC_DOUBAN_PROXY          | 默认的浏览器端豆瓣数据代理                   | url prefix                       | (空)                                                                                                                       |
+| DOUBAN_SERVER_PROXY               | 服务端豆瓣代理（Cloudflare 部署必需，见下）  | url prefix                       | (空)                                                                                                                       |
 | NEXT_PUBLIC_DISABLE_YELLOW_FILTER | 关闭色情内容过滤                             | true/false                       | false                                                                                                                      |
+
+### ⚠️ Cloudflare 部署必读：豆瓣数据源代理
+
+**问题**：Cloudflare Workers 的出口 IP 段被豆瓣封禁，导致部署在 Cloudflare Pages 上时 `/api/douban/*` 全部失败（首页分类、Top250 等无数据）。
+
+**解决**：部署一个豆瓣代理到 **非 Cloudflare** 平台（Deno Deploy 免费即可），再配置环境变量。
+
+项目已附带可直接使用的代理：[`deploy/douban-proxy.deno.ts`](deploy/douban-proxy.deno.ts)
+
+**部署步骤（3 步，全免费）：**
+
+1. 打开 [dash.deno.com](https://dash.deno.com) → **New Playground**
+2. 把 `deploy/douban-proxy.deno.ts` 内容整段粘贴 → **Save & Deploy**
+3. 复制分配的地址（形如 `https://xxx-yyy-123.deno.dev`）
+
+**配置环境变量**（Cloudflare Pages → Settings → Environment variables）：
+
+```
+DOUBAN_SERVER_PROXY = https://xxx.deno.dev/?url=
+```
+
+> 末尾必须是 `?url=`，服务端会拼接 `encodeURIComponent(目标URL)`。
+> 也可同时配 `NEXT_PUBLIC_DOUBAN_PROXY`（同样格式）让浏览器端也走代理。
+
+**代理安全**：仅允许 `douban.com` / `doubanio.com` 及其子域，拒绝后缀伪造（如 `douban.com.evil.com`）和内网地址，不会成为开放代理。
+
+**未配置时的行为**：豆瓣接口返回 `200 + 空列表 + 提示文案`（优雅降级），页面不再弹 500 错误，只是没有豆瓣推荐数据。
+
+**健康检查**：`curl https://xxx.deno.dev/health`
 
 ## 配置说明
 

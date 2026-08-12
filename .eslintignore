@@ -23,6 +23,9 @@ jest.config.js
 scripts/
 commitlint.config.js
 
+# Deno Deploy 代理（Deno 全局，非 Node 环境）
+deploy/
+
 # Scripts
 scripts/
 
