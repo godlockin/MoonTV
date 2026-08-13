@@ -1,9 +1,11 @@
 /**
- * 豆瓣代理 — Vercel Edge Function
+ * 豆瓣代理 — Vercel Serverless Function (Node.js runtime)
  *
  * 用途: MoonTV 部署在 Cloudflare Pages 时, CF Workers 出口 IP 被豆瓣封禁,
  *       /api/douban/* 全部失败。本代理跑在 Vercel (出口 IP 不同),
  *       转发请求并补齐 Referer, 让 MoonTV 经由此处访问豆瓣。
+ *
+ * 注: 用 Node.js runtime 而非 Edge —— Vercel 已禁止匿名部署使用 Edge runtime。
  *
  * 调用格式:
  *   GET /?url=<encodeURIComponent(豆瓣URL)>
@@ -13,7 +15,7 @@
  *       不会成为开放代理。
  */
 
-export const config = { runtime: 'edge' };
+import type { IncomingMessage, ServerResponse } from 'http';
 
 const ALLOWED_HOSTS = ['douban.com', 'doubanio.com'];
 
@@ -27,76 +29,98 @@ const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Max-Age': '86400',
 };
 
+const UPSTREAM_TIMEOUT_MS = 12000;
+
 /**
  * 白名单校验: 精确匹配根域或其子域。
  * 用 endsWith('.' + allowed) 而非 includes, 避免 douban.com.evil.com 绕过。
  */
-function isAllowed(hostname: string): boolean {
+export function isAllowed(hostname: string): boolean {
   const host = hostname.toLowerCase();
   return ALLOWED_HOSTS.some(
     (allowed) => host === allowed || host.endsWith(`.${allowed}`)
   );
 }
 
-function json(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      ...CORS_HEADERS,
-    },
-  });
+function applyCors(res: ServerResponse): void {
+  for (const [k, v] of Object.entries(CORS_HEADERS)) {
+    res.setHeader(k, v);
+  }
 }
 
-export default async function handler(request: Request): Promise<Response> {
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+function sendJson(res: ServerResponse, status: number, body: unknown): void {
+  applyCors(res);
+  res.statusCode = status;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify(body));
+}
+
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse
+): Promise<void> {
+  if (req.method === 'OPTIONS') {
+    applyCors(res);
+    res.statusCode = 204;
+    res.end();
+    return;
   }
 
-  if (request.method !== 'GET') {
-    return json({ error: '仅支持 GET' }, 405);
+  if (req.method !== 'GET') {
+    sendJson(res, 405, { error: '仅支持 GET' });
+    return;
   }
 
-  const url = new URL(request.url);
+  // req.url 只含 path + query, 补个 base 才能用 URL 解析
+  const requestUrl = new URL(req.url ?? '/', 'http://localhost');
 
-  if (url.pathname === '/health' || url.pathname === '/api/health') {
-    return json({
+  if (
+    requestUrl.pathname === '/health' ||
+    requestUrl.pathname === '/api/health'
+  ) {
+    sendJson(res, 200, {
       ok: true,
       service: 'douban-proxy',
-      platform: 'vercel-edge',
+      platform: 'vercel-node',
       allowed: ALLOWED_HOSTS,
     });
+    return;
   }
 
-  const raw = url.searchParams.get('url');
+  const raw = requestUrl.searchParams.get('url');
   if (!raw) {
-    return json(
-      {
-        error: '缺少 url 参数',
-        usage: '/?url=<encodeURIComponent(https://m.douban.com/...)>',
-      },
-      400
-    );
+    sendJson(res, 400, {
+      error: '缺少 url 参数',
+      usage: '/?url=<encodeURIComponent(https://m.douban.com/...)>',
+    });
+    return;
   }
 
   let target: URL;
   try {
     target = new URL(raw);
   } catch {
-    return json({ error: 'url 参数不是合法 URL' }, 400);
+    sendJson(res, 400, { error: 'url 参数不是合法 URL' });
+    return;
   }
 
   if (target.protocol !== 'https:' && target.protocol !== 'http:') {
-    return json({ error: '仅支持 http/https' }, 400);
+    sendJson(res, 400, { error: '仅支持 http/https' });
+    return;
   }
 
   if (!isAllowed(target.hostname)) {
-    return json({ error: '目标域名不在白名单内', host: target.hostname }, 403);
+    sendJson(res, 403, {
+      error: '目标域名不在白名单内',
+      host: target.hostname,
+    });
+    return;
   }
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  const timeoutId = setTimeout(() => controller.abort(), UPSTREAM_TIMEOUT_MS);
   try {
+    const acceptHeader = req.headers.accept;
     const upstream = await fetch(target.toString(), {
       signal: controller.signal,
       headers: {
@@ -104,25 +128,26 @@ export default async function handler(request: Request): Promise<Response> {
         // 豆瓣接口强校验 Referer, 必须补齐
         Referer: 'https://movie.douban.com/',
         Accept:
-          request.headers.get('Accept') ?? 'application/json, text/plain, */*',
+          typeof acceptHeader === 'string' && acceptHeader
+            ? acceptHeader
+            : 'application/json, text/plain, */*',
         'Accept-Language': 'zh-CN,zh;q=0.9',
       },
     });
     clearTimeout(timeoutId);
 
-    const headers = new Headers(CORS_HEADERS);
+    applyCors(res);
+    res.statusCode = upstream.status;
     const contentType = upstream.headers.get('content-type');
-    if (contentType) headers.set('Content-Type', contentType);
+    if (contentType) res.setHeader('Content-Type', contentType);
     // 成功结果短缓存, 减轻上游压力
-    headers.set('Cache-Control', 'public, max-age=300');
+    res.setHeader('Cache-Control', 'public, max-age=300');
 
-    return new Response(upstream.body, {
-      status: upstream.status,
-      headers,
-    });
+    const buffer = Buffer.from(await upstream.arrayBuffer());
+    res.end(buffer);
   } catch (e) {
     clearTimeout(timeoutId);
     const message = e instanceof Error ? e.message : String(e);
-    return json({ error: '上游请求失败', details: message }, 502);
+    sendJson(res, 502, { error: '上游请求失败', details: message });
   }
 }

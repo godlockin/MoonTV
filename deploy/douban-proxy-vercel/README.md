@@ -1,8 +1,10 @@
-# 豆瓣代理 (Vercel Edge Function)
+# 豆瓣代理 (Vercel Serverless Function)
 
 MoonTV 部署在 Cloudflare Pages 时，CF Workers 的出口 IP 段被豆瓣封禁，导致 `/api/douban/*` 全部失败（首页分类、Top250 无数据）。
 
 本目录是一个**独立的 Vercel 项目**，部署后作为豆瓣代理，MoonTV 服务端经由它访问豆瓣。
+
+> 使用 **Node.js runtime**（非 Edge）—— Vercel 已禁止匿名部署使用 Edge runtime。
 
 ## 部署方式（二选一）
 

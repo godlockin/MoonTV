@@ -2,5 +2,9 @@
   "name": "douban-proxy",
   "version": "1.0.0",
   "private": true,
-  "description": "豆瓣 API 代理 (Vercel Edge Function), 供 MoonTV 在 Cloudflare 部署时绕过豆瓣对 CF 出口 IP 的封禁"
+  "description": "豆瓣 API 代理 (Vercel Node runtime), 供 MoonTV 在 Cloudflare 部署时绕过豆瓣对 CF 出口 IP 的封禁",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
 }
