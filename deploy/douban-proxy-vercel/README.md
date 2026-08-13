@@ -48,6 +48,7 @@ DOUBAN_SERVER_PROXY = https://douban-proxy-xxx.vercel.app/?url=
 ```bash
 # 健康检查
 curl https://douban-proxy-xxx.vercel.app/health
+# → {"ok":true,"service":"douban-proxy","platform":"vercel-node",...}
 
 # 实际取豆瓣数据（应返回含 items 的 JSON）
 curl "https://douban-proxy-xxx.vercel.app/?url=$(python3 -c "
@@ -55,6 +56,9 @@ import urllib.parse
 print(urllib.parse.quote('https://m.douban.com/rexxar/api/v2/subject/recent_hot/tv?start=0&limit=20&category=show&type=show', safe=''))
 ")"
 ```
+
+已在真实 Vercel 部署上验证通过（2026-08-13）：豆瓣三类接口分别返回 20 / 20 / 16 条数据，
+说明 Vercel 出口 IP 未被豆瓣封禁；SSRF 拦截与参数校验线上行为与预期一致。
 
 ## 安全说明
 

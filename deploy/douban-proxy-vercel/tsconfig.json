@@ -3,7 +3,8 @@
     "target": "ES2022",
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["ES2022"],
+    // 需要 DOM: Node 18+ 的全局 fetch/Response/AbortController 类型来自 DOM lib
+    "lib": ["ES2022", "DOM"],
     "types": ["node"],
     "strict": true,
     "esModuleInterop": true,
