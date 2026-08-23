@@ -62,12 +62,20 @@ async function fetchOnce(
 ): Promise<Response> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  let referer = 'https://movie.douban.com/';
+  if (url.includes('m.douban.com') || url.includes('subject_collection')) {
+    referer = 'https://m.douban.com/';
+  } else if (url.includes('new_search_subjects')) {
+    referer = 'https://movie.douban.com/explore';
+  }
+
   try {
     const response = await fetch(url, {
       signal: controller.signal,
       headers: {
         'User-Agent': USER_AGENT,
-        Referer: 'https://movie.douban.com/',
+        Referer: referer,
         Accept: accept,
       },
     });

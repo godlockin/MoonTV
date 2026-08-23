@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 import { getCacheTime } from '@/lib/config';
 import {
   DoubanUnavailableError,
-  fetchDoubanHtml,
   fetchDoubanJson,
   hasServerProxy,
 } from '@/lib/douban.server';
@@ -70,7 +69,7 @@ export async function GET(request: Request) {
   }
 
   if (tag === 'top250') {
-    return handleTop250(pageStart);
+    return handleTop250(pageStart, pageSize);
   }
 
   const target = `https://movie.douban.com/j/search_subjects?type=${type}&tag=${tag}&sort=recommend&page_limit=${pageSize}&page_start=${pageStart}`;
@@ -112,35 +111,39 @@ export async function GET(request: Request) {
   }
 }
 
-async function handleTop250(pageStart: number) {
-  const target = `https://movie.douban.com/top250?start=${pageStart}&filter=`;
+interface DoubanSubjectCollectionResponse {
+  subject_collection_items: Array<{
+    id: string;
+    title: string;
+    card_subtitle?: string;
+    pic?: {
+      large?: string;
+      normal?: string;
+    };
+    rating?: {
+      value?: number;
+    };
+    cover_url?: string;
+  }>;
+}
+
+async function handleTop250(pageStart: number, pageSize = 25) {
+  const target = `https://m.douban.com/rexxar/api/v2/subject_collection/movie_top250/items?start=${pageStart}&count=${pageSize}&for_mobile=1`;
 
   try {
-    const html = await fetchDoubanHtml(target);
+    const doubanData = await fetchDoubanJson<DoubanSubjectCollectionResponse>(
+      target
+    );
 
-    // 通过正则同时捕获影片 id、标题、封面以及评分
-    const moviePattern =
-      /<div class="item">[\s\S]*?<a[^>]+href="https?:\/\/movie\.douban\.com\/subject\/(\d+)\/"[\s\S]*?<img[^>]+alt="([^"]+)"[^>]*src="([^"]+)"[\s\S]*?<span class="rating_num"[^>]*>([^<]*)<\/span>[\s\S]*?<\/div>/g;
-    const movies: DoubanItem[] = [];
-    let match;
-
-    while ((match = moviePattern.exec(html)) !== null) {
-      const id = match[1];
-      const title = match[2];
-      const cover = match[3];
-      const rate = match[4] || '';
-
-      // 处理图片 URL，确保使用 HTTPS
-      const processedCover = cover.replace(/^http:/, 'https:');
-
-      movies.push({
-        id: id,
-        title: title,
-        poster: processedCover,
-        rate: rate,
-        year: '',
-      });
-    }
+    const movies: DoubanItem[] = (
+      doubanData.subject_collection_items || []
+    ).map((item) => ({
+      id: item.id,
+      title: item.title,
+      poster: item.pic?.normal || item.pic?.large || item.cover_url || '',
+      rate: item.rating?.value ? item.rating.value.toFixed(1) : '',
+      year: item.card_subtitle?.match(/(\d{4})/)?.[1] || '',
+    }));
 
     const apiResponse: DoubanResult = {
       code: 200,
