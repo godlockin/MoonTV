@@ -642,6 +642,12 @@ const VideoSourceConfig = ({
 }) => {
   const [sources, setSources] = useState<DataSource[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showTvBoxModal, setShowTvBoxModal] = useState(false);
+  const [tvboxInput, setTvboxInput] = useState('');
+  const [tvboxLoading, setTvboxLoading] = useState(false);
+  const [tvboxSites, setTvboxSites] = useState<any[]>([]);
+  const [selectedSites, setSelectedSites] = useState<Record<string, boolean>>({});
+  const [skippedCount, setSkippedCount] = useState(0);
   const [orderChanged, setOrderChanged] = useState(false);
   const [newSource, setNewSource] = useState<DataSource>({
     name: '',
@@ -736,6 +742,65 @@ const VideoSourceConfig = ({
       .catch(() => {
         console.error('操作失败', 'add', newSource);
       });
+  };
+
+  const handleParseTvBox = async () => {
+    if (!tvboxInput.trim()) {
+      showError('请输入 TVBox 订阅链接或配置内容');
+      return;
+    }
+    setTvboxLoading(true);
+    try {
+      const isUrl =
+        tvboxInput.trim().startsWith('http://') ||
+        tvboxInput.trim().startsWith('https://');
+      const resp = await fetch('/api/admin/source', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'parse_tvbox',
+          url: isUrl ? tvboxInput.trim() : undefined,
+          content: !isUrl ? tvboxInput.trim() : undefined,
+        }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.ok) {
+        throw new Error(data.error || '解析 TVBox 配置失败');
+      }
+      const parsed = data.data;
+      if (!parsed.success || parsed.sites.length === 0) {
+        throw new Error(parsed.error || '未在配置中发现可用的 CMS 直连源');
+      }
+      setTvboxSites(parsed.sites);
+      setSkippedCount(parsed.skippedSpiderCount || 0);
+      const initSelected: Record<string, boolean> = {};
+      parsed.sites.forEach((s: any) => {
+        initSelected[s.key] = true;
+      });
+      setSelectedSites(initSelected);
+      showSuccess(`成功解析出 ${parsed.sites.length} 个可用站点！`);
+    } catch (err) {
+      showError(err instanceof Error ? err.message : '解析失败');
+    } finally {
+      setTvboxLoading(false);
+    }
+  };
+
+  const handleImportTvBox = async () => {
+    const toImport = tvboxSites.filter((s) => selectedSites[s.key]);
+    if (toImport.length === 0) {
+      showError('请至少勾选一个站点');
+      return;
+    }
+    try {
+      await callSourceApi({ action: 'batch_add', sources: toImport });
+      showSuccess(`成功导入 ${toImport.length} 个视频源！`);
+      setShowTvBoxModal(false);
+      setTvboxSites([]);
+      setTvboxInput('');
+    } catch (err) {
+      showError(err instanceof Error ? err.message : '导入失败');
+    }
   };
 
   const handleDragEnd = (event: any) => {
@@ -845,18 +910,129 @@ const VideoSourceConfig = ({
 
   return (
     <div className='space-y-6'>
-      {/* 添加视频源表单 */}
+      {/* 头部操作栏 */}
       <div className='flex items-center justify-between'>
         <h4 className='text-sm font-medium text-gray-700 dark:text-gray-300'>
           视频源列表
         </h4>
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className='px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg transition-colors'
-        >
-          {showAddForm ? '取消' : '添加视频源'}
-        </button>
+        <div className='flex items-center space-x-2'>
+          <button
+            onClick={() => {
+              setShowTvBoxModal(!showTvBoxModal);
+              if (showAddForm) setShowAddForm(false);
+            }}
+            className='px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors'
+          >
+            {showTvBoxModal ? '收起 TVBox 导入' : '导入 TVBox 订阅'}
+          </button>
+          <button
+            onClick={() => {
+              setShowAddForm(!showAddForm);
+              if (showTvBoxModal) setShowTvBoxModal(false);
+            }}
+            className='px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors'
+          >
+            {showAddForm ? '取消' : '添加单个视频源'}
+          </button>
+        </div>
       </div>
+
+      {/* 导入 TVBox 订阅面板 */}
+      {showTvBoxModal && (
+        <div className='p-4 bg-blue-50/50 dark:bg-blue-950/20 rounded-xl border border-blue-200 dark:border-blue-900/50 space-y-4'>
+          <div>
+            <label className='block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1.5'>
+              TVBox 订阅地址 (URL) 或 JSON / Base64 配置内容
+            </label>
+            <textarea
+              rows={3}
+              placeholder='输入 http(s)://... 订阅链接，或直接粘贴 TVBox JSON 配置/Base64 字符串'
+              value={tvboxInput}
+              onChange={(e) => setTvboxInput(e.target.value)}
+              className='w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            />
+          </div>
+
+          <div className='flex items-center justify-between'>
+            <span className='text-xs text-gray-500 dark:text-gray-400'>
+              自动提取其中的 Apple CMS (JSON) 采集站，自动过滤需本地引擎的 Spider 源
+            </span>
+            <button
+              onClick={handleParseTvBox}
+              disabled={tvboxLoading || !tvboxInput.trim()}
+              className='px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors shadow-sm'
+            >
+              {tvboxLoading ? '正在拉取与解析...' : '解析配置'}
+            </button>
+          </div>
+
+          {/* 解析结果列表 */}
+          {tvboxSites.length > 0 && (
+            <div className='pt-3 border-t border-blue-200/60 dark:border-blue-900/60 space-y-3'>
+              <div className='flex items-center justify-between text-xs text-gray-600 dark:text-gray-300'>
+                <span>
+                  已识别出 <strong>{tvboxSites.length}</strong> 个 CMS 直连源
+                  {skippedCount > 0 && ` (已自动跳过 ${skippedCount} 个 Spider 源)`}
+                </span>
+                <div className='space-x-3'>
+                  <button
+                    onClick={() => {
+                      const all: Record<string, boolean> = {};
+                      tvboxSites.forEach((s) => (all[s.key] = true));
+                      setSelectedSites(all);
+                    }}
+                    className='text-blue-600 dark:text-blue-400 hover:underline'
+                  >
+                    全选
+                  </button>
+                  <button
+                    onClick={() => setSelectedSites({})}
+                    className='text-gray-500 hover:underline'
+                  >
+                    反选
+                  </button>
+                </div>
+              </div>
+
+              <div className='max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900'>
+                {tvboxSites.map((site) => (
+                  <label
+                    key={site.key}
+                    className='flex items-center px-3 py-2 text-xs hover:bg-gray-50 dark:hover:bg-gray-800/60 cursor-pointer space-x-2.5'
+                  >
+                    <input
+                      type='checkbox'
+                      checked={!!selectedSites[site.key]}
+                      onChange={(e) =>
+                        setSelectedSites((prev) => ({
+                          ...prev,
+                          [site.key]: e.target.checked,
+                        }))
+                      }
+                      className='rounded text-blue-600 focus:ring-blue-500'
+                    />
+                    <span className='font-medium text-gray-800 dark:text-gray-200 w-28 truncate'>
+                      {site.name}
+                    </span>
+                    <span className='text-gray-400 truncate flex-1 font-mono text-[11px]'>
+                      {site.api}
+                    </span>
+                  </label>
+                ))}
+              </div>
+
+              <div className='flex justify-end pt-1'>
+                <button
+                  onClick={handleImportTvBox}
+                  className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-xs sm:text-sm font-medium rounded-lg transition-colors shadow-sm'
+                >
+                  一键导入勾选的源
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {showAddForm && (
         <div className='p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 space-y-4'>

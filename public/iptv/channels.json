@@ -1,0 +1,593 @@
+{
+  "updatedAt": "2026-11-01T05:07:03.020Z",
+  "totalChannels": 68,
+  "onlineCount": 42,
+  "channels": [
+    {
+      "id": "cctv1",
+      "name": "CCTV-1 综合",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV1.png",
+      "url": "https://play-live.cctv.com/live/cctv1_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv4",
+      "name": "CCTV-4 中文国际",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV4.png",
+      "url": "https://play-live.cctv.com/live/cctv4_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv6",
+      "name": "CCTV-6 电影",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV6.png",
+      "url": "https://play-live.cctv.com/live/cctv6_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv2",
+      "name": "CCTV-2 财经",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV2.png",
+      "url": "https://play-live.cctv.com/live/cctv2_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv4k",
+      "name": "CCTV-4K 超高清",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV4K.png",
+      "url": "https://play-live.cctv.com/live/cctv4k_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv5",
+      "name": "CCTV-5 体育",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV5.png",
+      "url": "https://play-live.cctv.com/live/cctv5_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv5p",
+      "name": "CCTV-5+ 体育赛事",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV5Plus.png",
+      "url": "https://play-live.cctv.com/live/cctv5plus_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv9",
+      "name": "CCTV-9 纪录",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV9.png",
+      "url": "https://play-live.cctv.com/live/cctv9_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv7",
+      "name": "CCTV-7 国防军事",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV7.png",
+      "url": "https://play-live.cctv.com/live/cctv7_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv11",
+      "name": "CCTV-11 戏曲",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV11.png",
+      "url": "https://play-live.cctv.com/live/cctv11_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv10",
+      "name": "CCTV-10 科教",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV10.png",
+      "url": "https://play-live.cctv.com/live/cctv10_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv12",
+      "name": "CCTV-12 社会与法",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV12.png",
+      "url": "https://play-live.cctv.com/live/cctv12_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv14",
+      "name": "CCTV-14 少儿",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV14.png",
+      "url": "https://play-live.cctv.com/live/cctv14_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv13",
+      "name": "CCTV-13 新闻",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV13.png",
+      "url": "https://play-live.cctv.com/live/cctv13_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv8",
+      "name": "CCTV-8 电视剧",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV8.png",
+      "url": "https://play-live.cctv.com/live/cctv8_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv3",
+      "name": "CCTV-3 综艺",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV3.png",
+      "url": "https://play-live.cctv.com/live/cctv3_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv15",
+      "name": "CCTV-15 音乐",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV15.png",
+      "url": "https://play-live.cctv.com/live/cctv15_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv16",
+      "name": "CCTV-16 奥林匹克",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV16.png",
+      "url": "https://play-live.cctv.com/live/cctv16_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "cctv17",
+      "name": "CCTV-17 农业农村",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV17.png",
+      "url": "https://play-live.cctv.com/live/cctv17_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "ch_1793509609333_brnpn",
+      "name": "CGTN阿语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN阿语.png",
+      "url": "https://0472.org/hls/cgtna.m3u8",
+      "status": "online",
+      "latency": 844
+    },
+    {
+      "id": "ch_1793509609333_2km7r",
+      "name": "CGTN英语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN.png",
+      "url": "https://0472.org/hls/cgtn.m3u8",
+      "status": "online",
+      "latency": 852
+    },
+    {
+      "id": "ch_1793509609333_ghzfu",
+      "name": "CGTN记录",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN纪录.png",
+      "url": "https://0472.org/hls/cgtnd.m3u8",
+      "status": "online",
+      "latency": 859
+    },
+    {
+      "id": "ch_1793509609333_sn8sq",
+      "name": "CGTN西语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN西语.png",
+      "url": "https://0472.org/hls/cgtnx.m3u8",
+      "status": "online",
+      "latency": 1199
+    },
+    {
+      "id": "ch_1793509609333_9ycnf",
+      "name": "CGTN法语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN法语.png",
+      "url": "https://0472.org/hls/cgtnf.m3u8",
+      "status": "online",
+      "latency": 1644
+    },
+    {
+      "id": "ch_1793509609333_6q0im",
+      "name": "CGTN俄语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN俄语.png",
+      "url": "https://0472.org/hls/cgtne.m3u8",
+      "status": "online",
+      "latency": 1897
+    },
+    {
+      "id": "sichuan",
+      "name": "四川卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/四川卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226995/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EBQiz3wrGrpG0CUSRIJ-7Jg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 265
+    },
+    {
+      "id": "ch_1793509609331_00yum",
+      "name": "天津卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/天津卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226954/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eaf3wyULP1h575eM_4ByMDg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 122
+    },
+    {
+      "id": "ch_1793509609331_m0aym",
+      "name": "辽宁卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/辽宁卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226966/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E6qJH8Fd-zgCGx3P-Ce86cA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 81
+    },
+    {
+      "id": "ch_1793509609331_mxr12",
+      "name": "黑龙江卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/黑龙江卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226965/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7UiKL56-L86ihmTWaZ6csw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 116
+    },
+    {
+      "id": "ch_1793509609331_35ghv",
+      "name": "吉林卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/吉林卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227015/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EW5-3AVdwD5KlUpuA4mz7Cg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 78
+    },
+    {
+      "id": "ch_1793509609331_2ze2w",
+      "name": "海南卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/海南卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227029/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EEuBMjt2kLMD8fAO7QYER7Q%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 439
+    },
+    {
+      "id": "ch_1793509609331_p60dv",
+      "name": "广西卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/广西卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227010/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkAhb-89sxdm9fz6-heXCuw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 78
+    },
+    {
+      "id": "ch_1793509609331_bo52q",
+      "name": "河北卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/河北卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227014/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErSGjhI3DMaaAASPrbQJYTg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 79
+    },
+    {
+      "id": "ch_1793509609331_0aexl",
+      "name": "山西卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/山西卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227016/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESb5Qr3NTpE2ZugIroKoyTw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 78
+    },
+    {
+      "id": "ch_1793509609331_a15lx",
+      "name": "江西卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/江西卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 96
+    },
+    {
+      "id": "ch_1793509609331_wyhhu",
+      "name": "重庆卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/重庆卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226963/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjTXsJprEx2nE38tdvu5lhA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 392
+    },
+    {
+      "id": "ch_1793509609331_7v1e8",
+      "name": "东南卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/东南卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226991/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EQ6F5Mjgs0tJyEArWFL3vQA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 398
+    },
+    {
+      "id": "ch_1793509609331_ic263",
+      "name": "陕西卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/陕西卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226999/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EsGLKaSqf0wDZMbAjeQtfyw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 77
+    },
+    {
+      "id": "ch_1793509609331_da673",
+      "name": "云南卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/云南卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227028/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGfQPqRNVeBjTMsZ48qu0SA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 80
+    },
+    {
+      "id": "ch_1793509609331_62aaa",
+      "name": "宁夏卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/宁夏卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227003/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ESco1zinvdUYzleEkXYhIvA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 101
+    },
+    {
+      "id": "zhejiang",
+      "name": "浙江卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/浙江卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226899/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ETYfTgTra_pUx2cPrgZ_BDw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 184
+    },
+    {
+      "id": "hunan",
+      "name": "湖南卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/湖南卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226509/1.m3u8?zoneoffset=480&servicetype=1&icpid=&limitflux=-1&limitdur=-1&tenantId=8601&accountinfo=%7E%7EV2.0%7EIGb_ib7rnBX9_sANRKq9sg%7EpK8OKM5JoJWWbLRyLfPcUMkwWZ90MzSI9S9PDltJsYzd0ZGcS3Tkh7syciNKJa-w60mDOdwtDyoNwCx9aRgzHNH9AUREV_qvNJtXHRPzYw0%7EExtInfo9bj61dxzlMXrsixrqcFYPg%3D%3D%3A20221022013542%2C915973%2C119.123.71.209%2C20221022013542%2C10000100000000050000000003873458%2C915973%2C-1%2C0%2C1%2C%2C%2C2%2C%2C%2C%2C2%2C%2C10000100000000060000000007253514_0%2CEND&GuardEncType=2",
+      "status": "online",
+      "latency": 189
+    },
+    {
+      "id": "shenzhen",
+      "name": "深圳卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/深圳卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226959/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EGrVNEZREjuNVKiTJo2mtwg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 242
+    },
+    {
+      "id": "ch_1793509609331_eapw1",
+      "name": "贵州卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/贵州卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227012/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EnqBF03rFwPucF8ODtWxLQQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 250
+    },
+    {
+      "id": "ch_1793509609331_q6euq",
+      "name": "甘肃卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/甘肃卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227020/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Err-CLugPnTcUinEM8JeySg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 80
+    },
+    {
+      "id": "ch_1793509609332_a4vpb",
+      "name": "内蒙古卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/内蒙古卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227018/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ErN_hoRDwApMKnJqiNHvn9w%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 81
+    },
+    {
+      "id": "ch_1793509609332_oft0p",
+      "name": "新疆卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/新疆卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227011/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7ExAUu61iVvo_xYbANWJhgXw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 86
+    },
+    {
+      "id": "henan",
+      "name": "河南卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/河南卫视.png",
+      "url": "http://ivi.bupt.edu.cn/hls/hnhd.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "ch_1793509609332_9jedj",
+      "name": "中国教育2台",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/中国教育2台.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND",
+      "status": "online",
+      "latency": 107
+    },
+    {
+      "id": "ch_1793509609332_vzpm0",
+      "name": "康巴卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/康巴卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227027/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkHMvBpWz4rccMxNvSRekpQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 117
+    },
+    {
+      "id": "dongfang",
+      "name": "东方卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/东方卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226898/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0uh4lyjjBCCN7TCq21vSIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 194
+    },
+    {
+      "id": "ch_1793509609332_hyj1v",
+      "name": "中国教育1台",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/中国教育1台.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?",
+      "status": "fallback"
+    },
+    {
+      "id": "beijing",
+      "name": "北京卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/北京卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226900/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EcYPi33WFyhvd6SjmqUKhJg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 303
+    },
+    {
+      "id": "ch_1793509609332_i4tyf",
+      "name": "延边卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/延边卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227045/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Eq0D3NdTUN7FuRzr8eJsbQA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 129
+    },
+    {
+      "id": "guangdong",
+      "name": "广东卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/广东卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226961/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E2MGyx659D_aaDPP0qt3NgA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 303
+    },
+    {
+      "id": "ch_1793509609332_sclua",
+      "name": "西藏卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/西藏卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227033/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EdeTB7OZ9G_VNJk5C3t96fQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 134
+    },
+    {
+      "id": "jiangsu",
+      "name": "江苏卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/江苏卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226897/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0BmO6uHF7WFoTed__Xr3NQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 308
+    },
+    {
+      "id": "ch_1793509609331_h2i87",
+      "name": "青海卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/青海卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227017/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EacviHy_ucMT27Ymf2iLtZA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 456
+    },
+    {
+      "id": "ch_1793509609332_fgwip",
+      "name": "中国教育3台",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/中国教育3台.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND",
+      "status": "online",
+      "latency": 187
+    },
+    {
+      "id": "ch_1793509609332_kdm33",
+      "name": "中国教育4台",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.cn/tv/中国教育4台.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 152
+    },
+    {
+      "id": "anhui",
+      "name": "安徽卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/安徽卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226943/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E0QmKQ_slRCwvVVUUfxPVbw%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 1233
+    },
+    {
+      "id": "hubei",
+      "name": "湖北卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/湖北卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226952/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EREB40lnZnCEwjRy7LZuhIQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 1235
+    },
+    {
+      "id": "shandong",
+      "name": "山东卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/山东卫视.png",
+      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226957/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EjW26v5VaHGy1jQuIA-4EbA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
+      "status": "online",
+      "latency": 82
+    },
+    {
+      "id": "phoenix_chinese",
+      "name": "凤凰卫视中文台",
+      "group": "港澳频道",
+      "logo": "https://live.fanmingming.com/tv/凤凰中文.png",
+      "url": "http://play.fengshows.com/live/fhzw.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "phoenix_info",
+      "name": "凤凰卫视资讯台",
+      "group": "港澳频道",
+      "logo": "https://live.fanmingming.com/tv/凤凰资讯.png",
+      "url": "http://play.fengshows.com/live/fhzx.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "chc_action",
+      "name": "CHC 动作电影",
+      "group": "轮播影院",
+      "logo": "https://live.fanmingming.com/tv/CHC动作电影.png",
+      "url": "https://cctvalih5ca.v.myalicdn.com/live/cctv6_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "chc_family",
+      "name": "CHC 家庭影院",
+      "group": "轮播影院",
+      "logo": "https://live.fanmingming.com/tv/CHC家庭影院.png",
+      "url": "https://cctvalih5ca.v.myalicdn.com/live/cctv8_2/index.m3u8",
+      "status": "fallback"
+    },
+    {
+      "id": "classic_anime",
+      "name": "精选少儿动画",
+      "group": "轮播影院",
+      "logo": "https://live.fanmingming.com/tv/卡酷少儿.png",
+      "url": "https://itemianfei.brtv.org.cn/live/kkse.m3u8",
+      "status": "fallback"
+    }
+  ]
+}

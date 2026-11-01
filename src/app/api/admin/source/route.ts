@@ -5,12 +5,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthInfoFromCookie } from '@/lib/auth';
 import { getConfig } from '@/lib/config';
 import { getStorage } from '@/lib/db';
+import { parseTvBoxConfig } from '@/lib/tvbox';
 import { IStorage } from '@/lib/types';
 
 export const runtime = 'edge';
 
 // 支持的操作类型
-type Action = 'add' | 'disable' | 'enable' | 'delete' | 'sort';
+type Action = 'add' | 'disable' | 'enable' | 'delete' | 'sort' | 'batch_add' | 'parse_tvbox';
 
 interface BaseBody {
   action?: Action;
@@ -38,7 +39,15 @@ export async function POST(request: NextRequest) {
     const username = authInfo.username;
 
     // 基础校验
-    const ACTIONS: Action[] = ['add', 'disable', 'enable', 'delete', 'sort'];
+    const ACTIONS: Action[] = [
+      'add',
+      'disable',
+      'enable',
+      'delete',
+      'sort',
+      'batch_add',
+      'parse_tvbox',
+    ];
     if (!username || !action || !ACTIONS.includes(action)) {
       return NextResponse.json({ error: '参数格式错误' }, { status: 400 });
     }
@@ -55,6 +64,37 @@ export async function POST(request: NextRequest) {
       if (!userEntry || userEntry.role !== 'admin') {
         return NextResponse.json({ error: '权限不足' }, { status: 401 });
       }
+    }
+
+    // 处理 parse_tvbox 预览（无需写库）
+    if (action === 'parse_tvbox') {
+      const { url, content } = body as { url?: string; content?: string };
+      let rawContent = content || '';
+      if (url) {
+        try {
+          const resp = await fetch(url, {
+            headers: {
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 okhttp/3.15',
+              Accept: '*/*',
+            },
+          });
+          if (!resp.ok) {
+            return NextResponse.json(
+              { error: `获取订阅失败: ${resp.status} ${resp.statusText}` },
+              { status: 400 }
+            );
+          }
+          rawContent = await resp.text();
+        } catch (fetchErr) {
+          return NextResponse.json(
+            { error: `拉取订阅地址失败: ${(fetchErr as Error).message}` },
+            { status: 400 }
+          );
+        }
+      }
+      const result = parseTvBoxConfig(rawContent);
+      return NextResponse.json({ ok: true, data: result });
     }
 
     switch (action) {
@@ -79,6 +119,41 @@ export async function POST(request: NextRequest) {
           from: 'custom',
           disabled: false,
         });
+        break;
+      }
+      case 'batch_add': {
+        const { sources } = body as {
+          sources?: Array<{
+            key: string;
+            name: string;
+            api: string;
+            detail?: string;
+          }>;
+        };
+        if (!Array.isArray(sources) || sources.length === 0) {
+          return NextResponse.json(
+            { error: '没有需要添加的有效源' },
+            { status: 400 }
+          );
+        }
+        for (const s of sources) {
+          if (!s.key || !s.name || !s.api) continue;
+          if (
+            adminConfig.SourceConfig.some(
+              (item) => item.key === s.key || item.api === s.api
+            )
+          ) {
+            continue;
+          }
+          adminConfig.SourceConfig.push({
+            key: s.key,
+            name: s.name,
+            api: s.api,
+            detail: s.detail,
+            from: 'custom',
+            disabled: false,
+          });
+        }
         break;
       }
       case 'disable': {

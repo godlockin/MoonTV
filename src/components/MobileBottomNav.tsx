@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Clover, Film, Home, Search, Star, Tv } from 'lucide-react';
+import { Clover, Film, Home, Radio, Search, Star, Tv } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -38,6 +38,11 @@ const MobileBottomNav = ({ activePath }: MobileBottomNavProps) => {
       label: '综艺',
       href: '/douban?type=show',
     },
+    {
+      icon: Radio,
+      label: '直播',
+      href: '/live',
+    },
   ]);
 
   useEffect(() => {
@@ -60,6 +65,10 @@ const MobileBottomNav = ({ activePath }: MobileBottomNavProps) => {
     // 解码URL以进行正确的比较
     const decodedActive = decodeURIComponent(currentActive);
     const decodedItemHref = decodeURIComponent(href);
+
+    if (decodedItemHref === '/live') {
+      return decodedActive.startsWith('/live');
+    }
 
     return (
       decodedActive === decodedItemHref ||
@@ -85,7 +94,7 @@ const MobileBottomNav = ({ activePath }: MobileBottomNavProps) => {
             <li
               key={item.href}
               className='flex-shrink-0'
-              style={{ width: '20vw', minWidth: '20vw' }}
+              style={{ minWidth: '4.5rem' }}
             >
               <Link
                 href={item.href}

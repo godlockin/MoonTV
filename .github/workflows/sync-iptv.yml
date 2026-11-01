@@ -1,0 +1,41 @@
+name: Scheduled IPTV Sync & Probe
+
+on:
+  schedule:
+    # 每天北京时间凌晨 04:00 执行 (UTC 20:00)
+    - cron: '0 20 * * *'
+  # 支持在 GitHub Actions 页面手动点击触发
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-iptv:
+    name: Sync & Probe IPTV Sources
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run IPTV Probe and Sync Script
+        run: node scripts/sync-iptv.js
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/iptv/
+          if git diff --staged --quiet; then
+            echo "IPTV 直播源已是最新，无变动"
+          else
+            git commit -m "chore(iptv): 自动同步与探活更新直播源 [skip ci]"
+            git push
+          fi
