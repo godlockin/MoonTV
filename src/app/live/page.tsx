@@ -171,7 +171,7 @@ function LivePageClient() {
         });
 
         art.on('ready', () => {
-          art.play().catch((err) => {
+          art.play().catch((err: unknown) => {
             void err;
           });
         });
@@ -182,7 +182,7 @@ function LivePageClient() {
 
         artPlayerInstance.current = art;
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         console.error('播放器加载失败:', err);
       });
 
