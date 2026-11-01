@@ -6,7 +6,6 @@ import {
   ListFilter,
   Plus,
   Radio,
-  RefreshCw,
   Search,
   Trash2,
   Tv,
@@ -172,7 +171,9 @@ function LivePageClient() {
         });
 
         art.on('ready', () => {
-          art.play().catch(() => {});
+          art.play().catch((err) => {
+            void err;
+          });
         });
 
         art.on('error', () => {

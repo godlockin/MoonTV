@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /**
  * TVBox 配置订阅解析模块
  * 支持解析标准 TVBox JSON 配置、Base64 编码的 TVBox 订阅地址，提取可用的 Apple CMS 采集站点
@@ -46,7 +48,7 @@ function normalizeUrl(rawUrl: string): string {
  */
 export function parseTvBoxConfig(rawContent: string): TvBoxParseResult {
   try {
-    let content = rawContent.trim();
+    const content = rawContent.trim();
     if (!content) {
       return { success: false, totalFound: 0, sites: [], skippedSpiderCount: 0, error: '配置内容为空' };
     }
