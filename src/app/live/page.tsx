@@ -169,7 +169,14 @@ function LivePageClient() {
                 }
                 const hls = new Hls({
                   enableWorker: true,
-                  lowLatencyMode: true,
+                  lowLatencyMode: false, // 关闭激进低延迟，防止紧贴切片边缘导致的频繁断流卡顿
+                  liveSyncDurationCount: 3, // 保持约 3 个切片的安全平滑缓冲区，极大提升抗抖动能力
+                  maxBufferLength: 30, // 允许前向缓冲 30 秒直播切片
+                  maxMaxBufferLength: 60,
+                  maxBufferHole: 0.5, // 轻微切片空洞平滑跳过
+                  highBufferWatchdogPeriod: 2,
+                  nudgeOffset: 0.2,
+                  nudgeMaxRetry: 5,
                 });
                 hls.loadSource(url);
                 hls.attachMedia(video);

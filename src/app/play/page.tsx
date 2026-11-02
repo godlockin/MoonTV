@@ -6,7 +6,7 @@ import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 import { Heart } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   deleteFavorite,
@@ -118,6 +118,33 @@ function PlayPageClient() {
   const videoTitleRef = useRef(videoTitle);
   const videoYearRef = useRef(videoYear);
   const detailRef = useRef<SearchResult | null>(detail);
+
+  // 暂停状态下持续预加载定时器
+  const pausePreloadIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const stopPausePreloadTimer = useCallback(() => {
+    if (pausePreloadIntervalRef.current) {
+      clearInterval(pausePreloadIntervalRef.current);
+      pausePreloadIntervalRef.current = null;
+    }
+  }, []);
+
+  const startPausePreloadTimer = useCallback(() => {
+    stopPausePreloadTimer();
+    pausePreloadIntervalRef.current = setInterval(() => {
+      const art = artPlayerRef.current;
+      if (!art || !art.video) return;
+      const video = art.video as any;
+      if (video.hls && video.paused) {
+        try {
+          // 视频暂停时持续激活 Hls 加载管线
+          video.hls.startLoad();
+        } catch (_) {
+          // ignore
+        }
+      }
+    }, 2500);
+  }, [stopPausePreloadTimer]);
   const currentEpisodeIndexRef = useRef(currentEpisodeIndex);
 
   // 同步最新值到 refs
@@ -1212,6 +1239,7 @@ function PlayPageClient() {
 
     // WebKit浏览器或首次创建：销毁之前的播放器实例并创建新的
     if (artPlayerRef.current) {
+      stopPausePreloadTimer();
       if (artPlayerRef.current.video && artPlayerRef.current.video.hls) {
         artPlayerRef.current.video.hls.destroy();
       }
@@ -1273,12 +1301,14 @@ function PlayPageClient() {
             const hls = new Hls({
               debug: false, // 关闭日志
               enableWorker: true, // WebWorker 解码，降低主线程压力
-              lowLatencyMode: true, // 开启低延迟 LL-HLS
+              lowLatencyMode: false, // 点播视频关闭低延迟模式以启用深度预加载缓冲
 
-              /* 缓冲/内存相关 */
-              maxBufferLength: 30, // 前向缓冲最大 30s，过大容易导致高延迟
-              backBufferLength: 30, // 仅保留 30s 已播放内容，避免内存占用
-              maxBufferSize: 60 * 1000 * 1000, // 约 60MB，超出后触发清理
+              /* 深度缓冲配置：暂停时持续预加载后续分片 */
+              maxBufferLength: 600, // 前向预加载目标 600 秒 (10 分钟)
+              maxMaxBufferLength: 1200, // 最大允许缓冲 1200 秒 (20 分钟)
+              maxBufferSize: 256 * 1024 * 1024, // 256MB 大缓冲池，容纳高清大段码流
+              maxBufferHole: 0.5, // 容忍小空洞平滑跳过，防止微小跳帧卡死
+              highBufferWatchdogPeriod: 2,
 
               /* 自定义loader */
               loader: blockAdEnabledRef.current
@@ -1557,6 +1587,22 @@ function PlayPageClient() {
 
       artPlayerRef.current.on('pause', () => {
         saveCurrentPlayProgress();
+        // 暂停后维持后台预加载，除非用户退出/离开页面
+        if (artPlayerRef.current?.video) {
+          const v = artPlayerRef.current.video as any;
+          if (v.hls) {
+            try {
+              v.hls.startLoad();
+            } catch (_) {
+              // ignore
+            }
+          }
+        }
+        startPausePreloadTimer();
+      });
+
+      artPlayerRef.current.on('play', () => {
+        stopPausePreloadTimer();
       });
 
       if (artPlayerRef.current?.video) {
@@ -1574,11 +1620,12 @@ function PlayPageClient() {
   // 当组件卸载时清理定时器
   useEffect(() => {
     return () => {
+      stopPausePreloadTimer();
       if (saveIntervalRef.current) {
         clearInterval(saveIntervalRef.current);
       }
     };
-  }, []);
+  }, [stopPausePreloadTimer]);
 
   if (loading) {
     return (
