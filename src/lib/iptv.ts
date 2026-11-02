@@ -155,14 +155,14 @@ export const PRESET_CHANNELS: LiveChannel[] = [
     name: 'CGTN 英语新闻',
     group: '央视频道',
     logo: 'https://live.fanmingming.com/tv/CGTN.png',
-    url: 'https://news.cgtn.com/resource/live/english/cgtn-news.m3u8',
+    url: 'https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8',
   },
   {
     id: 'cgtn_doc',
     name: 'CGTN 纪录频道',
     group: '央视频道',
     logo: 'https://live.fanmingming.com/tv/CGTNDocumentary.png',
-    url: 'https://livedoc.cgtn.com/1000d/prog_index.m3u8',
+    url: 'https://english-livebkali.cgtn.com/live/doccgtn.m3u8',
   },
 
   // --- 卫视频道 ---

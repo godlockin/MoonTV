@@ -52,8 +52,8 @@ const CORE_PRESETS = [
   { id: 'cctv15', name: 'CCTV-15 音乐', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CCTV15.png', urls: ['http://207.56.13.146:81/cdnlive/cctv15.m3u8'] },
   { id: 'cctv16', name: 'CCTV-16 奥林匹克', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CCTV16.png', urls: ['http://207.56.13.146:81/cdnlive/cctv16.m3u8'] },
   { id: 'cctv17', name: 'CCTV-17 农业农村', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CCTV17.png', urls: ['http://207.56.13.146:81/cdnlive/cctv17.m3u8'] },
-  { id: 'cgtn_news', name: 'CGTN 英语新闻', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CGTN.png', urls: ['https://news.cgtn.com/resource/live/english/cgtn-news.m3u8'] },
-  { id: 'cgtn_doc', name: 'CGTN 纪录频道', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CGTNDocumentary.png', urls: ['https://livedoc.cgtn.com/1000d/prog_index.m3u8'] },
+  { id: 'cgtn_news', name: 'CGTN 英语新闻', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CGTN.png', urls: ['https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8', 'https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8'] },
+  { id: 'cgtn_doc', name: 'CGTN 纪录频道', group: '央视频道', logo: 'https://live.fanmingming.com/tv/CGTNDocumentary.png', urls: ['https://english-livebkali.cgtn.com/live/doccgtn.m3u8', 'https://english-livebkali.cgtn.com/live/doccgtn_0.m3u8'] },
 
   // --- 卫视频道 ---
   { id: 'hunan', name: '湖南卫视', group: '卫视频道', logo: 'https://live.fanmingming.com/tv/湖南卫视.png', urls: ['http://207.56.13.146:81/cdnlive/hunan.m3u8'] },
@@ -234,15 +234,39 @@ function probeStreamUrl(urlStr, redirectCount = 0, initialStartTime = null) {
         if ([200, 206].includes(res.statusCode)) {
           let snippet = '';
           let resolved = false;
-          const finish = () => {
+          const finish = async () => {
             if (resolved) return;
             resolved = true;
-            const isValidM3u = snippet.includes('#EXTM3U');
-            resolve({ ok: isValidM3u, latency: isValidM3u ? latency : 9999 });
+            if (!snippet.includes('#EXTM3U')) {
+              return resolve({ ok: false, latency: 9999, error: 'Not an M3U8' });
+            }
+
+            // 如果是多码率 Master Playlist，提取首个子流地址进行深度连通性探活，防止主索引可用但子流已下线（如 live.cgtn.com 域名注销）
+            if (snippet.includes('#EXT-X-STREAM-INF') && redirectCount < 2) {
+              const lines = snippet.split('\n');
+              let subStreamUrl = null;
+              for (const l of lines) {
+                const trimmed = l.trim();
+                if (trimmed && !trimmed.startsWith('#')) {
+                  try {
+                    subStreamUrl = new URL(trimmed, urlStr).toString();
+                    break;
+                  } catch {
+                    // ignore
+                  }
+                }
+              }
+              if (subStreamUrl) {
+                const subProbe = await probeStreamUrl(subStreamUrl, redirectCount + 1, startTime);
+                return resolve(subProbe);
+              }
+            }
+
+            resolve({ ok: true, latency });
           };
           res.on('data', (chunk) => {
             snippet += chunk.toString();
-            if (snippet.length > 512) {
+            if (snippet.length > 1024) {
               res.destroy();
               finish();
             }
@@ -392,16 +416,21 @@ async function main() {
     const existing = channelMap.get(normKey);
 
     if (existing) {
-      // 过滤无效假域名与省网受限内网源
+      // 过滤无效假域名、失效已注销域名与省网受限内网源
       if (
         !item.url.includes('play-live.cctv.com') &&
-        !item.url.includes('gslbserv.itv.cmvideo.cn')
+        !item.url.includes('gslbserv.itv.cmvideo.cn') &&
+        !item.url.includes('live.cgtn.com') &&
+        !item.url.includes('livedoc.cgtn.com')
       ) {
         existing.urls.add(item.url);
       }
     } else if (
       item.group &&
       !item.url.includes('gslbserv.itv.cmvideo.cn') &&
+      !item.url.includes('play-live.cctv.com') &&
+      !item.url.includes('live.cgtn.com') &&
+      !item.url.includes('livedoc.cgtn.com') &&
       (item.group.includes('卫视') || item.group.includes('央视') || item.group.includes('港澳') || item.group.includes('电影'))
     ) {
       // 自动收录优质大类中的未知频道
