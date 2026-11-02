@@ -2,6 +2,8 @@
 
 'use client';
 
+import Artplayer from 'artplayer';
+import Hls from 'hls.js';
 import {
   ListFilter,
   Plus,
@@ -52,6 +54,8 @@ function LivePageClient() {
 
   const artRef = useRef<HTMLDivElement>(null);
   const artPlayerInstance = useRef<any>(null);
+  const hlsRef = useRef<any>(null);
+  const activeHlsInstances = useRef<Set<any>>(new Set());
 
   // 优先拉取嗅探脚本同步更新的最新频道库，并叠加本地用户自定义频道
   useEffect(() => {
@@ -155,41 +159,79 @@ function LivePageClient() {
   }, [channels, activeGroup, searchQuery]);
 
   // 彻底安全销毁旧播放器与 HLS 实例，杜绝换台背景音残留与幽灵进程
-  const teardownPlayer = (instance: any) => {
-    if (!instance) return;
-    try {
-      const video = instance.video;
-      if (video) {
+  const teardownPlayer = () => {
+    // 1. 彻底关停所有 HLS.js 实例的网络请求与解码线程
+    for (const h of activeHlsInstances.current) {
+      try {
+        h.removeAllListeners();
+        h.stopLoad();
+        h.detachMedia();
+        h.destroy();
+      } catch (_) {}
+    }
+    activeHlsInstances.current.clear();
+
+    if (hlsRef.current) {
+      try {
+        hlsRef.current.removeAllListeners();
+        hlsRef.current.stopLoad();
+        hlsRef.current.detachMedia();
+        hlsRef.current.destroy();
+      } catch (_) {}
+      hlsRef.current = null;
+    }
+
+    // 2. 彻底静音、暂停并重置页面与容器中的所有 HTMLVideoElement
+    if (typeof document !== 'undefined') {
+      const allVideos = document.querySelectorAll('video');
+      allVideos.forEach((video) => {
         try {
           video.pause();
-        } catch (_) {}
-        if (video.hls) {
-          try {
-            video.hls.stopLoad();
-            video.hls.detachMedia();
-            video.hls.destroy();
-          } catch (_) {}
-          video.hls = null;
-        }
-        try {
+          video.muted = true;
+          if ((video as any).hls) {
+            try {
+              (video as any).hls.removeAllListeners();
+              (video as any).hls.stopLoad();
+              (video as any).hls.detachMedia();
+              (video as any).hls.destroy();
+            } catch (_) {}
+            (video as any).hls = null;
+          }
+          video.src = '';
           video.removeAttribute('src');
           video.load();
         } catch (_) {}
-      }
-      instance.destroy(true); // true 彻底移除播放器 DOM 节点及 video 标签
-    } catch (e) {
-      console.warn('[IPTV] 销毁播放器异常:', e);
+      });
+    }
+
+    // 3. 销毁 ArtPlayer 实例
+    if (artPlayerInstance.current) {
+      try {
+        const art = artPlayerInstance.current;
+        if (art.video) {
+          try {
+            art.video.pause();
+            art.video.muted = true;
+            art.video.src = '';
+            art.video.removeAttribute('src');
+            art.video.load();
+          } catch (_) {}
+        }
+        art.destroy(true);
+      } catch (_) {}
+      artPlayerInstance.current = null;
+    }
+
+    // 4. 清理 DOM 容器
+    if (artRef.current) {
+      artRef.current.innerHTML = '';
     }
   };
 
   // 换台处理：同步切断旧节目音视频，重置线路索引
   const handleSelectChannel = (channel: LiveChannel) => {
     if (selectedChannel?.id === channel.id) return;
-    teardownPlayer(artPlayerInstance.current);
-    artPlayerInstance.current = null;
-    if (artRef.current) {
-      artRef.current.innerHTML = '';
-    }
+    teardownPlayer();
     setCurrentRouteIndex(0);
     setSelectedChannel(channel);
   };
@@ -197,11 +239,7 @@ function LivePageClient() {
   // 切换线路处理
   const handleSwitchRoute = (idx: number) => {
     if (currentRouteIndex === idx) return;
-    teardownPlayer(artPlayerInstance.current);
-    artPlayerInstance.current = null;
-    if (artRef.current) {
-      artRef.current.innerHTML = '';
-    }
+    teardownPlayer();
     setCurrentRouteIndex(idx);
   };
 
@@ -209,174 +247,170 @@ function LivePageClient() {
   useEffect(() => {
     if (!artRef.current || !selectedChannel) return;
 
+    let isInstanceDestroyed = false;
     let art: any = null;
-    let isDestroyed = false;
 
     setPlayerError(null);
 
-    // 动态导入 ArtPlayer & Hls.js 以适配 SSR
-    Promise.all([import('artplayer'), import('hls.js')])
-      .then(([ArtPlayerModule, HlsModule]) => {
-        if (isDestroyed || !artRef.current) return;
-        const Artplayer = ArtPlayerModule.default;
-        const Hls = HlsModule.default;
+    // 换台或重新初始化前，先彻底清理旧实例
+    teardownPlayer();
 
-        // 如果旧实例存在，先彻底销毁清理
-        if (artPlayerInstance.current) {
-          teardownPlayer(artPlayerInstance.current);
-          artPlayerInstance.current = null;
-        }
-        if (artRef.current) {
-          artRef.current.innerHTML = '';
-        }
+    // 判定实际播放 URL：当开启代理，或在 HTTPS 生产站点下播放 HTTP 直播流时，通过内置边缘代理中转
+    const isHttpsPage =
+      typeof window !== 'undefined' &&
+      window.location.protocol === 'https:';
+    const shouldProxy =
+      useProxy ||
+      (isHttpsPage && currentStreamUrl.startsWith('http://'));
 
-        // 判定实际播放 URL：当开启代理，或在 HTTPS 生产站点下播放 HTTP 直播流时，通过内置边缘代理中转
-        const isHttpsPage =
-          typeof window !== 'undefined' &&
-          window.location.protocol === 'https:';
-        const shouldProxy =
-          useProxy ||
-          (isHttpsPage && currentStreamUrl.startsWith('http://'));
+    const targetUrl = shouldProxy
+      ? `/api/live-proxy?url=${encodeURIComponent(currentStreamUrl)}`
+      : currentStreamUrl;
 
-        const targetUrl = shouldProxy
-          ? `/api/live-proxy?url=${encodeURIComponent(currentStreamUrl)}`
-          : currentStreamUrl;
+    try {
+      art = new Artplayer({
+        container: artRef.current,
+        url: targetUrl,
+        type: 'm3u8',
+        isLive: true,
+        autoplay: true,
+        autoMini: false, // 严禁进入浮动迷你播放器，防止脱离容器挂载到 body 继续播放
+        mutex: true, // 强制互斥，其它播放器实例自动静音暂停
+        setting: true,
+        pip: true,
+        fullscreen: true,
+        fullscreenWeb: true,
+        playsInline: true,
+        playbackRate: false,
+        theme: '#16a34a',
+        customType: {
+          m3u8: function (video: HTMLVideoElement, url: string, artInstance: any) {
+            if (isInstanceDestroyed) return;
 
-        art = new Artplayer({
-          container: artRef.current,
-          url: targetUrl,
-          type: 'm3u8',
-          isLive: true,
-          autoplay: true,
-          autoMini: true,
-          setting: true,
-          pip: true,
-          fullscreen: true,
-          fullscreenWeb: true,
-          playsInline: true,
-          playbackRate: false,
-          theme: '#16a34a',
-          customType: {
-            m3u8: function (video: HTMLVideoElement, url: string, art: any) {
-              if (Hls.isSupported()) {
-                if (video.hls) {
-                  try {
-                    video.hls.stopLoad();
-                    video.hls.detachMedia();
-                    video.hls.destroy();
-                  } catch (_) {}
-                  video.hls = null;
-                }
-                const hls = new Hls({
-                  enableWorker: true,
-                  lowLatencyMode: false, // 关闭激进低延迟，防止紧贴切片边缘导致的频繁断流卡顿
-                  liveSyncDurationCount: 3, // 保持约 3 个切片的安全平滑缓冲区，极大提升抗抖动能力
-                  maxBufferLength: 30, // 允许前向缓冲 30 秒直播切片
-                  maxMaxBufferLength: 60,
-                  maxBufferHole: 0.5, // 轻微切片空洞平滑跳过
-                  highBufferWatchdogPeriod: 2,
-                  nudgeOffset: 0.2,
-                  nudgeMaxRetry: 5,
-                });
-                hls.loadSource(url);
-                hls.attachMedia(video);
-                video.hls = hls;
-
-                // 监听播放器销毁事件，同步解绑并终止 HLS 解码
-                art.on('destroy', () => {
-                  if (video && video.hls) {
-                    try {
-                      video.hls.stopLoad();
-                      video.hls.detachMedia();
-                      video.hls.destroy();
-                    } catch (_) {}
-                    video.hls = null;
-                  }
-                });
-
-                hls.on(Hls.Events.ERROR, function (_event: any, data: any) {
-                  if (data.fatal) {
-                    // 若直连失败且当前尚未使用中转代理，自动尝试使用边缘代理自愈
-                    if (
-                      data.type === Hls.ErrorTypes.NETWORK_ERROR &&
-                      !url.includes('/api/live-proxy')
-                    ) {
-                      console.warn(
-                        '[IPTV] 直播流直连失败，自动切换至边缘代理中转...'
-                      );
-                      const proxiedUrl = `/api/live-proxy?url=${encodeURIComponent(
-                        currentStreamUrl
-                      )}`;
-                      hls.loadSource(proxiedUrl);
-                      hls.startLoad();
-                      return;
-                    }
-
-                    // 如果有多线路且后续有备用源，自动切换至下一条线路
-                    if (currentRouteIndex + 1 < allRoutes.length) {
-                      console.warn(
-                        `[IPTV] 线路 ${currentRouteIndex + 1} 异常，自动切换至线路 ${currentRouteIndex + 2}...`
-                      );
-                      setCurrentRouteIndex((prev) => prev + 1);
-                      return;
-                    }
-
-                    switch (data.type) {
-                      case Hls.ErrorTypes.NETWORK_ERROR:
-                        console.warn('[IPTV] 直播流网络错误，尝试重连...');
-                        hls.startLoad();
-                        break;
-                      case Hls.ErrorTypes.MEDIA_ERROR:
-                        console.warn('[IPTV] 媒体解析错误，尝试自愈...');
-                        hls.recoverMediaError();
-                        break;
-                      default:
-                        console.error('[IPTV] 直播流不可用');
-                        setPlayerError(
-                          '当前频道所有可用线路均已超时或失效，请尝试切换其他频道'
-                        );
-                        hls.destroy();
-                        break;
-                    }
-                  }
-                });
-              } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = url;
-              } else {
-                art.notice.show = '当前浏览器不支持播放 HLS 视频流';
+            if (Hls.isSupported()) {
+              if (hlsRef.current) {
+                try {
+                  hlsRef.current.removeAllListeners();
+                  hlsRef.current.stopLoad();
+                  hlsRef.current.detachMedia();
+                  hlsRef.current.destroy();
+                } catch (_) {}
+                activeHlsInstances.current.delete(hlsRef.current);
+                hlsRef.current = null;
               }
-            },
+
+              const hls = new Hls({
+                enableWorker: true,
+                lowLatencyMode: false, // 关闭激进低延迟，防止紧贴切片边缘导致的频繁断流卡顿
+                liveSyncDurationCount: 3, // 保持约 3 个切片的安全平滑缓冲区，极大提升抗抖动能力
+                maxBufferLength: 30, // 允许前向缓冲 30 秒直播切片
+                maxMaxBufferLength: 60,
+                maxBufferHole: 0.5, // 轻微切片空洞平滑跳过
+                highBufferWatchdogPeriod: 2,
+                nudgeOffset: 0.2,
+                nudgeMaxRetry: 5,
+              });
+
+              hlsRef.current = hls;
+              activeHlsInstances.current.add(hls);
+
+              hls.loadSource(url);
+              hls.attachMedia(video);
+              (video as any).hls = hls;
+
+              // 监听播放器销毁事件，同步解绑并终止 HLS 解码
+              artInstance.on('destroy', () => {
+                if (isInstanceDestroyed) return;
+                try {
+                  hls.removeAllListeners();
+                  hls.stopLoad();
+                  hls.detachMedia();
+                  hls.destroy();
+                } catch (_) {}
+                activeHlsInstances.current.delete(hls);
+                if (hlsRef.current === hls) {
+                  hlsRef.current = null;
+                }
+              });
+
+              hls.on(Hls.Events.ERROR, function (_event: any, data: any) {
+                // 如果本实例已被销毁或用户已切台，坚决不重试、不拉流、不触发切换线路！
+                if (isInstanceDestroyed) return;
+
+                if (data.fatal) {
+                  // 若直连失败且当前尚未使用中转代理，自动尝试使用边缘代理自愈
+                  if (
+                    data.type === Hls.ErrorTypes.NETWORK_ERROR &&
+                    !url.includes('/api/live-proxy')
+                  ) {
+                    console.warn(
+                      '[IPTV] 直播流直连失败，自动切换至边缘代理中转...'
+                    );
+                    const proxiedUrl = `/api/live-proxy?url=${encodeURIComponent(
+                      currentStreamUrl
+                    )}`;
+                    hls.loadSource(proxiedUrl);
+                    hls.startLoad();
+                    return;
+                  }
+
+                  // 如果有多线路且后续有备用源，自动切换至下一条线路
+                  if (currentRouteIndex + 1 < allRoutes.length) {
+                    console.warn(
+                      `[IPTV] 线路 ${currentRouteIndex + 1} 异常，自动切换至线路 ${currentRouteIndex + 2}...`
+                    );
+                    setCurrentRouteIndex((prev) => prev + 1);
+                    return;
+                  }
+
+                  switch (data.type) {
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+                      console.warn('[IPTV] 直播流网络错误，尝试重连...');
+                      hls.startLoad();
+                      break;
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+                      console.warn('[IPTV] 媒体解析错误，尝试自愈...');
+                      hls.recoverMediaError();
+                      break;
+                    default:
+                      console.error('[IPTV] 直播流不可用');
+                      setPlayerError(
+                        '当前频道所有可用线路均已超时或失效，请尝试切换其他频道'
+                      );
+                      hls.destroy();
+                      break;
+                  }
+                }
+              });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+              video.src = url;
+            } else {
+              artInstance.notice.show = '当前浏览器不支持播放 HLS 视频流';
+            }
           },
-        });
-
-        art.on('ready', () => {
-          art.play().catch((err: unknown) => {
-            void err;
-          });
-        });
-
-        art.on('error', () => {
-          setPlayerError('直播源连接失败，可能源站已失效或受到防盗链限制');
-        });
-
-        artPlayerInstance.current = art;
-      })
-      .catch((err: unknown) => {
-        console.error('播放器加载失败:', err);
+        },
       });
 
+      art.on('ready', () => {
+        if (isInstanceDestroyed) return;
+        art.play().catch((err: unknown) => {
+          void err;
+        });
+      });
+
+      art.on('error', () => {
+        if (isInstanceDestroyed) return;
+        setPlayerError('直播源连接失败，可能源站已失效或受到防盗链限制');
+      });
+
+      artPlayerInstance.current = art;
+    } catch (err: unknown) {
+      console.error('播放器初始化失败:', err);
+    }
+
     return () => {
-      isDestroyed = true;
-      if (art) {
-        teardownPlayer(art);
-      }
-      if (artPlayerInstance.current) {
-        teardownPlayer(artPlayerInstance.current);
-        artPlayerInstance.current = null;
-      }
-      if (artRef.current) {
-        artRef.current.innerHTML = '';
-      }
+      isInstanceDestroyed = true;
+      teardownPlayer();
     };
   }, [selectedChannel, useProxy, currentStreamUrl]);
 
