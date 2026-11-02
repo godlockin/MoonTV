@@ -180,16 +180,29 @@ async function discoverGitHubIptvM3uUrls() {
 }
 
 /**
- * 嗅探探测单个 M3U8 流媒体地址是否可用并测量延迟
+ * 嗅探探测单个 M3U8 流媒体地址是否可用并测量延迟（自动追踪重定向并校验 #EXTM3U 内容）
  */
-function probeStreamUrl(urlStr) {
+function probeStreamUrl(urlStr, redirectCount = 0, initialStartTime = null) {
   return new Promise((resolve) => {
-    const startTime = Date.now();
+    const startTime = initialStartTime || Date.now();
+    if (redirectCount > 4) {
+      return resolve({ ok: false, latency: 9999, error: 'Too many redirects' });
+    }
+
     let parsed;
     try {
       parsed = new URL(urlStr);
     } catch {
       return resolve({ ok: false, latency: 9999, error: 'Invalid URL' });
+    }
+
+    // 拦截已知的无效回环或假流路径
+    if (
+      parsed.hostname === '1.1.1.1' ||
+      parsed.hostname === '127.0.0.1' ||
+      parsed.hostname.includes('cache.ott.')
+    ) {
+      return resolve({ ok: false, latency: 9999, error: 'Restricted host' });
     }
 
     const client = parsed.protocol === 'https:' ? https : http;
@@ -206,21 +219,36 @@ function probeStreamUrl(urlStr) {
       },
       (res) => {
         const latency = Date.now() - startTime;
-        // 允许 200, 206 及重定向响应
-        if ([200, 206, 301, 302].includes(res.statusCode)) {
+
+        // 跟随重定向校验最终流地址是否真正可访问
+        if ([301, 302, 303, 307, 308].includes(res.statusCode) && res.headers.location) {
+          res.resume();
+          try {
+            const nextUrl = new URL(res.headers.location, urlStr).toString();
+            return resolve(probeStreamUrl(nextUrl, redirectCount + 1, startTime));
+          } catch {
+            return resolve({ ok: false, latency: 9999, error: 'Invalid redirect' });
+          }
+        }
+
+        if ([200, 206].includes(res.statusCode)) {
           let snippet = '';
+          let resolved = false;
+          const finish = () => {
+            if (resolved) return;
+            resolved = true;
+            const isValidM3u = snippet.includes('#EXTM3U');
+            resolve({ ok: isValidM3u, latency: isValidM3u ? latency : 9999 });
+          };
           res.on('data', (chunk) => {
             snippet += chunk.toString();
             if (snippet.length > 512) {
               res.destroy();
+              finish();
             }
           });
-          res.on('end', () => {
-            resolve({ ok: true, latency });
-          });
-          res.on('close', () => {
-            resolve({ ok: true, latency });
-          });
+          res.on('end', finish);
+          res.on('close', finish);
         } else {
           res.resume();
           resolve({ ok: false, latency, status: res.statusCode });
@@ -364,12 +392,16 @@ async function main() {
     const existing = channelMap.get(normKey);
 
     if (existing) {
-      // 过滤无效假域名
-      if (!item.url.includes('play-live.cctv.com')) {
+      // 过滤无效假域名与省网受限内网源
+      if (
+        !item.url.includes('play-live.cctv.com') &&
+        !item.url.includes('gslbserv.itv.cmvideo.cn')
+      ) {
         existing.urls.add(item.url);
       }
     } else if (
       item.group &&
+      !item.url.includes('gslbserv.itv.cmvideo.cn') &&
       (item.group.includes('卫视') || item.group.includes('央视') || item.group.includes('港澳') || item.group.includes('电影'))
     ) {
       // 自动收录优质大类中的未知频道
