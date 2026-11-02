@@ -154,6 +154,57 @@ function LivePageClient() {
     });
   }, [channels, activeGroup, searchQuery]);
 
+  // 彻底安全销毁旧播放器与 HLS 实例，杜绝换台背景音残留与幽灵进程
+  const teardownPlayer = (instance: any) => {
+    if (!instance) return;
+    try {
+      const video = instance.video;
+      if (video) {
+        try {
+          video.pause();
+        } catch (_) {}
+        if (video.hls) {
+          try {
+            video.hls.stopLoad();
+            video.hls.detachMedia();
+            video.hls.destroy();
+          } catch (_) {}
+          video.hls = null;
+        }
+        try {
+          video.removeAttribute('src');
+          video.load();
+        } catch (_) {}
+      }
+      instance.destroy(true); // true 彻底移除播放器 DOM 节点及 video 标签
+    } catch (e) {
+      console.warn('[IPTV] 销毁播放器异常:', e);
+    }
+  };
+
+  // 换台处理：同步切断旧节目音视频，重置线路索引
+  const handleSelectChannel = (channel: LiveChannel) => {
+    if (selectedChannel?.id === channel.id) return;
+    teardownPlayer(artPlayerInstance.current);
+    artPlayerInstance.current = null;
+    if (artRef.current) {
+      artRef.current.innerHTML = '';
+    }
+    setCurrentRouteIndex(0);
+    setSelectedChannel(channel);
+  };
+
+  // 切换线路处理
+  const handleSwitchRoute = (idx: number) => {
+    if (currentRouteIndex === idx) return;
+    teardownPlayer(artPlayerInstance.current);
+    artPlayerInstance.current = null;
+    if (artRef.current) {
+      artRef.current.innerHTML = '';
+    }
+    setCurrentRouteIndex(idx);
+  };
+
   // 初始化 / 切换频道播放器
   useEffect(() => {
     if (!artRef.current || !selectedChannel) return;
@@ -170,14 +221,13 @@ function LivePageClient() {
         const Artplayer = ArtPlayerModule.default;
         const Hls = HlsModule.default;
 
-        // 如果旧实例存在，先销毁
+        // 如果旧实例存在，先彻底销毁清理
         if (artPlayerInstance.current) {
-          try {
-            artPlayerInstance.current.destroy(false);
-          } catch (_) {
-            // ignore
-          }
+          teardownPlayer(artPlayerInstance.current);
           artPlayerInstance.current = null;
+        }
+        if (artRef.current) {
+          artRef.current.innerHTML = '';
         }
 
         // 判定实际播放 URL：当开启代理，或在 HTTPS 生产站点下播放 HTTP 直播流时，通过内置边缘代理中转
@@ -210,7 +260,12 @@ function LivePageClient() {
             m3u8: function (video: HTMLVideoElement, url: string, art: any) {
               if (Hls.isSupported()) {
                 if (video.hls) {
-                  video.hls.destroy();
+                  try {
+                    video.hls.stopLoad();
+                    video.hls.detachMedia();
+                    video.hls.destroy();
+                  } catch (_) {}
+                  video.hls = null;
                 }
                 const hls = new Hls({
                   enableWorker: true,
@@ -226,6 +281,18 @@ function LivePageClient() {
                 hls.loadSource(url);
                 hls.attachMedia(video);
                 video.hls = hls;
+
+                // 监听播放器销毁事件，同步解绑并终止 HLS 解码
+                art.on('destroy', () => {
+                  if (video && video.hls) {
+                    try {
+                      video.hls.stopLoad();
+                      video.hls.detachMedia();
+                      video.hls.destroy();
+                    } catch (_) {}
+                    video.hls = null;
+                  }
+                });
 
                 hls.on(Hls.Events.ERROR, function (_event: any, data: any) {
                   if (data.fatal) {
@@ -300,13 +367,15 @@ function LivePageClient() {
 
     return () => {
       isDestroyed = true;
+      if (art) {
+        teardownPlayer(art);
+      }
       if (artPlayerInstance.current) {
-        try {
-          artPlayerInstance.current.destroy(false);
-        } catch (_) {
-          // ignore
-        }
+        teardownPlayer(artPlayerInstance.current);
         artPlayerInstance.current = null;
+      }
+      if (artRef.current) {
+        artRef.current.innerHTML = '';
       }
     };
   }, [selectedChannel, useProxy, currentStreamUrl]);
@@ -360,7 +429,7 @@ function LivePageClient() {
     if (confirm('确定要清除所有已导入的自定义直播源并恢复预置吗？')) {
       localStorage.removeItem('moontv_custom_live_channels');
       setChannels(PRESET_CHANNELS);
-      setSelectedChannel(PRESET_CHANNELS[0]);
+      handleSelectChannel(PRESET_CHANNELS[0]);
     }
   };
 
@@ -382,7 +451,7 @@ function LivePageClient() {
                       (c) => c.id === selectedChannel.id
                     );
                     const next = channels[(idx + 1) % channels.length];
-                    if (next) setSelectedChannel(next);
+                    if (next) handleSelectChannel(next);
                   }}
                   className='px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-medium transition-colors shadow'
                 >
@@ -422,7 +491,7 @@ function LivePageClient() {
                       {allRoutes.map((_, idx) => (
                         <button
                           key={idx}
-                          onClick={() => setCurrentRouteIndex(idx)}
+                          onClick={() => handleSwitchRoute(idx)}
                           className={`px-1.5 py-0.5 text-[10px] font-medium rounded transition-all ${
                             currentRouteIndex === idx
                               ? 'bg-green-600 text-white shadow-xs'
@@ -539,7 +608,7 @@ function LivePageClient() {
                 return (
                   <button
                     key={channel.id}
-                    onClick={() => setSelectedChannel(channel)}
+                    onClick={() => handleSelectChannel(channel)}
                     className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all ${
                       isSelected
                         ? 'bg-green-500/15 border border-green-500/30 text-green-700 dark:text-green-300 shadow-sm'
