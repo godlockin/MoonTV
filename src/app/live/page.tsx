@@ -58,7 +58,13 @@ function LivePageClient() {
     const loadChannels = async () => {
       let baseList = PRESET_CHANNELS;
       try {
-        const resp = await fetch('/iptv/channels.json');
+        const resp = await fetch(`/iptv/channels.json?t=${Date.now()}`, {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            Pragma: 'no-cache',
+          },
+        });
         if (resp.ok) {
           const data = await resp.json();
           if (Array.isArray(data?.channels) && data.channels.length > 0) {
@@ -90,12 +96,51 @@ function LivePageClient() {
     loadChannels();
   }, []);
 
-  // 计算分组列表
+  // 常用大类优先排列顺序
+  const GROUP_ORDER = useMemo(
+    () => [
+      '全部',
+      '央视频道',
+      '卫视频道',
+      '影视轮播',
+      '国际频道',
+      '体育赛事',
+      '音乐电台',
+      '纪录探索',
+      '少儿动画',
+      '港澳台',
+      '地方综合',
+    ],
+    []
+  );
+
+  // 计算每个分组的频道数量
+  const groupCounts = useMemo(() => {
+    const counts: Record<string, number> = { 全部: channels.length };
+    channels.forEach((c) => {
+      const g = c.group || '其他频道';
+      counts[g] = (counts[g] || 0) + 1;
+    });
+    return counts;
+  }, [channels]);
+
+  // 计算智能有序的分组列表
   const groups = useMemo(() => {
     const set = new Set<string>();
-    channels.forEach((c) => set.add(c.group || '其他'));
-    return ['全部', ...Array.from(set)];
-  }, [channels]);
+    channels.forEach((c) => set.add(c.group || '其他频道'));
+    const list = Array.from(set);
+
+    list.sort((a, b) => {
+      const idxA = GROUP_ORDER.indexOf(a);
+      const idxB = GROUP_ORDER.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return (groupCounts[b] || 0) - (groupCounts[a] || 0);
+    });
+
+    return ['全部', ...list];
+  }, [channels, GROUP_ORDER, groupCounts]);
 
   // 过滤后的频道
   const filteredChannels = useMemo(() => {
@@ -445,20 +490,39 @@ function LivePageClient() {
             </div>
 
             {/* 分组标签栏 */}
-            <div className='flex items-center space-x-1.5 overflow-x-auto pb-1 scrollbar-hide'>
-              {groups.map((group) => (
-                <button
-                  key={group}
-                  onClick={() => setActiveGroup(group)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
-                    activeGroup === group
-                      ? 'bg-green-600 text-white shadow-sm'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  {group}
-                </button>
-              ))}
+            <div className='space-y-1.5'>
+              <div className='flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 font-medium px-0.5'>
+                <span>分类导航 ({groups.length - 1} 个大类)</span>
+                <span className='font-mono'>共 {channels.length} 个优质频道</span>
+              </div>
+              <div className='flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-0.5'>
+                {groups.map((group) => {
+                  const count = groupCounts[group] ?? 0;
+                  const isActive = activeGroup === group;
+                  return (
+                    <button
+                      key={group}
+                      onClick={() => setActiveGroup(group)}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all flex items-center space-x-1.5 ${
+                        isActive
+                          ? 'bg-green-600 text-white shadow-xs font-semibold'
+                          : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800/80 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                      }`}
+                    >
+                      <span>{group}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                          isActive
+                            ? 'bg-white/20 text-white'
+                            : 'bg-gray-200/90 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 

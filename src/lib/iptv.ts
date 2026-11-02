@@ -230,20 +230,79 @@ export const PRESET_CHANNELS: LiveChannel[] = [
     url: 'http://120.198.95.220:9901/tsfile/live/1065_1.m3u8?key=txiptv&playlive=1&down=1',
   },
 
-  // --- 轮播精选 ---
+  // --- 影视轮播 ---
   {
-    id: 'classic_movie',
-    name: '经典动作影院',
-    group: '轮播影院',
+    id: 'chc_action',
+    name: 'CHC 动作电影',
+    group: '影视轮播',
     logo: 'https://live.fanmingming.com/tv/CHC动作电影.png',
     url: 'https://cctvalih5ca.v.myalicdn.com/live/cctv6_2/index.m3u8',
   },
   {
-    id: 'animation',
-    name: '经典动画轮播',
-    group: '轮播影院',
+    id: 'chc_family',
+    name: 'CHC 家庭影院',
+    group: '影视轮播',
+    logo: 'https://live.fanmingming.com/tv/CHC家庭影院.png',
+    url: 'https://cctvalih5ca.v.myalicdn.com/live/cctv8_2/index.m3u8',
+  },
+
+  // --- 国际频道 ---
+  {
+    id: 'bloomberg',
+    name: 'Bloomberg TV (彭博商业新闻)',
+    group: '国际频道',
+    logo: 'https://live.fanmingming.com/tv/CGTN.png',
+    url: 'https://liveprodupmx.akamaized.net/us/Channel-USTV-AWS-virginia-1/live.m3u8',
+  },
+  {
+    id: 'france24',
+    name: 'France 24 (法国24小时新闻)',
+    group: '国际频道',
+    logo: 'https://live.fanmingming.com/tv/CGTN.png',
+    url: 'https://f24hls-i.akamaihd.net/hls/live/221193/F24_EN_LO_HLS/master.m3u8',
+  },
+
+  // --- 体育赛事 ---
+  {
+    id: 'sports_redbull',
+    name: 'Red Bull TV 极限体育',
+    group: '体育赛事',
+    logo: 'https://live.fanmingming.com/tv/CCTV5.png',
+    url: 'https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8',
+  },
+
+  // --- 纪录探索 ---
+  {
+    id: 'nasa_tv',
+    name: 'NASA TV (美国宇航局官方台)',
+    group: '纪录探索',
+    logo: 'https://live.fanmingming.com/tv/CCTV9.png',
+    url: 'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8',
+  },
+
+  // --- 少儿动画 ---
+  {
+    id: 'kaku_anime',
+    name: '北京卡酷少儿动画',
+    group: '少儿动画',
     logo: 'https://live.fanmingming.com/tv/卡酷少儿.png',
     url: 'https://itemianfei.brtv.org.cn/live/kkse.m3u8',
+  },
+
+  // --- 港澳台 ---
+  {
+    id: 'phoenix_zw',
+    name: '凤凰卫视中文台',
+    group: '港澳台',
+    logo: 'https://live.fanmingming.com/tv/凤凰中文.png',
+    url: 'http://play.fengshows.com/live/fhzw.m3u8',
+  },
+  {
+    id: 'phoenix_zx',
+    name: '凤凰卫视资讯台',
+    group: '港澳台',
+    logo: 'https://live.fanmingming.com/tv/凤凰资讯.png',
+    url: 'http://play.fengshows.com/live/fhzx.m3u8',
   },
 ];
 
