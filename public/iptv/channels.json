@@ -1,44 +1,8 @@
 {
-  "updatedAt": "2026-11-02T16:30:53.715Z",
-  "totalChannels": 70,
-  "onlineCount": 54,
+  "updatedAt": "2026-11-02T16:43:25.400Z",
+  "totalChannels": 409,
+  "onlineCount": 403,
   "channels": [
-    {
-      "id": "cgtn_doc",
-      "name": "CGTN 纪录频道",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CGTNDocumentary.png",
-      "url": "https://english-livebkali.cgtn.com/live/doccgtn_0.m3u8",
-      "backup_urls": [
-        "https://english-livebkali.cgtn.com/live/doccgtn.m3u8"
-      ],
-      "status": "online",
-      "latency": 11
-    },
-    {
-      "id": "cctv10",
-      "name": "CCTV-10 科教",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV10.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://74.91.26.218:82/live/cctv10hd.m3u8"
-      ],
-      "status": "online",
-      "latency": 208
-    },
-    {
-      "id": "cctv16",
-      "name": "CCTV-16 奥林匹克",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV16.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1030_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://173.208.234.146/live/cctv16.m3u8"
-      ],
-      "status": "online",
-      "latency": 217
-    },
     {
       "id": "cctv4",
       "name": "CCTV-4 中文国际",
@@ -49,20 +13,56 @@
         "http://207.56.13.146:81/cdnlive/cctv4.m3u8"
       ],
       "status": "online",
-      "latency": 172
+      "latency": 120
     },
     {
-      "id": "cctv17",
-      "name": "CCTV-17 农业农村",
+      "id": "cctv6",
+      "name": "CCTV-6 电影",
       "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV17.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1031_1.m3u8?key=txiptv&playlive=1&down=1",
+      "logo": "https://live.fanmingming.com/tv/CCTV6.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1021_1.m3u8?key=txiptv&playlive=1&down=1",
       "backup_urls": [
-        "http://59.39.89.130:60901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0",
-        "http://74.91.26.218:82/live/cctv17hd.m3u8"
+        "http://69.30.245.50/live/cctv6.m3u8"
       ],
       "status": "online",
-      "latency": 220
+      "latency": 122
+    },
+    {
+      "id": "cctv5p",
+      "name": "CCTV-5+ 体育赛事",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV5Plus.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1020_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://38.75.136.137:98/gslb/dsdqpub/cctv5p.m3u8?auth=testpub"
+      ],
+      "status": "online",
+      "latency": 133
+    },
+    {
+      "id": "cctv8",
+      "name": "CCTV-8 电视剧",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV8.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1023_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv8hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 145
+    },
+    {
+      "id": "cctv9",
+      "name": "CCTV-9 纪录",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV9.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1024_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "https://v4-e6b1c5baf4e240fe63adbf68dda23435.livehwc4.com/play.kankanlive.com/live/1698423397390920.m3u8?sub_m3u8=true&edge_slice=true&user_session_id=f68e521c8365d8fd82c611f33589783e",
+        "http://74.91.26.218:82/live/cctv9hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 147
     },
     {
       "id": "cctv7",
@@ -74,19 +74,19 @@
         "http://74.91.26.218:82/live/cctv7hd.m3u8"
       ],
       "status": "online",
-      "latency": 394
+      "latency": 151
     },
     {
-      "id": "cctv13",
-      "name": "CCTV-13 新闻",
+      "id": "cgtn_doc",
+      "name": "CGTN 纪录频道",
       "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV13.png",
-      "url": "https://event.pull.hebtv.com/jishi/cp1.m3u8",
+      "logo": "https://live.fanmingming.com/tv/CGTNDocumentary.png",
+      "url": "https://english-livebkali.cgtn.com/live/doccgtn_0.m3u8",
       "backup_urls": [
-        "http://74.91.26.218:82/live/cctv13hd.m3u8"
+        "https://english-livebkali.cgtn.com/live/doccgtn.m3u8"
       ],
       "status": "online",
-      "latency": 410
+      "latency": 153
     },
     {
       "id": "cctv11",
@@ -99,155 +99,7 @@
         "http://74.91.26.218:82/live/cctv11hd.m3u8"
       ],
       "status": "online",
-      "latency": 207
-    },
-    {
-      "id": "cctv9",
-      "name": "CCTV-9 纪录",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV9.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1024_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "https://v4-e6b1c5baf4e240fe63adbf68dda23435.livehwc4.com/play.kankanlive.com/live/1698423397390920.m3u8?sub_m3u8=true&edge_slice=true&user_session_id=f68e521c8365d8fd82c611f33589783e",
-        "https://xykt-fix.github.io/Y77.m3u8",
-        "http://74.91.26.218:82/live/cctv9hd.m3u8"
-      ],
-      "status": "online",
-      "latency": 210
-    },
-    {
-      "id": "cctv2",
-      "name": "CCTV-2 财经",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV2.png",
-      "url": "http://74.91.26.218:82/live/cctv2hd.m3u8",
-      "status": "online",
-      "latency": 496
-    },
-    {
-      "id": "cctv12",
-      "name": "CCTV-12 社会与法",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV12.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1027_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://74.91.26.218:82/live/cctv12hd.m3u8"
-      ],
-      "status": "online",
-      "latency": 211
-    },
-    {
-      "id": "cctv8",
-      "name": "CCTV-8 电视剧",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV8.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1023_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://74.91.26.218:82/live/cctv8hd.m3u8",
-        "http://207.56.13.146:81/cdnlive/cctv8.m3u8"
-      ],
-      "status": "online",
-      "latency": 205
-    },
-    {
-      "id": "cctv1",
-      "name": "CCTV-1 综合",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV1.png",
-      "url": "http://74.91.26.218:82/live/cctv1hd.m3u8",
-      "backup_urls": [
-        "http://38.75.136.137:98/gslb/dsdqbv/cctv1hd.m3u8?auth=test20251009"
-      ],
-      "status": "online",
-      "latency": 492
-    },
-    {
-      "id": "cgtn_news",
-      "name": "CGTN 英语新闻",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CGTN.png",
-      "url": "https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8",
-      "backup_urls": [
-        "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8"
-      ],
-      "status": "online",
-      "latency": 2361
-    },
-    {
-      "id": "cctv14",
-      "name": "CCTV-14 少儿",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV14.png",
-      "url": "https://event.pull.hebtv.com/jishi/cp2.m3u8",
-      "backup_urls": [
-        "http://120.198.95.220:9901/tsfile/live/1028_1.m3u8?key=txiptv&playlive=1&down=1",
-        "http://74.91.26.218:82/live/cctv14hd.m3u8",
-        "http://173.208.212.130:8181/1080p/cctv14.m3u8"
-      ],
-      "status": "online",
-      "latency": 66
-    },
-    {
-      "id": "cctv5p",
-      "name": "CCTV-5+ 体育赛事",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV5Plus.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1020_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://38.75.136.137:98/gslb/dsdqpub/cctv5p.m3u8?auth=testpub",
-        "http://38.75.136.137:98/gslb/dsdqbv/cctv5p.m3u8?auth=test20251009",
-        "http://207.56.13.146:81/cdnlive/cctv5.m3u8"
-      ],
-      "status": "online",
-      "latency": 179
-    },
-    {
-      "id": "cctv3",
-      "name": "CCTV-3 综艺",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV3.png",
-      "url": "http://74.91.26.218:82/live/cctv3hd.m3u8",
-      "status": "online",
-      "latency": 493
-    },
-    {
-      "id": "cctv6",
-      "name": "CCTV-6 电影",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.com/tv/CCTV6.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1021_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://69.30.245.50/live/cctv6.m3u8"
-      ],
-      "status": "online",
-      "latency": 53
-    },
-    {
-      "id": "ch_cgtn___4ofd",
-      "name": "CGTN记录",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.cn/tv/CGTN纪录.png",
-      "url": "https://0472.org/hls/cgtnd.m3u8",
-      "status": "online",
-      "latency": 1619
-    },
-    {
-      "id": "ch_cgtn___a07u",
-      "name": "CGTN阿语",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.cn/tv/CGTN阿语.png",
-      "url": "https://0472.org/hls/cgtna.m3u8",
-      "status": "online",
-      "latency": 1479
-    },
-    {
-      "id": "ch_cgtn___1u43",
-      "name": "CGTN西语",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.cn/tv/CGTN西语.png",
-      "url": "https://0472.org/hls/cgtnx.m3u8",
-      "status": "online",
-      "latency": 2236
+      "latency": 162
     },
     {
       "id": "cctv15",
@@ -259,41 +111,367 @@
         "http://74.91.26.218:82/live/cctv15hd.m3u8"
       ],
       "status": "online",
-      "latency": 211
+      "latency": 167
     },
     {
-      "id": "ch_cgtn___p84k",
+      "id": "cctv16",
+      "name": "CCTV-16 奥林匹克",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV16.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1030_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://173.208.234.146/live/cctv16.m3u8"
+      ],
+      "status": "online",
+      "latency": 168
+    },
+    {
+      "id": "cctv10",
+      "name": "CCTV-10 科教",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV10.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv10hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 169
+    },
+    {
+      "id": "cctv12",
+      "name": "CCTV-12 社会与法",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV12.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1027_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv12hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 169
+    },
+    {
+      "id": "cctv14",
+      "name": "CCTV-14 少儿",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV14.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1028_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv14hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 181
+    },
+    {
+      "id": "cctv17",
+      "name": "CCTV-17 农业农村",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV17.png",
+      "url": "http://59.39.89.130:60901/tsfile/live/0017_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "backup_urls": [
+        "http://120.198.95.220:9901/tsfile/live/1031_1.m3u8?key=txiptv&playlive=1&down=1",
+        "http://74.91.26.218:82/live/cctv17hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 185
+    },
+    {
+      "id": "cctv13",
+      "name": "CCTV-13 新闻",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV13.png",
+      "url": "https://event.pull.hebtv.com/jishi/cp1.m3u8",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv13hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 213
+    },
+    {
+      "id": "cctv1",
+      "name": "CCTV-1 综合",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV1.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqbv/cctv1hd.m3u8?auth=test20251009",
+      "backup_urls": [
+        "http://74.91.26.218:82/live/cctv1hd.m3u8"
+      ],
+      "status": "online",
+      "latency": 420
+    },
+    {
+      "id": "cctv3",
+      "name": "CCTV-3 综艺",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV3.png",
+      "url": "http://74.91.26.218:82/live/cctv3hd.m3u8",
+      "status": "online",
+      "latency": 453
+    },
+    {
+      "id": "cctv2",
+      "name": "CCTV-2 财经",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CCTV2.png",
+      "url": "http://74.91.26.218:82/live/cctv2hd.m3u8",
+      "status": "online",
+      "latency": 975
+    },
+    {
+      "id": "ch_cctv_golf___tennis_bibr",
+      "name": "CCTV-Golf & Tennis",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/iqJJTmH.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/gefwq.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 1274
+    },
+    {
+      "id": "ch_cctv_weapon___technology_tjo1",
+      "name": "CCTV-Weapon & Technology",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/QlF96eS.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/gfjs.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 1298
+    },
+    {
+      "id": "ch_cgtn___25qh",
+      "name": "CGTN西语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN西语.png",
+      "url": "https://0472.org/hls/cgtnx.m3u8",
+      "status": "online",
+      "latency": 1364
+    },
+    {
+      "id": "ch_cgtn___onu5",
+      "name": "CGTN阿语",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN阿语.png",
+      "url": "https://0472.org/hls/cgtna.m3u8",
+      "status": "online",
+      "latency": 1557
+    },
+    {
+      "id": "ch_cctv_storm_music_c3qv",
+      "name": "CCTV-Storm Music",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/IiiRmrf.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/fyyy.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 1648
+    },
+    {
+      "id": "ch_cctv_billiards_gemy",
+      "name": "CCTV-Billiards",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/WK3keM9.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/ystq.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 1671
+    },
+    {
+      "id": "ch_cgtn___ol75",
       "name": "CGTN英语",
       "group": "央视频道",
       "logo": "https://live.fanmingming.cn/tv/CGTN.png",
       "url": "https://0472.org/hls/cgtn.m3u8",
       "status": "online",
-      "latency": 2429
+      "latency": 1907
     },
     {
-      "id": "ch_cgtn___4vuc",
-      "name": "CGTN俄语",
+      "id": "ch_cctv_storm_football_3vjg",
+      "name": "CCTV-Storm Football",
       "group": "央视频道",
-      "logo": "https://live.fanmingming.cn/tv/CGTN俄语.png",
-      "url": "https://0472.org/hls/cgtne.m3u8",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_cgtn___o0nz",
-      "name": "CGTN法语",
-      "group": "央视频道",
-      "logo": "https://live.fanmingming.cn/tv/CGTN法语.png",
-      "url": "https://0472.org/hls/cgtnf.m3u8",
-      "status": "fallback"
-    },
-    {
-      "id": "beijing",
-      "name": "北京卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/北京卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1057_1.m3u8?key=txiptv&playlive=1&down=1",
+      "logo": "https://i.imgur.com/Fy6HkX0.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/fyzq.m3u8?auth=testpub",
       "status": "online",
-      "latency": 104
+      "latency": 2201
+    },
+    {
+      "id": "ch_cgtn___4a7x",
+      "name": "CGTN记录",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.cn/tv/CGTN纪录.png",
+      "url": "https://0472.org/hls/cgtnd.m3u8",
+      "status": "online",
+      "latency": 2242
+    },
+    {
+      "id": "ch_cctv_storm_theater_02n8",
+      "name": "CCTV-Storm Theater",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/rEttkKm.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/fyjc.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 2340
+    },
+    {
+      "id": "cgtn_news",
+      "name": "CGTN 英语新闻",
+      "group": "央视频道",
+      "logo": "https://live.fanmingming.com/tv/CGTN.png",
+      "url": "https://fastlive.cctvplus.com/out/v1/2b3d8a0c805d437f9dc85b764c2ac599/index.m3u8",
+      "backup_urls": [
+        "https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8"
+      ],
+      "status": "online",
+      "latency": 2980
+    },
+    {
+      "id": "ch_cctv_the_first_theater_rkk2",
+      "name": "CCTV-The First Theater",
+      "group": "央视频道",
+      "logo": "https://i.imgur.com/eFxD3hq.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/dyjc.m3u8?auth=testpub",
+      "status": "online",
+      "latency": 3303
+    },
+    {
+      "id": "ch______axyq",
+      "name": "青海卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/青海卫视.png",
+      "url": "http://113.25.252.226:9901/tsfile/live/1043_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "status": "online",
+      "latency": 35
+    },
+    {
+      "id": "ch_______ojwt",
+      "name": "黑龙江卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/黑龙江卫视.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1049_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://36.136.38.87:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0"
+      ],
+      "status": "online",
+      "latency": 48
+    },
+    {
+      "id": "ch______z0io",
+      "name": "天津卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/天津卫视.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1067_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://120.198.95.220:9901/tsfile/live/1067_1.m3u8?key=txiptv&playlive=1&down=1",
+        "http://36.136.38.87:9901/tsfile/live/0135_1.m3u8?key=txiptv&playlive=1&authid=0"
+      ],
+      "status": "online",
+      "latency": 52
+    },
+    {
+      "id": "sichuan",
+      "name": "四川卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/四川卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1060_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 54
+    },
+    {
+      "id": "ch______tmag",
+      "name": "云南卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/云南卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1056_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://119.125.131.73:9901/tsfile/live/1056_1.m3u8?key=txiptv&playlive=1&down=1"
+      ],
+      "status": "online",
+      "latency": 56
+    },
+    {
+      "id": "ch______vq24",
+      "name": "辽宁卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/辽宁卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://36.136.38.87:9901/tsfile/live/0121_1.m3u8?key=txiptv&playlive=1&authid=0",
+        "https://piccpndks.v.kcdnvip.com/audio/liaoning_2/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 60
+    },
+    {
+      "id": "shenzhen",
+      "name": "深圳卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/深圳卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://119.125.131.73:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&down=1",
+        "http://120.198.95.220:9901/tsfile/live/1065_1.m3u8?key=txiptv&playlive=1&down=1"
+      ],
+      "status": "online",
+      "latency": 64
+    },
+    {
+      "id": "ch______o1ni",
+      "name": "新疆卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/新疆卫视.png",
+      "url": "http://113.25.252.226:9901/tsfile/live/1044_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "backup_urls": [
+        "http://59.39.89.130:60901/tsfile/live/0125_17.m3u8?key=txiptv&playlive=1&authid=0",
+        "http://218.84.12.186:8001/hls/main/playlist.m3u8?zxinjd;http://218.84.12.186:8001/hls/main/playlist.m3u8zxinjd"
+      ],
+      "status": "online",
+      "latency": 65
+    },
+    {
+      "id": "ch______gino",
+      "name": "贵州卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/贵州卫视.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 76
+    },
+    {
+      "id": "ch______gmdy",
+      "name": "山西卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/山西卫视.png",
+      "url": "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
+      "status": "online",
+      "latency": 77
+    },
+    {
+      "id": "ch______vm82",
+      "name": "东南卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/东南卫视.png",
+      "url": "http://124.228.160.112:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "backup_urls": [
+        "http://live.zohi.tv/video/s10001-fztv-3/index.m3u8",
+        "http://107.150.60.122/live/dnwshd.m3u8"
+      ],
+      "status": "online",
+      "latency": 81
+    },
+    {
+      "id": "ch______hpr8",
+      "name": "甘肃卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/甘肃卫视.png",
+      "url": "http://113.25.252.226:9901/tsfile/live/1047_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "status": "online",
+      "latency": 109
+    },
+    {
+      "id": "ch______2ehs",
+      "name": "西藏卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/西藏卫视.png",
+      "url": "http://59.39.89.130:60901/tsfile/live/0125_4.m3u8?key=txiptv&playlive=1&authid=0",
+      "backup_urls": [
+        "http://112.27.5.218:9901/tsfile/live/0111_1.m3u8?key=txiptv&playlive=1&authid=0"
+      ],
+      "status": "online",
+      "latency": 111
     },
     {
       "id": "dongfang",
@@ -305,95 +483,28 @@
         "http://bp-resource-dfl.bestv.cn/155/3/video.m3u8"
       ],
       "status": "online",
-      "latency": 137
+      "latency": 113
     },
     {
-      "id": "shandong",
-      "name": "山东卫视",
+      "id": "ch______ny4t",
+      "name": "延边卫视",
       "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/山东卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1063_1.m3u8?key=txiptv&playlive=1&down=1",
-      "status": "online",
-      "latency": 51
-    },
-    {
-      "id": "hubei",
-      "name": "湖北卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/湖北卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1068_1.m3u8?key=txiptv&playlive=1&down=1",
-      "status": "online",
-      "latency": 52
-    },
-    {
-      "id": "shenzhen",
-      "name": "深圳卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/深圳卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&down=1",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/延边卫视.png",
+      "url": "https://srs.iyb983.cn/video/CYS/index.m3u8",
       "backup_urls": [
-        "http://120.198.95.220:9901/tsfile/live/1048_1.m3u8?key=txiptv&playlive=1&down=1",
-        "http://120.198.95.220:9901/tsfile/live/1065_1.m3u8?key=txiptv&playlive=1&down=1",
-        "http://36.136.38.87:9901/tsfile/live/0126_1.m3u8?key=txiptv&playlive=1&authid=0"
+        "https://srs.iyb983.cn:443/video/CYS/index.m3u8"
       ],
       "status": "online",
-      "latency": 50
+      "latency": 121
     },
     {
-      "id": "sichuan",
-      "name": "四川卫视",
+      "id": "ch______wb6m",
+      "name": "广西卫视",
       "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/四川卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1060_1.m3u8?key=txiptv&playlive=1&down=1",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/广西卫视.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1054_1.m3u8?key=txiptv&playlive=1&down=1",
       "status": "online",
-      "latency": 53
-    },
-    {
-      "id": "jiangsu",
-      "name": "江苏卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/江苏卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1055_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://204.12.221.218:8181/3m1080p/jsws.m3u8"
-      ],
-      "status": "online",
-      "latency": 110
-    },
-    {
-      "id": "ch______ggp6",
-      "name": "天津卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/天津卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1067_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://36.136.38.87:9901/tsfile/live/0135_1.m3u8?key=txiptv&playlive=1&authid=0",
-        "http://120.198.95.220:9901/tsfile/live/1067_1.m3u8?key=txiptv&playlive=1&down=1"
-      ],
-      "status": "online",
-      "latency": 49
-    },
-    {
-      "id": "guangdong",
-      "name": "广东卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/广东卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1053_1.m3u8?key=txiptv&playlive=1&down=1",
-      "status": "online",
-      "latency": 1320
-    },
-    {
-      "id": "hunan",
-      "name": "湖南卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/湖南卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hnwshd",
-        "http://74.91.26.218:82/live/hnwshd.m3u8"
-      ],
-      "status": "online",
-      "latency": 219
+      "latency": 127
     },
     {
       "id": "henan",
@@ -405,32 +516,98 @@
         "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hawshd"
       ],
       "status": "online",
-      "latency": 71
+      "latency": 151
     },
     {
-      "id": "ch______0gg4",
-      "name": "辽宁卫视",
+      "id": "hunan",
+      "name": "湖南卫视",
       "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/辽宁卫视.png",
-      "url": "http://36.136.38.87:9901/tsfile/live/0121_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "logo": "https://live.fanmingming.com/tv/湖南卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&down=1",
       "backup_urls": [
-        "http://120.198.95.220:9901/tsfile/live/1051_1.m3u8?key=txiptv&playlive=1&down=1",
-        "https://piccpndks.v.kcdnvip.com/audio/liaoning_2/index.m3u8"
+        "http://74.91.26.218:82/live/hnwshd.m3u8",
+        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=hnwshd"
       ],
       "status": "online",
-      "latency": 51
+      "latency": 189
     },
     {
-      "id": "ch______59i5",
+      "id": "zhejiang",
+      "name": "浙江卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/浙江卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 206
+    },
+    {
+      "id": "jiangsu",
+      "name": "江苏卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/江苏卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1055_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://204.12.221.218:8181/3m1080p/jsws.m3u8"
+      ],
+      "status": "online",
+      "latency": 212
+    },
+    {
+      "id": "shandong",
+      "name": "山东卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/山东卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1063_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 213
+    },
+    {
+      "id": "guangdong",
+      "name": "广东卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/广东卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1053_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 218
+    },
+    {
+      "id": "ch______mce8",
+      "name": "兵团卫视",
+      "group": "卫视频道",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/兵团卫视.png",
+      "url": "http://59.39.89.130:60901/tsfile/live/0125_9.m3u8?key=txiptv&playlive=1&authid=0",
+      "status": "online",
+      "latency": 256
+    },
+    {
+      "id": "ch______a24a",
       "name": "宁夏卫视",
       "group": "卫视频道",
       "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/宁夏卫视.png",
       "url": "http://113.25.252.226:9901/tsfile/live/1046_1.m3u8?key=txiptv&playlive=1&authid=0",
       "status": "online",
-      "latency": 162
+      "latency": 296
     },
     {
-      "id": "ch_______omsi",
+      "id": "beijing",
+      "name": "北京卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/北京卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1057_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 313
+    },
+    {
+      "id": "hubei",
+      "name": "湖北卫视",
+      "group": "卫视频道",
+      "logo": "https://live.fanmingming.com/tv/湖北卫视.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1068_1.m3u8?key=txiptv&playlive=1&down=1",
+      "status": "online",
+      "latency": 315
+    },
+    {
+      "id": "ch_______2v8f",
       "name": "内蒙古卫视",
       "group": "卫视频道",
       "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/内蒙古卫视.png",
@@ -439,66 +616,34 @@
         "http://play1-qk.nmtv.cn/live/1769652018126032.m3u8"
       ],
       "status": "online",
-      "latency": 127
+      "latency": 317
     },
     {
-      "id": "ch______mdbj",
-      "name": "甘肃卫视",
+      "id": "ch______939t",
+      "name": "河北卫视",
       "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/甘肃卫视.png",
-      "url": "http://113.25.252.226:9901/tsfile/live/1047_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/河北卫视.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/hewshd.m3u8?auth=testpub",
       "status": "online",
-      "latency": 208
+      "latency": 490
     },
     {
-      "id": "ch______tpwo",
-      "name": "青海卫视",
+      "id": "ch______3p43",
+      "name": "香港卫视",
       "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/青海卫视.png",
-      "url": "http://113.25.252.226:9901/tsfile/live/1043_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/香港卫视.png",
+      "url": "https://hkstv.tv/api/m3u8-proxy?url=http%3A%2F%2Fwebcast.hkstv.tv%2Flivestream%2Fmutfysrq%2Fplaylist.m3u8",
       "status": "online",
-      "latency": 187
+      "latency": 801
     },
     {
-      "id": "ch______c9mm",
-      "name": "西藏卫视",
+      "id": "ch______x4ax",
+      "name": "吉林卫视",
       "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/西藏卫视.png",
-      "url": "http://112.27.5.218:9901/tsfile/live/0111_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "backup_urls": [
-        "http://59.39.89.130:60901/tsfile/live/0125_4.m3u8?key=txiptv&playlive=1&authid=0"
-      ],
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/吉林卫视.png",
+      "url": "http://38.75.136.137:98/gslb/dsdqpub/jlwshd.m3u8?auth=testpub",
       "status": "online",
-      "latency": 69
-    },
-    {
-      "id": "ch______8ei1",
-      "name": "延边卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/延边卫视.png",
-      "url": "https://srs.iyb983.cn/video/CYS/index.m3u8",
-      "backup_urls": [
-        "https://srs.iyb983.cn:443/video/CYS/index.m3u8"
-      ],
-      "status": "online",
-      "latency": 21
-    },
-    {
-      "id": "ch______gf52",
-      "name": "兵团卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/兵团卫视.png",
-      "url": "http://59.39.89.130:60901/tsfile/live/0125_9.m3u8?key=txiptv&playlive=1&authid=0",
-      "status": "online",
-      "latency": 426
-    },
-    {
-      "id": "ch______wb0c",
-      "name": "江西卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/江西卫视.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226956/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7Ei6ZIpVizXlewg-YfGvH8dA%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
-      "status": "fallback"
+      "latency": 1281
     },
     {
       "id": "anhui",
@@ -509,200 +654,3137 @@
       "status": "fallback"
     },
     {
-      "id": "ch______j75h",
-      "name": "海南卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/海南卫视.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227029/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EEuBMjt2kLMD8fAO7QYER7Q%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_____1__71vg",
-      "name": "中国教育1台",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/中国教育1台.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226494/1.m3u8?",
-      "status": "fallback"
-    },
-    {
-      "id": "ch______d6co",
-      "name": "康巴卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/康巴卫视.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221227027/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EkHMvBpWz4rccMxNvSRekpQ%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_____2__7qor",
-      "name": "中国教育2台",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/中国教育2台.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226537/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7E7AxXs4eTU2oiWrhopr9sHw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNNxsM0Bor098BJglrhfEQTl%2CEND",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_____4__j1eb",
-      "name": "中国教育4台",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/中国教育4台.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226997/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EAw_OvjRgJVjtlaOa0dcgzg%7EtP4-l0lmSfjwLWEfK_el1vH_mv-s1zo4AQJwdedaVwG9xkuFTDg8J26cwOrNJzn20BErrHdLhuZ9EzLUCD3PMW-OMx4MGteHV2vLeW6BqoY%2CEND",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_____3__l3si",
-      "name": "中国教育3台",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.cn/tv/中国教育3台.png",
-      "url": "http://[2409:8087:8:21::18]:6610/otttv.bj.chinamobile.com/PLTV/88888888/224/3221226577/1.m3u8?GuardEncType=2&accountinfo=%7E%7EV2.0%7EhE2Z89HKgsQOlN9opVn1iw%7E_eNUbgU9sJGUcVVduOMKhafLvQUgE_zlz_7pvDimJNN03yUnk4zBVk1bynPPL3hZ%2CEND",
-      "status": "fallback"
-    },
-    {
-      "id": "ch______bv5b",
-      "name": "新疆卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/新疆卫视.png",
-      "url": "http://113.25.252.226:9901/tsfile/live/1044_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "id": "ch______xyp8",
+      "name": "凤凰资讯",
+      "group": "港澳台",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/凤凰资讯.png",
+      "url": "http://119.125.131.73:9901/tsfile/live/1037_1.m3u8?key=txiptv&playlive=1&down=1",
       "backup_urls": [
-        "http://59.39.89.130:60901/tsfile/live/0125_17.m3u8?key=txiptv&playlive=1&authid=0",
-        "http://218.84.12.186:8001/hls/main/playlist.m3u8?zxinjd;http://218.84.12.186:8001/hls/main/playlist.m3u8zxinjd"
-      ],
-      "status": "online",
-      "latency": 198
-    },
-    {
-      "id": "ch______zb85",
-      "name": "香港卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/香港卫视.png",
-      "url": "https://hkstv.tv/api/m3u8-proxy?url=http%3A%2F%2Fwebcast.hkstv.tv%2Flivestream%2Fmutfysrq%2Fplaylist.m3u8",
-      "status": "online",
-      "latency": 974
-    },
-    {
-      "id": "ch______e3qm",
-      "name": "东南卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/东南卫视.png",
-      "url": "http://36.136.38.87:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "backup_urls": [
-        "http://124.228.160.112:9901/tsfile/live/0137_1.m3u8?key=txiptv&playlive=1&authid=0",
-        "http://live.zohi.tv/video/s10001-fztv-3/index.m3u8",
-        "http://107.150.60.122/live/dnwshd.m3u8"
-      ],
-      "status": "online",
-      "latency": 54
-    },
-    {
-      "id": "zhejiang",
-      "name": "浙江卫视",
-      "group": "卫视频道",
-      "logo": "https://live.fanmingming.com/tv/浙江卫视.png",
-      "url": "http://ali-xwl.cztv.com/live/channel01720Plxw.m3u8",
-      "backup_urls": [
-        "http://ali-xwl.cztv.com/live/channel011080Plxw.m3u8",
-        "http://120.198.95.220:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&down=1"
-      ],
-      "status": "online",
-      "latency": 64
-    },
-    {
-      "id": "ch______bxtw",
-      "name": "重庆卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/重庆卫视.png",
-      "url": "http://101.66.194.250:9901/tsfile/live/0142_1.m3u8?key=txiptv&playlive=0&authid=0",
-      "status": "fallback"
-    },
-    {
-      "id": "ch_______38fq",
-      "name": "黑龙江卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/黑龙江卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1049_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://36.136.38.87:9901/tsfile/live/0143_1.m3u8?key=txiptv&playlive=1&authid=0"
-      ],
-      "status": "online",
-      "latency": 49
-    },
-    {
-      "id": "ch______qrcn",
-      "name": "云南卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/云南卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1056_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://120.198.95.220:9901/tsfile/live/1056_1.m3u8?key=txiptv&playlive=1&down=1",
-        "http://63.141.230.178:82/gslb/zbdq5.m3u8?id=ynwshd"
-      ],
-      "status": "online",
-      "latency": 91
-    },
-    {
-      "id": "ch______4tyz",
-      "name": "河北卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/河北卫视.png",
-      "url": "http://event.pull.hebtv.com/jishi/weishi_tingyun.m3u8",
-      "backup_urls": [
-        "http://38.75.136.137:98/gslb/dsdqpub/hewshd.m3u8?auth=testpub"
-      ],
-      "status": "online",
-      "latency": 55
-    },
-    {
-      "id": "ch______6e4e",
-      "name": "山西卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/山西卫视.png",
-      "url": "http://119.39.9.8:9901/tsfile/live/0118_1.m3u8",
-      "backup_urls": [
-        "http://120.198.95.220:9901/tsfile/live/1057_1.m3u8?key=txiptv&playlive=1&down=1"
-      ],
-      "status": "online",
-      "latency": 161
-    },
-    {
-      "id": "ch______eyeu",
-      "name": "吉林卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/吉林卫视.png",
-      "url": "http://36.136.38.87:9901/tsfile/live/0116_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "backup_urls": [
-        "http://38.75.136.137:98/gslb/dsdqpub/jlwshd.m3u8?auth=testpub"
-      ],
-      "status": "online",
-      "latency": 155
-    },
-    {
-      "id": "ch______jidt",
-      "name": "贵州卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/贵州卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1052_1.m3u8?key=txiptv&playlive=1&down=1",
-      "backup_urls": [
-        "http://204.12.221.218:8181/3m1080p/gzws.m3u8"
+        "http://120.198.95.220:9901/tsfile/live/1037_1.m3u8?key=txiptv&playlive=1&down=1"
       ],
       "status": "online",
       "latency": 46
     },
     {
-      "id": "ch______yora",
-      "name": "广西卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/广西卫视.png",
-      "url": "http://119.125.131.73:9901/tsfile/live/1054_1.m3u8?key=txiptv&playlive=1&down=1",
+      "id": "ch______n6b2",
+      "name": "凤凰中文",
+      "group": "港澳台",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/凤凰中文.png",
+      "url": "http://120.198.95.220:9901/tsfile/live/1036_1.m3u8?key=txiptv&playlive=1&down=1",
+      "backup_urls": [
+        "http://119.125.131.73:9901/tsfile/live/1036_1.m3u8?key=txiptv&playlive=1&down=1"
+      ],
       "status": "online",
-      "latency": 104
+      "latency": 58
     },
     {
-      "id": "ch______jltm",
-      "name": "陕西卫视",
-      "group": "卫视频道",
-      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/陕西卫视.png",
-      "url": "http://120.198.95.220:9901/tsfile/live/1068_1.m3u8?key=txiptv&playlive=1&down=1",
+      "id": "ch______k5rk",
+      "name": "凤凰香港",
+      "group": "港澳台",
+      "logo": "https://gitee.com/mytv-android/myTVlogo/raw/main/img/凤凰香港.png",
+      "url": "https://epg.pw/stream/8770e89223a086eb1b8a0c931e42296d772a8069ad3eb72540e0c434e7cb3e93.m3u8",
+      "backup_urls": [
+        "https://epg.pw/stream/5f16dc7fc8aaaed3205516c63e4a8c24bca9dbba1181684244729cf574505b0e.m3u8"
+      ],
       "status": "online",
-      "latency": 110
+      "latency": 699
+    },
+    {
+      "id": "ch_tvbs_asia_qsdg",
+      "name": "TVBS-Asia",
+      "group": "港澳台",
+      "logo": "https://i.imgur.com/4S1rkhm.png",
+      "url": "http://38.64.72.148/hls/modn/list/4005/playlist.m3u8",
+      "status": "online",
+      "latency": 1663
+    },
+    {
+      "id": "ch_filmbox__love___crime_magyar_6w8l",
+      "name": "FILMBOX+ Love & Crime Magyar",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Blove-and-crime.png",
+      "url": "http://88.212.7.14/live/test_filmbox_plus_hun_atk_1200/playlist.m3u8",
+      "status": "online",
+      "latency": 344
+    },
+    {
+      "id": "ch_mozi__nvc5",
+      "name": "Mozi+",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/LtCnPFJ.png",
+      "url": "http://88.212.7.14/live/mozi_plusz/index.m3u8",
+      "status": "online",
+      "latency": 351
+    },
+    {
+      "id": "ch_film__ogbo",
+      "name": "Film+",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/OBYuY3S.png",
+      "url": "http://88.212.15.50/live/test_film_plus_25p/playlist.m3u8",
+      "backup_urls": [
+        "http://88.212.7.14/live/film_plus_hun_atk/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 361
+    },
+    {
+      "id": "ch_hbo_1jt0",
+      "name": "HBO",
+      "group": "影视轮播",
+      "logo": "https://static.wikia.nocookie.net/logopedia/images/a/a9/HBO_Silver_glossy_logo.svg/revision/latest?cb=20260529155924",
+      "url": "http://88.212.15.50/live/test_hbo_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 363
+    },
+    {
+      "id": "ch_filmbox__emotion_czechia_dd3y",
+      "name": "FILMBOX+ Emotion Czechia",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bemotion.png",
+      "url": "http://88.212.15.50/live/test_film_boxextra_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 365
+    },
+    {
+      "id": "ch_hbo_3_m372",
+      "name": "HBO 3",
+      "group": "影视轮播",
+      "logo": "https://static.wikia.nocookie.net/logopedia/images/6/6f/HBO_3_%28Metallic%29.png/revision/latest/scale-to-width-down/1000?cb=20190715122202",
+      "url": "http://88.212.15.50/live/test_hbo3_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 374
+    },
+    {
+      "id": "ch_filmbox__one_czechia_kwl5",
+      "name": "FILMBOX+ One Czechia",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bone.png",
+      "url": "http://88.212.15.50/live/test_filmbox/playlist.m3u8",
+      "status": "online",
+      "latency": 384
+    },
+    {
+      "id": "ch_filmbox__hits_czechia_8f3o",
+      "name": "FILMBOX+ Hits Czechia",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bhits.png",
+      "url": "http://88.212.15.50/live/test_film_boxpremium_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 388
+    },
+    {
+      "id": "ch_axn_crime_jhoy",
+      "name": "AXN Crime",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/AXN_Crime_-_Logo.png/960px-AXN_Crime_-_Logo.png",
+      "url": "http://88.212.7.14/live/viasat_film/index.m3u8",
+      "status": "online",
+      "latency": 404
+    },
+    {
+      "id": "ch_hbo_2_plbq",
+      "name": "HBO 2",
+      "group": "影视轮播",
+      "logo": "https://static.wikia.nocookie.net/logopedia/images/8/8f/HBO_2_%28Metallic%29.png/revision/latest/scale-to-width-down/1000?cb=20190715122226",
+      "url": "http://88.212.15.50/live/test_hbo2_hd_hevc/playlist.m3u8",
+      "backup_urls": [
+        "http://185.227.34.179:8080/hbo-2-hd/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 427
+    },
+    {
+      "id": "ch_kino_barrandov_ybmq",
+      "name": "Kino Barrandov",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Kino_Barrandov_logo.png/960px-Kino_Barrandov_logo.png",
+      "url": "http://88.212.15.50/live/test_kino_barrandov_sd_hevc50/playlist.m3u8",
+      "status": "online",
+      "latency": 434
+    },
+    {
+      "id": "ch_filmbox__hits_hungary_z8dw",
+      "name": "FILMBOX+ Hits Hungary",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bhits.png",
+      "url": "http://88.212.7.14/live/fb_premium_hungary/index.m3u8",
+      "status": "online",
+      "latency": 437
+    },
+    {
+      "id": "ch_filmbox__love___crime_u94j",
+      "name": "FILMBOX+ Love & Crime",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Blove-and-crime.png",
+      "url": "http://88.212.15.50/live/test_filmbox_plus_atk_1200/playlist.m3u8",
+      "status": "online",
+      "latency": 440
+    },
+    {
+      "id": "ch_filmbox__comedy_czechia_jrqu",
+      "name": "FILMBOX+ Comedy Czechia",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bcomedy.png",
+      "url": "http://88.212.15.50/live/test_filmbox_family_atk_1200/playlist.m3u8",
+      "status": "online",
+      "latency": 447
+    },
+    {
+      "id": "ch_de_pelicula_us_e1oc",
+      "name": "De Pelicula US",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/DPel%C3%ADcula_2021.svg/960px-DPel%C3%ADcula_2021.svg.png",
+      "url": "http://138.121.15.230:9002/DEPELICULA/index.m3u8",
+      "status": "online",
+      "latency": 648
+    },
+    {
+      "id": "ch_amc_15ut",
+      "name": "AMC",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",
+      "url": "http://23.239.31.26:8989/amc/index.m3u8",
+      "status": "online",
+      "latency": 776
+    },
+    {
+      "id": "ch_filmbox__one_magyar_sg20",
+      "name": "FILMBOX+ One Magyar",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bone.png",
+      "url": "http://88.212.7.14/live/filmbox_hungary/index.m3u8",
+      "status": "online",
+      "latency": 838
+    },
+    {
+      "id": "ch_kino_tv_srll",
+      "name": "Kino TV",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/sMpamNO.png",
+      "url": "http://176.118.197.101/KinoTvHD/playlist.m3u8",
+      "status": "online",
+      "latency": 877
+    },
+    {
+      "id": "ch_warner_tv_ecj0",
+      "name": "Warner TV",
+      "group": "影视轮播",
+      "logo": "https://static.wikia.nocookie.net/logopedia/images/c/c7/WarnerTV_2021.svg/revision/latest/scale-to-width-down/1000?cb=20230818123400",
+      "url": "http://88.212.15.50/live/warner_tv/index.m3u8",
+      "status": "online",
+      "latency": 910
+    },
+    {
+      "id": "ch_filmbox__emotion_hungary_ccba",
+      "name": "FILMBOX+ Emotion Hungary",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bemotion.png",
+      "url": "http://88.212.15.50/live/test_filmbox_extra_hd_hun_atk_1200/playlist.m3u8",
+      "status": "online",
+      "latency": 939
+    },
+    {
+      "id": "ch_moziverzum_1apo",
+      "name": "Moziverzum",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/NMifecQ.png",
+      "url": "http://88.212.7.14/live/moziverzum/index.m3u8",
+      "status": "online",
+      "latency": 960
+    },
+    {
+      "id": "ch_axn_cee_msdd",
+      "name": "AXN CEE",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://88.212.15.50/live/axn_hun/index.m3u8",
+      "status": "online",
+      "latency": 962
+    },
+    {
+      "id": "ch_film_cafe_vebp",
+      "name": "Film Cafe",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/jaKRnzU.png",
+      "url": "http://88.212.7.14/live/film_cafe/index.m3u8",
+      "status": "online",
+      "latency": 962
+    },
+    {
+      "id": "ch_axn_cee_czech_republic_rfro",
+      "name": "AXN CEE Czech Republic",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://88.212.15.50/live/test_axn/playlist.m3u8",
+      "status": "online",
+      "latency": 974
+    },
+    {
+      "id": "ch_cinemax_hk8r",
+      "name": "Cinemax",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Cinemax_2016.svg/960px-Cinemax_2016.svg.png",
+      "url": "http://88.212.15.50/live/test_cinemax_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 977
+    },
+    {
+      "id": "ch_filmbox__comedy_magyar_8nxk",
+      "name": "FILMBOX+ Comedy Magyar",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bcomedy.png",
+      "url": "http://88.212.15.50/live/test_filmbox_family_hun_atk_1200/playlist.m3u8",
+      "status": "online",
+      "latency": 977
+    },
+    {
+      "id": "ch_amc_europe_hungary_l9g0",
+      "name": "AMC Europe Hungary",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",
+      "url": "http://88.212.7.14/live/amc_hun/index.m3u8",
+      "status": "online",
+      "latency": 983
+    },
+    {
+      "id": "ch_cinemax_hits_f740",
+      "name": "Cinemax Hits",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/f/fb/Cinemax_Hits_Logo.png/960px-Cinemax_Hits_Logo.png",
+      "url": "http://23.237.104.106:8080/USA_MOREMAX/index.m3u8",
+      "status": "online",
+      "latency": 1012
+    },
+    {
+      "id": "ch_amc_europe_czech_republic_eq26",
+      "name": "AMC Europe Czech Republic",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",
+      "url": "http://88.212.7.14/live/test_amc_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 1030
+    },
+    {
+      "id": "ch_cinemax_2_niia",
+      "name": "Cinemax 2",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Cinemax_2_%282016%29.png/960px-Cinemax_2_%282016%29.png",
+      "url": "http://88.212.15.50/live/test_cinemax2_hd_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 1059
+    },
+    {
+      "id": "ch_mwd_movies_hx7t",
+      "name": "MWD Movies",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/5KRsqeF.png",
+      "url": "http://203.81.84.130/hls/mwd_movie/index.m3u8",
+      "status": "online",
+      "latency": 1150
+    },
+    {
+      "id": "ch_goldmines_movies_n6g5",
+      "name": "Goldmines Movies",
+      "group": "影视轮播",
+      "logo": "https://dtil.tmsimg.com/assets/s142881_ld_h15_aa.png?lock=720x540",
+      "url": "http://103.175.73.12:8080/live/51/51_0.m3u8",
+      "status": "online",
+      "latency": 1168
+    },
+    {
+      "id": "ch_cinemax_west_g5ih",
+      "name": "Cinemax West",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Cinemax_2016.svg/960px-Cinemax_2016.svg.png",
+      "url": "http://23.237.104.106:8080/USA_CINEMAX_WEST/index.m3u8",
+      "status": "online",
+      "latency": 1192
+    },
+    {
+      "id": "ch_axn_black_czech_republic_50p0",
+      "name": "AXN Black Czech Republic",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/Peo1QiZ.png",
+      "url": "http://88.212.15.50/live/test_black/playlist.m3u8",
+      "status": "online",
+      "latency": 1420
+    },
+    {
+      "id": "ch_paramount_network_12zu",
+      "name": "Paramount Network",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Paramount_Network.svg/960px-Paramount_Network.svg.png",
+      "url": "http://23.237.104.106:8080/USA_PARAMOUNT_NETWORK/index.m3u8",
+      "status": "online",
+      "latency": 1449
+    },
+    {
+      "id": "ch_ifc_oq3e",
+      "name": "IFC",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/bQdkyF9.png",
+      "url": "http://23.237.104.106:8080/USA_IFC/index.m3u8",
+      "status": "online",
+      "latency": 1471
+    },
+    {
+      "id": "ch_cinecanal_eh0s",
+      "name": "Cinecanal",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png",
+      "url": "http://15.204.246.24:8080/CinecanalHD/index.m3u8",
+      "status": "online",
+      "latency": 1524
+    },
+    {
+      "id": "ch_cinemax_classics_hyvv",
+      "name": "Cinemax Classics",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/66/Cinemax_Classics_Logo.png/960px-Cinemax_Classics_Logo.png",
+      "url": "http://23.237.104.106:8080/USA_5STARMAX/index.m3u8",
+      "status": "online",
+      "latency": 1532
+    },
+    {
+      "id": "ch_syfy_1090",
+      "name": "SYFY",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/4fMWhUE.png",
+      "url": "http://23.237.104.106:8080/USA_SYFY/index.m3u8",
+      "status": "online",
+      "latency": 1547
+    },
+    {
+      "id": "ch_dhe_gnkq",
+      "name": "DHE",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/nsttoEa.png",
+      "url": "http://15.204.246.24:8080/DHEHD/index.m3u8",
+      "status": "online",
+      "latency": 1575
+    },
+    {
+      "id": "ch_filmbox__hits_7ocr",
+      "name": "FILMBOX+ Hits",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bhits.png",
+      "url": "http://92.114.85.87:8008/play/a00a/index.m3u8",
+      "status": "online",
+      "latency": 1665
+    },
+    {
+      "id": "ch_nile_drama_aeao",
+      "name": "Nile Drama",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/FasJFMM.png",
+      "url": "http://185.9.2.18/chid_352/index.m3u8",
+      "status": "online",
+      "latency": 1721
+    },
+    {
+      "id": "ch_magyar_mozi_tv_2rhj",
+      "name": "Magyar Mozi TV",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/cXajs8V.png",
+      "url": "http://88.212.7.14/live/mozi/index.m3u8",
+      "status": "online",
+      "latency": 1733
+    },
+    {
+      "id": "ch_axn_black_poland_x7nw",
+      "name": "AXN Black Poland",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/Peo1QiZ.png",
+      "url": "http://185.227.34.179:8080/axn-black/index.m3u8",
+      "status": "online",
+      "latency": 1740
+    },
+    {
+      "id": "ch_star_channel_j5qj",
+      "name": "Star Channel",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Star_Channel_2020.svg/960px-Star_Channel_2020.svg.png",
+      "url": "http://138.121.15.230:9002/STAR-CHANNEL/index.m3u8",
+      "backup_urls": [
+        "http://190.61.47.54:8000/play/a035/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 1741
+    },
+    {
+      "id": "ch_tf1_series_films_6fgy",
+      "name": "TF1 Series Films",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/4CJIDKQ.png",
+      "url": "http://149.62.177.107:9999/TF1_Series_Films/index.m3u8",
+      "status": "online",
+      "latency": 1762
+    },
+    {
+      "id": "ch_axn_poland_odar",
+      "name": "AXN Poland",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/i5wOhkf.png",
+      "url": "http://92.114.85.87:8015/play/a00f/index.m3u8",
+      "status": "online",
+      "latency": 1765
+    },
+    {
+      "id": "ch_axn_black_hungary_x91t",
+      "name": "AXN Black Hungary",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/Peo1QiZ.png",
+      "url": "http://141.94.193.53:80/axn_black/index.m3u8",
+      "status": "online",
+      "latency": 1780
+    },
+    {
+      "id": "ch_avi_rewind_yisj",
+      "name": "AVI Rewind",
+      "group": "影视轮播",
+      "logo": "https://zplay.cl/LogosV2/AVIREWINDS_NEW.png",
+      "url": "http://45.70.201.81:8000/play/a010/index.m3u8",
+      "status": "online",
+      "latency": 1842
+    },
+    {
+      "id": "ch_filmbox__comedy_o0cs",
+      "name": "FILMBOX+ Comedy",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bcomedy.png",
+      "url": "http://92.114.85.87:8008/play/a009/index.m3u8",
+      "status": "online",
+      "latency": 1878
+    },
+    {
+      "id": "ch_hbo_2_latin_america_smp8",
+      "name": "HBO 2 Latin America",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/HBO2_logo.svg/960px-HBO2_logo.svg.png",
+      "url": "http://45.171.64.30:6060/play/a00i/index.m3u8",
+      "status": "online",
+      "latency": 1926
+    },
+    {
+      "id": "ch_axn_latin_america_andes_enaz",
+      "name": "AXN Latin America Andes",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://181.78.8.199:8000/play/a0cu/index.m3u8",
+      "status": "online",
+      "latency": 1931
+    },
+    {
+      "id": "ch_axn_pu4k",
+      "name": "AXN",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://170.83.16.50/AXN/index.m3u8",
+      "status": "online",
+      "latency": 1932
+    },
+    {
+      "id": "ch_max4_hsr7",
+      "name": "MAX4",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Max4_logo.png/960px-Max4_logo.png",
+      "url": "http://141.94.193.53:80/MAX4_HD/index.m3u8",
+      "status": "online",
+      "latency": 1935
+    },
+    {
+      "id": "ch_kinopremyera_czcl",
+      "name": "Kinopremyera",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/s0UYT8T.png",
+      "url": "http://5.188.159.128:8070/KINOPREMIERA/index.m3u8",
+      "status": "online",
+      "latency": 1970
+    },
+    {
+      "id": "ch_warner_channel_south_x0dm",
+      "name": "Warner Channel South",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Warner_TV_logo.svg/960px-Warner_TV_logo.svg.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/68.m3u8",
+      "status": "online",
+      "latency": 1986
+    },
+    {
+      "id": "ch_amc_latin_america_nrpa",
+      "name": "AMC Latin America",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",
+      "url": "http://15.204.246.24:8080/AMCHD/index.m3u8",
+      "status": "online",
+      "latency": 1994
+    },
+    {
+      "id": "ch_film4_li9n",
+      "name": "Film4",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/X5N8CHf.png",
+      "url": "http://88.212.7.14/live/film4_hun/index.m3u8",
+      "status": "online",
+      "latency": 1999
+    },
+    {
+      "id": "ch_star_channel_latin_america_south_sozc",
+      "name": "Star Channel Latin America South",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Star_Channel_2020.svg/960px-Star_Channel_2020.svg.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/51.m3u8",
+      "status": "online",
+      "latency": 2036
+    },
+    {
+      "id": "ch_filmbox__action_yo92",
+      "name": "FILMBOX+ Action",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Baction.png",
+      "url": "http://92.114.85.87:8008/play/a007/index.m3u8",
+      "status": "online",
+      "latency": 2038
+    },
+    {
+      "id": "ch_cinecanal_pacific_k4kh",
+      "name": "Cinecanal Pacific",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png",
+      "url": "http://138.121.15.230:9002/CINECANAL/index.m3u8",
+      "status": "online",
+      "latency": 2045
+    },
+    {
+      "id": "ch_kinomix_kvim",
+      "name": "Kinomix",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/D4q2XUT.png",
+      "url": "http://93.170.254.17/Kinomiks/index.m3u8",
+      "status": "online",
+      "latency": 2083
+    },
+    {
+      "id": "ch_bollywood_hqxw",
+      "name": "Bollywood",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/YLQRnXt.png",
+      "url": "http://176.118.197.101/Bollywood_HD/index.m3u8",
+      "status": "online",
+      "latency": 2106
+    },
+    {
+      "id": "ch_sundance_tv_7wkp",
+      "name": "Sundance TV",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/SundanceTV_2014.svg/960px-SundanceTV_2014.svg.png",
+      "url": "http://92.114.85.87:8003/play/a004/index.m3u8",
+      "status": "online",
+      "latency": 2120
+    },
+    {
+      "id": "ch_start_air_fout",
+      "name": "START Air",
+      "group": "影视轮播",
+      "logo": "https://images.iptv.rt.ru/images/d60qp8omife4gis72tk0.png",
+      "url": "http://176.118.197.101/START_AIR/index.m3u8",
+      "status": "online",
+      "latency": 2128
+    },
+    {
+      "id": "ch_axn_asia_indonesia_i8eg",
+      "name": "AXN Asia Indonesia",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://202.150.165.66:8088/play/301-AXN/index.m3u8",
+      "status": "online",
+      "latency": 2161
+    },
+    {
+      "id": "ch_hallmark_mystery_nfph",
+      "name": "Hallmark Mystery",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/3/32/Hallmark_Mystery_2024.svg",
+      "url": "http://41.205.93.154/HALLMARK/index.m3u8",
+      "status": "online",
+      "latency": 2174
+    },
+    {
+      "id": "ch_hbo_asia_mm1v",
+      "name": "HBO Asia",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/cE2gBt6.png",
+      "url": "http://202.150.165.66:8088/play/100-HBO/index.m3u8",
+      "status": "online",
+      "latency": 2193
+    },
+    {
+      "id": "ch_axn_adria_h4tw",
+      "name": "AXN Adria",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://5.57.74.130:8000/play/a0at/index.m3u8",
+      "status": "online",
+      "latency": 2263
+    },
+    {
+      "id": "ch_de_pelicula_latin_america_k6rp",
+      "name": "De Pelicula Latin America",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/aksM8pa.png",
+      "url": "http://38.19.41.46:8081/DEPELICULA/index.m3u8",
+      "status": "online",
+      "latency": 2407
+    },
+    {
+      "id": "ch_amc_latin_america_brazil_30im",
+      "name": "AMC Latin America Brazil",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/AMC_logo_2019.svg/960px-AMC_logo_2019.svg.png",
+      "url": "http://170.83.49.66:8083/AMCHD/index.m3u8",
+      "status": "online",
+      "latency": 2417
+    },
+    {
+      "id": "ch_filmbox__emotion_tk79",
+      "name": "FILMBOX+ Emotion",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bemotion.png",
+      "url": "http://92.114.85.87:8008/play/a008/index.m3u8",
+      "status": "online",
+      "latency": 2436
+    },
+    {
+      "id": "ch_tv_21_xndh",
+      "name": "TV 21",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/nSmSnH6.png",
+      "url": "http://178.134.1.158:8081/TVXXI/index.m3u8",
+      "status": "online",
+      "latency": 2464
+    },
+    {
+      "id": "ch_axn_movies_54dl",
+      "name": "AXN Movies",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/tJQckal.png",
+      "url": "http://50.7.120.34:8080/AXN_BLACK/index.m3u8",
+      "status": "online",
+      "latency": 2493
+    },
+    {
+      "id": "ch_de_pelicula_plus_om6q",
+      "name": "De Pelicula Plus",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/MMhSmDK.png",
+      "url": "http://200.115.120.1:8000/play/ca030/index.m3u8",
+      "status": "online",
+      "latency": 2519
+    },
+    {
+      "id": "ch_illusion__yjqg",
+      "name": "Illusion+",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/9GvuHQ5.png",
+      "url": "http://176.118.197.101/Illuzion+/index.m3u8",
+      "status": "online",
+      "latency": 2556
+    },
+    {
+      "id": "ch_az_cinema_l4zm",
+      "name": "Az Cinema",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/B5UN7C8.png",
+      "url": "http://15.204.196.147:22880/CABLE-MAGES-AZCINEMA/video.m3u8",
+      "status": "online",
+      "latency": 2614
+    },
+    {
+      "id": "ch_nash_kinopokaz_20xv",
+      "name": "Nash Kinopokaz",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/iwTMl8O.png",
+      "url": "http://46.53.200.153:7777/play/SRT_Nash_kinopokaz/index.m3u8",
+      "status": "online",
+      "latency": 2629
+    },
+    {
+      "id": "ch_warner_channel_colombia_0f7z",
+      "name": "Warner Channel Colombia",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Warner_TV_logo.svg/960px-Warner_TV_logo.svg.png",
+      "url": "http://38.134.250.110:8000/play/a029/index.m3u8",
+      "status": "online",
+      "latency": 2648
+    },
+    {
+      "id": "ch_indiyskoye_kino_omqt",
+      "name": "Indiyskoye Kino",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/LL8GyCh.png",
+      "url": "http://188.113.190.12/329/index.m3u8",
+      "status": "online",
+      "latency": 2710
+    },
+    {
+      "id": "ch_star_channel_latin_america_jaja",
+      "name": "Star Channel Latin America",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Star_Channel_2020.svg/960px-Star_Channel_2020.svg.png",
+      "url": "http://15.204.246.24:8080/STARCHANNELHD/index.m3u8",
+      "status": "online",
+      "latency": 2773
+    },
+    {
+      "id": "ch_axn_latin_america_south_260p",
+      "name": "AXN Latin America South",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/10.m3u8",
+      "status": "online",
+      "latency": 2820
+    },
+    {
+      "id": "ch_hbo_signature_asia_odl1",
+      "name": "HBO Signature Asia",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/HBO_Signature_Asia.png/960px-HBO_Signature_Asia.png",
+      "url": "http://202.150.165.66:8088/play/101-HBOSignature/index.m3u8",
+      "status": "online",
+      "latency": 2844
+    },
+    {
+      "id": "ch_axn_white_1iho",
+      "name": "AXN White",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/DaAyLE7.png",
+      "url": "http://92.114.85.87:8014/play/a004/index.m3u8",
+      "status": "online",
+      "latency": 2873
+    },
+    {
+      "id": "ch_filmbox__festival_poland_chwi",
+      "name": "FILMBOX+ Festival Poland",
+      "group": "影视轮播",
+      "logo": "https://spiintl.com/data/files/kcfinderUploadDir/images/filmboxplus/filmbox%2Bfestival.png",
+      "url": "http://92.114.85.87:8018/play/a009/index.m3u8",
+      "status": "online",
+      "latency": 2913
+    },
+    {
+      "id": "ch_kinosvidanie_bb2z",
+      "name": "Kinosvidanie",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/ZRaWqxj.png",
+      "url": "http://5.188.159.128:8070/kinosvidanie/index.m3u8",
+      "status": "online",
+      "latency": 2969
+    },
+    {
+      "id": "ch_viju_tv1000_novella_i55n",
+      "name": "viju TV1000 novella",
+      "group": "影视轮播",
+      "logo": "https://www.cableman.ru/sites/default/files/viju_TV1000_%D0%BD%D0%BE%D0%B2%D0%B5%D0%BB%D0%BB%D0%B0_color_rgb_02%20%281%29.png",
+      "url": "http://46.53.200.153:7777/play/VIJU_TV_1000_novella/index.m3u8",
+      "status": "online",
+      "latency": 2984
+    },
+    {
+      "id": "ch_sony_movies_tkz8",
+      "name": "Sony Movies",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Sony_Movies_Logo.svg/500px-Sony_Movies_Logo.svg.png",
+      "url": "http://45.162.64.114/SONY_MOVIES/index.m3u8",
+      "status": "online",
+      "latency": 3053
+    },
+    {
+      "id": "ch_axn_latin_america_rqe0",
+      "name": "AXN Latin America",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/AXN_logo_%282015%29.svg/960px-AXN_logo_%282015%29.svg.png",
+      "url": "http://138.121.15.230:9002/AXN/index.m3u8",
+      "status": "online",
+      "latency": 3330
+    },
+    {
+      "id": "ch_hbo_hits_asia_6v26",
+      "name": "HBO Hits Asia",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/CTjmocc.png",
+      "url": "http://202.150.165.66:8088/play/102-HBOHits/index.m3u8",
+      "status": "online",
+      "latency": 3628
+    },
+    {
+      "id": "ch_cinecanal_south_wn8y",
+      "name": "Cinecanal South",
+      "group": "影视轮播",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/CinecanalLA.png/960px-CinecanalLA.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/17.m3u8",
+      "status": "online",
+      "latency": 3672
+    },
+    {
+      "id": "ch_multipremier_qxsh",
+      "name": "MultiPremier",
+      "group": "影视轮播",
+      "logo": "https://i.imgur.com/H3PzGZW.png",
+      "url": "http://168.196.127.137:6001/play/a08n/index.m3u8",
+      "status": "online",
+      "latency": 3707
+    },
+    {
+      "id": "ch______6sb0",
+      "name": "浙江少儿",
+      "group": "少儿动画",
+      "logo": "https://live.fanmingming.cn/tv/浙江少儿.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel008/1080p.m3u8",
+      "status": "online",
+      "latency": 382
+    },
+    {
+      "id": "ch_cartoon_network_cee_czech_republic_p32z",
+      "name": "Cartoon Network CEE Czech Republic",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png",
+      "url": "http://88.212.7.14/live/test_cartoon_network_tizen/playlist.m3u8",
+      "status": "online",
+      "latency": 1022
+    },
+    {
+      "id": "ch_disney_channel_latin_america_bwkl",
+      "name": "Disney Channel Latin America",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",
+      "url": "http://15.204.246.24:8080/DisneyHD/index.m3u8",
+      "status": "online",
+      "latency": 1419
+    },
+    {
+      "id": "ch_teletoon__jamw",
+      "name": "Teletoon+",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/T%C3%A9l%C3%A9toon%2B_Logo.png/960px-T%C3%A9l%C3%A9toon%2B_Logo.png",
+      "url": "http://92.114.85.87:8009/play/a006/index.m3u8",
+      "status": "online",
+      "latency": 1786
+    },
+    {
+      "id": "ch_cartoon_network_iinz",
+      "name": "Cartoon Network",
+      "group": "少儿动画",
+      "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_CARTOON_NETWORK/images/LOGO_HD/image.png",
+      "url": "http://176.65.153.40:6002/play/a013/index.m3u8",
+      "status": "online",
+      "latency": 1822
+    },
+    {
+      "id": "ch_tooncast_argentina_iuc2",
+      "name": "Tooncast Argentina",
+      "group": "少儿动画",
+      "logo": "https://i.imgur.com/3yXRbQy.png",
+      "url": "http://45.134.141.161:2200/ARG/Tooncast/index.m3u8",
+      "status": "online",
+      "latency": 1964
+    },
+    {
+      "id": "ch_cartoon_network_arabic_z0ba",
+      "name": "Cartoon Network Arabic",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Cartoon_Network_Arabic_logo.png/960px-Cartoon_Network_Arabic_logo.png",
+      "url": "http://149.100.11.252:8000/play/a056/index.m3u8",
+      "status": "online",
+      "latency": 1968
+    },
+    {
+      "id": "ch_plim_plim_j2uo",
+      "name": "Plim Plim",
+      "group": "少儿动画",
+      "logo": "https://i.imgur.com/MYc8srh.png",
+      "url": "http://200.115.120.1:8000/play/ca091/index.m3u8",
+      "status": "online",
+      "latency": 2086
+    },
+    {
+      "id": "ch_disney_jr__latin_america_south_zsdm",
+      "name": "Disney Jr. Latin America South",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg",
+      "url": "http://45.185.163.75:8000/play/a016/index.m3u8",
+      "status": "online",
+      "latency": 2276
+    },
+    {
+      "id": "ch_disney_channel_latin_america_mexico_07hj",
+      "name": "Disney Channel Latin America Mexico",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",
+      "url": "http://45.166.93.156:9999/play/a0f3/index.m3u8",
+      "status": "online",
+      "latency": 2439
+    },
+    {
+      "id": "ch_tooncast_southamerica_9cpe",
+      "name": "Tooncast SouthAmerica",
+      "group": "少儿动画",
+      "logo": "https://i.imgur.com/3yXRbQy.png",
+      "url": "http://190.61.42.218:9000/play/a06i/index.m3u8",
+      "status": "online",
+      "latency": 2456
+    },
+    {
+      "id": "ch_disney_channel_latin_america_panregional_22uj",
+      "name": "Disney Channel Latin America Panregional",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",
+      "url": "http://45.134.141.161:2200/ARG/Disney_Channel/index.m3u8",
+      "status": "online",
+      "latency": 2499
+    },
+    {
+      "id": "ch_cartoon_network_cee_ukraine_dmr0",
+      "name": "Cartoon Network CEE Ukraine",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png",
+      "url": "http://45.132.87.69:8080/cartoon_network/index.m3u8",
+      "status": "online",
+      "latency": 2692
+    },
+    {
+      "id": "ch_baby_time_4l2d",
+      "name": "Baby Time",
+      "group": "少儿动画",
+      "logo": "https://i.imgur.com/lW3WIBD.png",
+      "url": "http://178.134.1.158:8081/babytime/index.m3u8",
+      "status": "online",
+      "latency": 2722
+    },
+    {
+      "id": "ch_disney_jr__latin_america_north_f819",
+      "name": "Disney Jr. Latin America North",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg",
+      "url": "http://181.78.14.26:4000/play/a073/index.m3u8",
+      "status": "online",
+      "latency": 3203
+    },
+    {
+      "id": "ch_disney_channel_latin_america_north_nfzw",
+      "name": "Disney Channel Latin America North",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",
+      "url": "http://138.121.15.230:9002/DISNEY-CHANNEL/index.m3u8",
+      "status": "online",
+      "latency": 3283
+    },
+    {
+      "id": "ch_disney_jr__latin_america_qsdc",
+      "name": "Disney Jr. Latin America",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/e/e3/2024_Disney_Jr._Logo.svg",
+      "url": "http://190.14.10.19:16000/play/a02d/index.m3u8",
+      "status": "online",
+      "latency": 3635
+    },
+    {
+      "id": "ch_cartoon_network_latin_america_brazil_y9g7",
+      "name": "Cartoon Network Latin America Brazil",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png",
+      "url": "http://45.162.64.114/CARTOON_NETWORK/index.m3u8",
+      "status": "online",
+      "latency": 3716
+    },
+    {
+      "id": "ch_disney_channel_latin_america_center_8rh0",
+      "name": "Disney Channel Latin America Center",
+      "group": "少儿动画",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/f/ff/2024_Disney_Channel_text_logo.svg",
+      "url": "http://181.78.8.199:8000/play/a0dn/index.m3u8",
+      "status": "online",
+      "latency": 3942
+    },
+    {
+      "id": "ch_ct_sport_7onp",
+      "name": "CT Sport",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/%C4%8CT_sport_logo.png/960px-%C4%8CT_sport_logo.png",
+      "url": "http://88.212.15.50/live/test_ctsport_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 339
+    },
+    {
+      "id": "ch_sport_ub94",
+      "name": "Sport",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/ORCu0w0.png",
+      "url": "http://88.212.15.50/live/test_rtvs_sport_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 340
+    },
+    {
+      "id": "ch_arena_sport_1_msez",
+      "name": "Arena Sport 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/2qf67zW.png",
+      "url": "http://88.212.15.50/live/test_arenasport/playlist.m3u8",
+      "status": "online",
+      "latency": 385
+    },
+    {
+      "id": "ch_arena4_z6o7",
+      "name": "Arena4",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/uAaQDr6.png",
+      "url": "http://88.212.7.14/live/arena4/index.m3u8",
+      "status": "online",
+      "latency": 416
+    },
+    {
+      "id": "ch_sport1_kk1t",
+      "name": "Sport1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/X5X3tKC.png",
+      "url": "http://88.212.15.50/live/test_sport1_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 424
+    },
+    {
+      "id": "ch_nfl_network_dzw1",
+      "name": "NFL Network",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/NFL_Network_logo.svg/960px-NFL_Network_logo.svg.png",
+      "url": "http://198.58.104.90:8989/nfl/index.m3u8",
+      "status": "online",
+      "latency": 679
+    },
+    {
+      "id": "ch_acc_network_2tfj",
+      "name": "ACC Network",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/TpCkbkT.png",
+      "url": "http://23.239.31.26:8989/accnetwork/index.m3u8",
+      "status": "online",
+      "latency": 762
+    },
+    {
+      "id": "ch_fox_sports_1_hj2n",
+      "name": "Fox Sports 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/O9BapV9.png",
+      "url": "http://85.237.89.160:9590/usa-s/FOX-SPORTS-1/index.m3u8",
+      "status": "online",
+      "latency": 772
+    },
+    {
+      "id": "ch_belarus_5_bucp",
+      "name": "Belarus-5",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/NJsRFud.png",
+      "url": "http://178.124.179.122:8080/BT5/index.m3u8",
+      "status": "online",
+      "latency": 839
+    },
+    {
+      "id": "ch_sport_2_59ax",
+      "name": "Sport 2",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/UxflVoU.png",
+      "url": "http://88.212.7.14/live/sport2_hun/index.m3u8",
+      "status": "online",
+      "latency": 846
+    },
+    {
+      "id": "ch_sport2_plfb",
+      "name": "Sport2",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/UxflVoU.png",
+      "url": "http://88.212.15.50/live/test_sport_2/playlist.m3u8",
+      "status": "online",
+      "latency": 861
+    },
+    {
+      "id": "ch_eurosport_1_hungary_80nx",
+      "name": "Eurosport 1 Hungary",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/olQJgm7.png",
+      "url": "http://88.212.7.14/live/esp1_hun/index.m3u8",
+      "status": "online",
+      "latency": 880
+    },
+    {
+      "id": "ch_spiler_2_jpx1",
+      "name": "Spiler 2",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/1e0VsVH.png",
+      "url": "http://88.212.7.14/live/spiler2/index.m3u8",
+      "status": "online",
+      "latency": 966
+    },
+    {
+      "id": "ch_m4_sport_et54",
+      "name": "M4 Sport",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/TQ4uJZk.png",
+      "url": "http://88.212.7.14/live/uatlmvixrr/index.m3u8",
+      "status": "online",
+      "latency": 972
+    },
+    {
+      "id": "ch_nba_tv_n5uy",
+      "name": "NBA TV",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d2/NBA_TV.svg/960px-NBA_TV.svg.png",
+      "url": "http://23.237.104.106:8080/USA_NBA/index.m3u8",
+      "status": "online",
+      "latency": 973
+    },
+    {
+      "id": "ch_eurosport_2_hungary_r0yy",
+      "name": "Eurosport 2 Hungary",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/f56dHgR.png",
+      "url": "http://88.212.7.14/live/esp2_hun/index.m3u8",
+      "status": "online",
+      "latency": 985
+    },
+    {
+      "id": "ch_real_madrid_tv_english_nkdo",
+      "name": "Real Madrid TV English",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/5pMo7dL.png",
+      "url": "http://88.212.15.50/live/real_madrid_tv/index.m3u8",
+      "status": "online",
+      "latency": 986
+    },
+    {
+      "id": "ch_dazn_5_aswg",
+      "name": "DAZN 5",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/HD2XaeS.png",
+      "url": "http://23.237.104.106:8080/DAZN_5/index.m3u8",
+      "status": "online",
+      "latency": 1016
+    },
+    {
+      "id": "ch_arena_sport_2_bron",
+      "name": "Arena Sport 2",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/Yq3Jf19.png",
+      "url": "http://88.212.15.50/live/test_arenasport_dva/playlist.m3u8",
+      "status": "online",
+      "latency": 1120
+    },
+    {
+      "id": "ch_eurosport_2_spain_zu8o",
+      "name": "Eurosport 2 Spain",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/f56dHgR.png",
+      "url": "http://45.134.141.161:2200/ARG/Eurosport_2_HD/index.m3u8",
+      "status": "online",
+      "latency": 1378
+    },
+    {
+      "id": "ch_dazn_4_zs8m",
+      "name": "DAZN 4",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/m7ga8bU.png",
+      "url": "http://23.237.104.106:8080/DAZN_4/index.m3u8",
+      "status": "online",
+      "latency": 1396
+    },
+    {
+      "id": "ch_sport_1_zgbg",
+      "name": "Sport 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/X5X3tKC.png",
+      "url": "http://88.212.7.14/live/sport1_hun/index.m3u8",
+      "status": "online",
+      "latency": 1506
+    },
+    {
+      "id": "ch_spiler_1_gmw8",
+      "name": "Spiler 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/pbk8c4x.png",
+      "url": "http://88.212.7.14/live/spiler1/index.m3u8",
+      "status": "online",
+      "latency": 1547
+    },
+    {
+      "id": "ch_eurosport_czechia_g2h0",
+      "name": "Eurosport Czechia",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/0o3zjC7.png",
+      "url": "http://88.212.15.50/live/esp_4k_atk/playlist.m3u8",
+      "status": "online",
+      "latency": 1574
+    },
+    {
+      "id": "ch_win_sports_z8ck",
+      "name": "Win Sports",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/DuSSrHV.png",
+      "url": "http://138.121.15.230:9002/WIN-SPORT/index.m3u8",
+      "status": "online",
+      "latency": 1675
+    },
+    {
+      "id": "ch_dazn_3_portugal_cq9w",
+      "name": "DAZN 3 Portugal",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/2rXsq2m.png",
+      "url": "http://23.237.104.106:8080/DAZN_3/index.m3u8",
+      "status": "online",
+      "latency": 1726
+    },
+    {
+      "id": "ch_arryadia_g4ya",
+      "name": "Arryadia",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/XjzK3gZ.png",
+      "url": "http://149.100.11.252:8000/play/a065/index.m3u8",
+      "status": "online",
+      "latency": 1744
+    },
+    {
+      "id": "ch_espn_latin_america_mexico_2jl6",
+      "name": "ESPN Latin America Mexico",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",
+      "url": "http://168.228.44.241:9997/play/a06p/index.m3u8",
+      "status": "online",
+      "latency": 1752
+    },
+    {
+      "id": "ch_eleven_sports_3_v5i5",
+      "name": "Eleven Sports 3",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/bWjGol4.png",
+      "url": "http://92.114.85.87:8002/play/a00g/index.m3u8",
+      "status": "online",
+      "latency": 1766
+    },
+    {
+      "id": "ch_espn_4_ztra",
+      "name": "ESPN 4",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/ESPN_4_logo.svg/960px-ESPN_4_logo.svg.png",
+      "url": "http://181.78.197.59:8000/play/a07n/index.m3u8",
+      "status": "online",
+      "latency": 1784
+    },
+    {
+      "id": "ch_tnt_sports_uj4h",
+      "name": "TNT Sports",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/TNT_Sports_2021_logo.svg/960px-TNT_Sports_2021_logo.svg.png",
+      "url": "http://209.45.101.130:8040/play/a03s/index.m3u8",
+      "backup_urls": [
+        "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/86.m3u8"
+      ],
+      "status": "online",
+      "latency": 1837
+    },
+    {
+      "id": "ch_l1_max_d2m9",
+      "name": "L1 Max",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/2fziU2B.png",
+      "url": "http://190.93.224.42/LIGA-1-MAX/index.m3u8",
+      "status": "online",
+      "latency": 1838
+    },
+    {
+      "id": "ch_meridiano_tv_czkb",
+      "name": "Meridiano TV",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/I6gsUqD.png",
+      "url": "http://181.78.8.199:8000/play/a0fr/index.m3u8",
+      "status": "online",
+      "latency": 1843
+    },
+    {
+      "id": "ch_espn_2_latin_america_colombia_2pec",
+      "name": "ESPN 2 Latin America Colombia",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png",
+      "url": "http://190.61.47.54:8000/play/a005/index.m3u8",
+      "status": "online",
+      "latency": 1856
+    },
+    {
+      "id": "ch_espn_latin_america_colombia_u20s",
+      "name": "ESPN Latin America Colombia",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",
+      "url": "http://190.61.47.54:8000/play/a004/index.m3u8",
+      "status": "online",
+      "latency": 1863
+    },
+    {
+      "id": "ch_cazetv_qk9q",
+      "name": "CazeTV",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/6/64/Caz%C3%A9TV_logo.svg/1280px-Caz%C3%A9TV_logo.svg.png",
+      "url": "http://138.204.86.4:8080/CAZE_TV/playlist.m3u8",
+      "status": "online",
+      "latency": 1865
+    },
+    {
+      "id": "ch_win__futbol_1d1k",
+      "name": "Win+ Futbol",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/0UN87vB.png",
+      "url": "http://181.78.12.119:16123/play/ch19/index.m3u8",
+      "status": "online",
+      "latency": 1914
+    },
+    {
+      "id": "ch_espn_yc01",
+      "name": "ESPN",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/960px-ESPN_wordmark.svg.png",
+      "url": "http://181.78.197.59:8000/play/a07z/index.m3u8",
+      "status": "online",
+      "latency": 1926
+    },
+    {
+      "id": "ch_fightbox_poland_0ppk",
+      "name": "FightBox Poland",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/mRsnztA.png",
+      "url": "http://92.114.85.87:8003/play/a00b/index.m3u8",
+      "status": "online",
+      "latency": 1967
+    },
+    {
+      "id": "ch_eurosport_1_spain_xyd0",
+      "name": "Eurosport 1 Spain",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/olQJgm7.png",
+      "url": "http://45.134.141.161:2200/ARG/Eurosport_1_HD/index.m3u8",
+      "status": "online",
+      "latency": 1998
+    },
+    {
+      "id": "ch_megogo_sport_2fyr",
+      "name": "MEGOGO Sport",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/5JmT4mW.png",
+      "url": "http://5.188.159.128:8070/megogo_sport/index.m3u8",
+      "status": "online",
+      "latency": 2019
+    },
+    {
+      "id": "ch_viju__sport_o29v",
+      "name": "viju+ Sport",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/fXESG0l.png",
+      "url": "http://46.53.200.153:7777/play/a01l/index.m3u8",
+      "status": "online",
+      "latency": 2034
+    },
+    {
+      "id": "ch_russian_extreme_ultra_i8s5",
+      "name": "Russian Extreme Ultra",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/Dk8VbAc.png",
+      "url": "http://46.53.200.153:7777/play/test_krask1/index.m3u8",
+      "status": "online",
+      "latency": 2049
+    },
+    {
+      "id": "ch_aym_sports_l7k7",
+      "name": "AyM Sports",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/yu3Bpbd.png",
+      "url": "http://168.196.127.137:6001/play/a06v/index.m3u8",
+      "status": "online",
+      "latency": 2050
+    },
+    {
+      "id": "ch_eleven_sports_4_qhln",
+      "name": "Eleven Sports 4",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/SEKXaAW.png",
+      "url": "http://92.114.85.87:8002/play/a00h/index.m3u8",
+      "status": "online",
+      "latency": 2089
+    },
+    {
+      "id": "ch_trace_sports_qjjp",
+      "name": "Trace Sports",
+      "group": "体育赛事",
+      "logo": "https://live.fanmingming.com/tv/Trace%20Sports.png",
+      "url": "https://lightning-tracesport-samsungau.amagi.tv/playlist1080p.m3u8",
+      "status": "online",
+      "latency": 2099
+    },
+    {
+      "id": "ch_deportv_cyrc",
+      "name": "DeporTV",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/THk9ARS.png",
+      "url": "http://158.172.155.130:8000/play/a09y/index.m3u8",
+      "status": "online",
+      "latency": 2111
+    },
+    {
+      "id": "ch_espn_premium_syl8",
+      "name": "ESPN Premium",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/ESPN_Premium_logo.svg/960px-ESPN_Premium_logo.svg.png",
+      "url": "http://158.172.155.130:8000/play/a0ao/index.m3u8",
+      "status": "online",
+      "latency": 2149
+    },
+    {
+      "id": "ch_match__premier_5nza",
+      "name": "Match! Premier",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/GQPyHYK.png",
+      "url": "http://185.23.80.23:8080/MATCH_PREMIER/index.m3u8",
+      "status": "online",
+      "latency": 2190
+    },
+    {
+      "id": "ch_tyc_sports_usa_ufsg",
+      "name": "TyC Sports USA",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/TyC_Sports_logo.svg/960px-TyC_Sports_logo.svg.png",
+      "url": "http://45.170.130.224:8000/play/a020/index.m3u8",
+      "status": "online",
+      "latency": 2256
+    },
+    {
+      "id": "ch_claro_sports_42sm",
+      "name": "Claro Sports",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/n0kd17r.png",
+      "url": "http://168.196.127.137:6001/play/a08r/index.m3u8",
+      "status": "online",
+      "latency": 2258
+    },
+    {
+      "id": "ch_match__ultra_np83",
+      "name": "Match! Ultra",
+      "group": "体育赛事",
+      "logo": "https://www.kartina.tv/media/news/images/News/SEO/kanal-match-ultra.jpg",
+      "url": "http://31.148.5.241/kanal_3/index.m3u8",
+      "status": "online",
+      "latency": 2346
+    },
+    {
+      "id": "ch_espnu_4rqc",
+      "name": "ESPNU",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/HiBrysh.png",
+      "url": "http://85.237.89.160:9590/usa-s/ESPN-U-HD/index.m3u8",
+      "status": "online",
+      "latency": 2449
+    },
+    {
+      "id": "ch_espn_2_481u",
+      "name": "ESPN 2",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/ESPN2_logo.svg/960px-ESPN2_logo.svg.png",
+      "url": "http://85.237.89.160:9590/usa-s/ESPN-2-HD/index.m3u8",
+      "status": "online",
+      "latency": 2577
+    },
+    {
+      "id": "ch_sky_sports_1_xflp",
+      "name": "Sky Sports 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/9onSfMi.png",
+      "url": "http://45.228.234.9:8000/play/a06b/index.m3u8",
+      "status": "online",
+      "latency": 2712
+    },
+    {
+      "id": "ch_golf_channel_latin_america_mumt",
+      "name": "Golf Channel Latin America",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Golf_Channel_Logo_2018.png/960px-Golf_Channel_Logo_2018.png",
+      "url": "http://15.204.246.24:8080/GolfChannelHD/index.m3u8",
+      "status": "online",
+      "latency": 2728
+    },
+    {
+      "id": "ch_eleven_sports_2_j4u5",
+      "name": "Eleven Sports 2",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/bTIRgqG.png",
+      "url": "http://92.114.85.87:8002/play/a00f/index.m3u8",
+      "status": "online",
+      "latency": 2775
+    },
+    {
+      "id": "ch_eleven_sports_1_9f3x",
+      "name": "Eleven Sports 1",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/AOu4FXH.png",
+      "url": "http://92.114.85.87:8002/play/a00e/index.m3u8",
+      "status": "online",
+      "latency": 2912
+    },
+    {
+      "id": "ch_match4_k09d",
+      "name": "Match4",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/hzexBLX.png",
+      "url": "http://141.94.193.53:80/Match4_HD/index.m3u8",
+      "status": "online",
+      "latency": 3110
+    },
+    {
+      "id": "ch_fox_sports_5iwp",
+      "name": "Fox Sports",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/FOX_Sports_logo.svg/960px-FOX_Sports_logo.svg.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/1552.m3u8",
+      "status": "online",
+      "latency": 3239
+    },
+    {
+      "id": "ch_fox_deportes_o49j",
+      "name": "Fox Deportes",
+      "group": "体育赛事",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/FOX_Deportes_logo.png/960px-FOX_Deportes_logo.png",
+      "url": "http://23.237.104.106:8080/USA_FOX_DEPORTES/index.m3u8",
+      "status": "online",
+      "latency": 3306
+    },
+    {
+      "id": "ch_futv_cciu",
+      "name": "FUTV",
+      "group": "体育赛事",
+      "logo": "https://i.imgur.com/f8BkLql.png",
+      "url": "http://45.228.234.9:8000/play/a06o/index.m3u8",
+      "status": "online",
+      "latency": 3806
+    },
+    {
+      "id": "ch_okko_futbol_u3q3",
+      "name": "Okko Futbol",
+      "group": "体育赛事",
+      "logo": "https://xml-epgservice.cdnvideo.ru/EPGService/hs/xmldata/852f4b92-cae5-463e-aad6-cd8844c5a49/logo/8986.png",
+      "url": "http://178.124.179.122:8080/Setanta1/index.m3u8",
+      "status": "online",
+      "latency": 4400
+    },
+    {
+      "id": "ch_sportsgrid_w2gs",
+      "name": "SportsGrid",
+      "group": "体育赛事",
+      "logo": "https://live.fanmingming.com/tv/SportsGrid.png",
+      "url": "https://sportsgrid-tribal.amagi.tv/playlist.m3u8",
+      "backup_urls": [
+        "https://amg00315-sportsgrid-firetv.amagi.tv/playlist.m3u8"
+      ],
+      "status": "online",
+      "latency": 5587
+    },
+    {
+      "id": "ch_viasat_history_nuvi",
+      "name": "Viasat History",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Viasat_History_2026.svg",
+      "url": "http://88.212.15.50/live/test_viasat_history_atk_tv/playlist.m3u8",
+      "status": "online",
+      "latency": 336
+    },
+    {
+      "id": "ch_national_geographic_if1r",
+      "name": "National Geographic",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",
+      "url": "http://88.212.15.50/live/test_ngc/playlist.m3u8",
+      "status": "online",
+      "latency": 340
+    },
+    {
+      "id": "ch______2b2u",
+      "name": "之江纪录",
+      "group": "纪录探索",
+      "logo": "https://live.fanmingming.cn/tv/之江纪录.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel012/1080p.m3u8",
+      "status": "online",
+      "latency": 347
+    },
+    {
+      "id": "ch_national_geographic_wild_2sh7",
+      "name": "National Geographic Wild",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png",
+      "url": "http://88.212.7.14/live/ngw_hun/index.m3u8",
+      "backup_urls": [
+        "http://88.212.15.50/live/test_ngw/playlist.m3u8"
+      ],
+      "status": "online",
+      "latency": 353
+    },
+    {
+      "id": "ch_dvojka_ehk6",
+      "name": "Dvojka",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/ft10wQn.png",
+      "url": "http://88.212.15.50/live/test_dvojka_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 377
+    },
+    {
+      "id": "ch_spektrum_lge3",
+      "name": "Spektrum",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/F5Uosum.png",
+      "url": "http://88.212.15.50/live/test_spektrum/playlist.m3u8",
+      "backup_urls": [
+        "http://88.212.7.14/live/spektrum_hun/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 398
+    },
+    {
+      "id": "ch_history_latin_america_b9g6",
+      "name": "History Latin America",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png",
+      "url": "http://15.204.246.24:8080/HistoryHD/index.m3u8",
+      "status": "online",
+      "latency": 655
+    },
+    {
+      "id": "ch_national_geographic_east_2sjm",
+      "name": "National Geographic East",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",
+      "url": "http://198.58.104.90:8989/natgeo/index.m3u8",
+      "status": "online",
+      "latency": 795
+    },
+    {
+      "id": "ch_viasat_nature_9pt5",
+      "name": "Viasat Nature",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/24/Cropped-viasat-nature.png",
+      "url": "http://88.212.15.50/live/test_viasat_nature_atk_tv/playlist.m3u8",
+      "status": "online",
+      "latency": 876
+    },
+    {
+      "id": "ch_investigation_discovery_0es5",
+      "name": "Investigation Discovery",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png",
+      "url": "http://88.212.7.14/live/id_hun/index.m3u8",
+      "status": "online",
+      "latency": 889
+    },
+    {
+      "id": "ch_bbc_earth_hungary_jhld",
+      "name": "BBC Earth Hungary",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/nGSsUd4.png",
+      "url": "http://88.212.7.14/live/bbce_hun/index.m3u8",
+      "status": "online",
+      "latency": 896
+    },
+    {
+      "id": "ch_viasat_explore_279d",
+      "name": "Viasat Explore",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/7/71/Viasat_Explore_2026.svg",
+      "url": "http://88.212.15.50/live/test_viasat_explore_atk_tv/playlist.m3u8",
+      "status": "online",
+      "latency": 952
+    },
+    {
+      "id": "ch_ct2_70lk",
+      "name": "CT2",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/%C4%8CT2_logo_2012.svg/960px-%C4%8CT2_logo_2012.svg.png",
+      "url": "http://88.212.15.50/live/test_ct2_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 976
+    },
+    {
+      "id": "ch_bbc_earth_czechia_n8ws",
+      "name": "BBC Earth Czechia",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/nGSsUd4.png",
+      "url": "http://88.212.7.14/live/test_bbc_eartch_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 998
+    },
+    {
+      "id": "ch_mwd_documentary_nphy",
+      "name": "MWD Documentary",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/4XV7cjU.png",
+      "url": "http://203.81.84.130/hls/mwd_document/index.m3u8",
+      "status": "online",
+      "latency": 1155
+    },
+    {
+      "id": "ch_national_geographic_latin_america_5iqx",
+      "name": "National Geographic Latin America",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeologo.svg/960px-Natgeologo.svg.png",
+      "url": "http://15.204.246.24:8080/NatGeoHD/index.m3u8",
+      "status": "online",
+      "latency": 1256
+    },
+    {
+      "id": "ch_national_geographic_wild_east_w936",
+      "name": "National Geographic Wild East",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/National_Geographic_Wild_logo.svg/960px-National_Geographic_Wild_logo.svg.png",
+      "url": "http://198.58.104.90:8989/natgeowild/index.m3u8",
+      "status": "online",
+      "latency": 1297
+    },
+    {
+      "id": "ch_history_2_latin_america_bz6z",
+      "name": "History 2 Latin America",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/History2_logo_%282022%29.svg/500px-History2_logo_%282022%29.svg.png",
+      "url": "http://138.121.15.230:9002/HISTORY-2/index.m3u8",
+      "status": "online",
+      "latency": 1590
+    },
+    {
+      "id": "ch_polsat_viasat_explore_1bkx",
+      "name": "Polsat Viasat Explore",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/gDlqO9h.png",
+      "url": "http://92.114.85.87:8014/play/a00g/index.m3u8",
+      "status": "online",
+      "latency": 1861
+    },
+    {
+      "id": "ch_30a_loomered_tv_macx",
+      "name": "30A Loomered TV",
+      "group": "纪录探索",
+      "logo": "https://cbs12.com/resources/media/0c1ecad8-fb09-4bb2-beaa-fc561dfe624a-small21x9_LoomerStill.jpg?1603419052801",
+      "url": "https://30a-tv.com/loomer.m3u8",
+      "status": "online",
+      "latency": 1877
+    },
+    {
+      "id": "ch_animal_planet_latin_america_tbec",
+      "name": "Animal Planet Latin America",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/2018_Animal_Planet_logo.svg/960px-2018_Animal_Planet_logo.svg.png",
+      "url": "http://15.204.246.24:8080/AnimalPlanetHD/index.m3u8",
+      "backup_urls": [
+        "http://190.128.214.97:64333/play/a01n/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 1945
+    },
+    {
+      "id": "ch_history_latin_america_south_xi42",
+      "name": "History Latin America South",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/History_%282021%29.svg/500px-History_%282021%29.svg.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/37.m3u8",
+      "status": "online",
+      "latency": 1974
+    },
+    {
+      "id": "ch_polsat_viasat_history_a80y",
+      "name": "Polsat Viasat History",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/X16UGUf.png",
+      "url": "http://185.227.34.179:8080/polsat-viasat-history-hd/index.m3u8",
+      "status": "online",
+      "latency": 2003
+    },
+    {
+      "id": "ch_american_heroes_channel_106j",
+      "name": "American Heroes Channel",
+      "group": "纪录探索",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/American_Heroes_Channel_logo.svg/960px-American_Heroes_Channel_logo.svg.png",
+      "url": "http://23.237.104.106:8080/USA_AMERICAN_HEROES/index.m3u8",
+      "status": "online",
+      "latency": 2079
+    },
+    {
+      "id": "ch_polsat_viasat_nature_lb0e",
+      "name": "Polsat Viasat Nature",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/TUcM0oS.png",
+      "url": "http://92.114.85.87:8016/play/a004/index.m3u8",
+      "status": "online",
+      "latency": 2166
+    },
+    {
+      "id": "ch_rt_documentary_jzyk",
+      "name": "RT Documentary",
+      "group": "纪录探索",
+      "logo": "https://live.fanmingming.com/tv/RT%20Documentary.png",
+      "url": "https://rt-rtd.rttv.com/live/rtdoc/playlist_4500Kb.m3u8",
+      "backup_urls": [
+        "https://rt-rtd.rttv.com/dvr/rtdoc/playlist.m3u8"
+      ],
+      "status": "online",
+      "latency": 2816
+    },
+    {
+      "id": "ch_viju_history_mejz",
+      "name": "viju History",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/FqWkeXb.png",
+      "url": "http://178.124.179.122:8080/HistoryHD/index.m3u8",
+      "status": "online",
+      "latency": 3661
+    },
+    {
+      "id": "ch_nano_329r",
+      "name": "Nano",
+      "group": "纪录探索",
+      "logo": "https://i.imgur.com/dYj3XDa.png",
+      "url": "http://185.23.80.23:8080/NANO_HD/index.m3u8",
+      "status": "online",
+      "latency": 4007
+    },
+    {
+      "id": "ch______hjc9",
+      "name": "浙江国际",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.cn/tv/浙江国际.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel010/1080p.m3u8",
+      "status": "online",
+      "latency": 410
+    },
+    {
+      "id": "ch_ct24_nbxb",
+      "name": "CT24",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/%C4%8CT24_logo.png/960px-%C4%8CT24_logo.png",
+      "url": "http://88.212.15.50/live/test_ct24_hevc/playlist.m3u8",
+      "status": "online",
+      "latency": 418
+    },
+    {
+      "id": "ch__24_yptu",
+      "name": ":24",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/tTCuczU.png",
+      "url": "http://88.212.15.50/live/test_trojka_25p/playlist.m3u8",
+      "status": "online",
+      "latency": 901
+    },
+    {
+      "id": "ch_cnn_prima_news_qp42",
+      "name": "CNN Prima News",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/elZyUjX.png",
+      "url": "http://88.212.15.50/live/test_cnn_pirma_news/playlist.m3u8",
+      "status": "online",
+      "latency": 964
+    },
+    {
+      "id": "ch_m1_ianr",
+      "name": "M1",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/r4tgKZK.png",
+      "url": "http://88.212.7.14/live/test_m_1_hungary_1200_atk/playlist.m3u8",
+      "status": "online",
+      "latency": 967
+    },
+    {
+      "id": "ch_kapaz_tv_dgur",
+      "name": "Kapaz TV",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/az/thumb/3/3e/K%C9%99p%C9%99z_TV_%282019-h.h.%29.png/500px-K%C9%99p%C9%99z_TV_%282019-h.h.%29.png",
+      "url": "http://85.132.78.122:8050/hls/stream/index.m3u8",
+      "status": "online",
+      "latency": 1009
+    },
+    {
+      "id": "ch_wionnews_fx6b",
+      "name": "WionNews",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/WionNews.png",
+      "url": "https://d7x8z4yuq42qn.cloudfront.net/index_7.m3u8",
+      "status": "online",
+      "latency": 1033
+    },
+    {
+      "id": "ch_cna_s36a",
+      "name": "CNA",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/CNA.png",
+      "url": "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_5.m3u8",
+      "backup_urls": [
+        "https://live1.mediadesk.al/cnatvlive.m3u8",
+        "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 1098
+    },
+    {
+      "id": "ch_up_now_6jdw",
+      "name": "UP NOW",
+      "group": "国际频道",
+      "logo": "https://papaji.freetvindia.com/media/channels/Upnow.png",
+      "url": "http://45.122.122.61:8080/UPNOW/video.m3u8",
+      "status": "online",
+      "latency": 1210
+    },
+    {
+      "id": "ch_one_america_news_network_6wem",
+      "name": "One America News Network",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/en/thumb/8/84/One_America_News_Network_logo.svg/960px-One_America_News_Network_logo.svg.png",
+      "url": "http://23.237.104.106:8080/USA_OAN/index.m3u8",
+      "status": "online",
+      "latency": 1434
+    },
+    {
+      "id": "ch_hln_1j3q",
+      "name": "HLN",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/HLN_%28TV_network%29_2017_logo.svg/960px-HLN_%28TV_network%29_2017_logo.svg.png",
+      "url": "http://23.237.104.106:8080/USA_HLN/index.m3u8",
+      "status": "online",
+      "latency": 1464
+    },
+    {
+      "id": "ch_bbc_news_north_america_scys",
+      "name": "BBC News North America",
+      "group": "国际频道",
+      "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png",
+      "url": "http://23.237.104.106:8080/USA_BBC_NEWS/index.m3u8",
+      "status": "online",
+      "latency": 1477
+    },
+    {
+      "id": "ch_aaj_ki_khabar_k8xt",
+      "name": "Aaj Ki Khabar",
+      "group": "国际频道",
+      "logo": "https://m.media-amazon.com/images/I/71q8sOMPwHL.png",
+      "url": "https://stream.ottlive.co.in/aajkikhabar/index.m3u8",
+      "status": "online",
+      "latency": 1533
+    },
+    {
+      "id": "ch_rtu_et04",
+      "name": "RTU",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/1OWvMP4.png",
+      "url": "http://45.224.97.181:9999/RTU/index.m3u8",
+      "status": "online",
+      "latency": 1673
+    },
+    {
+      "id": "ch_e__latin_america_mexico_vbeu",
+      "name": "E! Latin America Mexico",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/E%21_Logo_2012.svg/500px-E%21_Logo_2012.svg.png",
+      "url": "http://72.1.184.5:8089/play/a05d/index.m3u8",
+      "status": "online",
+      "latency": 1696
+    },
+    {
+      "id": "ch_tv_peru_noticias_vzfv",
+      "name": "TV Peru Noticias",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/TV_Per%C3%BA_Noticias_-_2019_logo.png/960px-TV_Per%C3%BA_Noticias_-_2019_logo.png",
+      "url": "http://190.93.224.42/TV-PERU-NOTICIAS/index.m3u8",
+      "status": "online",
+      "latency": 1743
+    },
+    {
+      "id": "ch_rpp_tv_86qf",
+      "name": "RPP TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/oBz3CgE.png",
+      "url": "http://190.93.224.42/RPP/index.m3u8",
+      "status": "online",
+      "latency": 1754
+    },
+    {
+      "id": "ch_wild_earth_cago",
+      "name": "Wild Earth",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Wild%20Earth.png",
+      "url": "https://wildearth-plex.amagi.tv/masterR1080p.m3u8",
+      "status": "online",
+      "latency": 1759
+    },
+    {
+      "id": "ch_telesur_tc1e",
+      "name": "Telesur",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/P50VjRX.png",
+      "url": "http://181.78.211.244:8005/play/a0cc/index.m3u8",
+      "status": "online",
+      "latency": 1761
+    },
+    {
+      "id": "ch_alikhbaria_syria_rfv6",
+      "name": "Alikhbaria Syria",
+      "group": "国际频道",
+      "logo": "https://alikhbariah.com/wp-content/themes/alekhbariah-custom-theme/img/logo.webp",
+      "url": "http://185.9.2.18/chid_423/index.m3u8",
+      "status": "online",
+      "latency": 1884
+    },
+    {
+      "id": "ch_cablenoticias_hyp1",
+      "name": "Cablenoticias",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/FfhOGR9.png",
+      "url": "http://181.78.211.244:8005/play/a09u/index.m3u8",
+      "status": "online",
+      "latency": 1892
+    },
+    {
+      "id": "ch_acento_tv_zrn5",
+      "name": "Acento TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/jhiZfHf.png",
+      "url": "https://acentotv01.streamprolive.com/hls/live.m3u8",
+      "status": "online",
+      "latency": 1904
+    },
+    {
+      "id": "ch_meganoticias_ahora_acgh",
+      "name": "Meganoticias Ahora",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/JCVEqTc.png",
+      "url": "http://15.204.196.147:22880/MEGANOTICIA-MEGAMEDIA-EE.UU-PROVEEDOR/video.m3u8",
+      "status": "online",
+      "latency": 1915
+    },
+    {
+      "id": "ch_cnn_international_latin_america_1vug",
+      "name": "CNN International Latin America",
+      "group": "国际频道",
+      "logo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/CNN-International-Logo.svg/960px-CNN-International-Logo.svg.png",
+      "url": "http://168.228.44.241:9997/play/a073/index.m3u8",
+      "status": "online",
+      "latency": 1942
+    },
+    {
+      "id": "ch_newsmax_polska_n72n",
+      "name": "Newsmax Polska",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/2NhPCrY.png",
+      "url": "http://92.114.85.87:8014/play/a006/index.m3u8",
+      "status": "online",
+      "latency": 1948
+    },
+    {
+      "id": "ch_agromais_grp5",
+      "name": "AgroMais",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/sFcOZeo.png",
+      "url": "http://45.162.64.114/AGROMAIS/index.m3u8",
+      "status": "online",
+      "latency": 1967
+    },
+    {
+      "id": "ch_wydarzenia_24_6a39",
+      "name": "Wydarzenia 24",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/uYpUnHP.png",
+      "url": "http://92.114.85.87:8016/play/a007/index.m3u8",
+      "status": "online",
+      "latency": 2026
+    },
+    {
+      "id": "ch_abc_tv_paraguay_hn1z",
+      "name": "ABC-TV Paraguay",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/OqfBMGy.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/7.m3u8",
+      "status": "online",
+      "latency": 2056
+    },
+    {
+      "id": "ch_franceinfo_tgpt",
+      "name": "Franceinfo",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/eITXz6A.png",
+      "url": "http://149.62.177.107:9999/franceinfo:/index.m3u8",
+      "status": "online",
+      "latency": 2056
+    },
+    {
+      "id": "ch_rt_news_qvpp",
+      "name": "RT News",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/RT%20News.png",
+      "url": "https://rt-glb.rttv.com/dvr/rtnews/playlist_4500Kb.m3u8",
+      "status": "online",
+      "latency": 2080
+    },
+    {
+      "id": "ch_24_news_01uj",
+      "name": "24 News",
+      "group": "国际频道",
+      "logo": "https://sund-images.sunnxt.com/202222/300x300_24News_202222_d63feca0-79ae-47ea-b75a-66c17d456f4c.png",
+      "url": "https://cdn4.mjunoon.tv:8087/streamtest/146M/chunks.m3u8",
+      "backup_urls": [
+        "https://mumt07.tangotv.in/zHjX9OFlTWENTYFOURNEWS/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 2098
+    },
+    {
+      "id": "ch_cnn_xcud",
+      "name": "CNN",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/CNN.png",
+      "url": "http://212.5.144.156:8080/cnn/index.m3u8",
+      "backup_urls": [
+        "https://tvsen6.aynaott.com/cnn/index.m3u8"
+      ],
+      "status": "online",
+      "latency": 2101
+    },
+    {
+      "id": "ch_record_news_t1st",
+      "name": "Record News",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/HZDRG0K.png",
+      "url": "http://45.162.64.114/RECORD_NEWS/index.m3u8",
+      "status": "online",
+      "latency": 2103
+    },
+    {
+      "id": "ch_unicanal_4mji",
+      "name": "Unicanal",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/cgTD2TW.png",
+      "url": "http://45.184.109.10/live/69393EAE6ADBC65A68F942022362A202/72.m3u8",
+      "status": "online",
+      "latency": 2138
+    },
+    {
+      "id": "ch_atv__dgim",
+      "name": "ATV+",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/fY9256H.png",
+      "url": "http://45.171.108.253:8888/ATV/index.m3u8",
+      "status": "online",
+      "latency": 2169
+    },
+    {
+      "id": "ch_jovem_pan_news_n5un",
+      "name": "Jovem Pan News",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Jovem_Pan_logo_2018.svg/960px-Jovem_Pan_logo_2018.svg.png",
+      "url": "http://170.83.49.66:8083/JOVEMPANNEWSHD/index.m3u8",
+      "status": "online",
+      "latency": 2182
+    },
+    {
+      "id": "ch_guatevision_otri",
+      "name": "Guatevision",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/mbmHPnO.png",
+      "url": "http://200.115.120.1:8000/play/ca066/index.m3u8",
+      "status": "online",
+      "latency": 2186
+    },
+    {
+      "id": "ch_360_ooz2",
+      "name": "360",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/agn47sQ.png",
+      "url": "https://turkmedya-live.ercdn.net/tv360/tv360.m3u8",
+      "status": "online",
+      "latency": 2196
+    },
+    {
+      "id": "ch_rt_ttub",
+      "name": "RT",
+      "group": "国际频道",
+      "logo": "https://dtil.tmsimg.com/assets/s142401_ld_h15_aa.png?lock=720x540",
+      "url": "http://212.5.144.156:8080/rt/index.m3u8",
+      "status": "online",
+      "latency": 2199
+    },
+    {
+      "id": "ch_al_jazeera_xdcp",
+      "name": "Al Jazeera",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Al%20Jazeera.png",
+      "url": "https://live-hls-apps-aja-fa.getaj.net/AJA/01.m3u8",
+      "status": "online",
+      "latency": 2200
+    },
+    {
+      "id": "ch_news_21_bangla_tv_o1ue",
+      "name": "News 21 Bangla TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/ijuJfmd.png",
+      "url": "http://103.190.133.68:1935/news21live/live/playlist.m3u8",
+      "status": "online",
+      "latency": 2335
+    },
+    {
+      "id": "ch_abp_asmita_l8qt",
+      "name": "ABP Asmita",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/ABP_Asmita_logo.svg/500px-ABP_Asmita_logo.svg.png",
+      "url": "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/asmita-livetv/master.m3u8",
+      "status": "online",
+      "latency": 2479
+    },
+    {
+      "id": "ch_abp_majha_379a",
+      "name": "ABP Majha",
+      "group": "国际频道",
+      "logo": "https://dtil.tmsimg.com/assets/s142521_ld_h15_aa.png?lock=720x540",
+      "url": "https://mumbai-edge.smartplaytv.in/ABPMajha/index.m3u8",
+      "status": "online",
+      "latency": 2479
+    },
+    {
+      "id": "ch_a24_xc6e",
+      "name": "A24",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/LnXQkIU.png",
+      "url": "http://138.59.227.20:8000/play/a05u/index.m3u8",
+      "status": "online",
+      "latency": 2501
+    },
+    {
+      "id": "ch_afghanistan_international_dqy4",
+      "name": "Afghanistan International",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/r8MmFRX.png",
+      "url": "https://hls.afintl.com/hls/stream.m3u8",
+      "status": "online",
+      "latency": 2617
+    },
+    {
+      "id": "ch_abp_ganga_iab0",
+      "name": "ABP Ganga",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/ABP_Ganga.svg/500px-ABP_Ganga.svg.png",
+      "url": "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/ganga-livetv/master.m3u8",
+      "status": "online",
+      "latency": 2627
+    },
+    {
+      "id": "ch_pbo_yczg",
+      "name": "PBO",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/vBpxX4S.png",
+      "url": "http://190.93.224.42/PBO/index.m3u8",
+      "status": "online",
+      "latency": 2627
+    },
+    {
+      "id": "ch_tv_natal_d937",
+      "name": "TV Natal",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/wqQmQml.png",
+      "url": "http://185.228.163.146:8000/play/a01y/index.m3u8",
+      "status": "online",
+      "latency": 2767
+    },
+    {
+      "id": "ch_abp_news_a0zc",
+      "name": "ABP News",
+      "group": "国际频道",
+      "logo": "https://dtil.tmsimg.com/assets/s158138_ld_h15_aa.png?lock=720x540",
+      "url": "https://d1rc86nwwc9fag.cloudfront.net/vglive-sk-472500/abpnews/master.m3u8",
+      "status": "online",
+      "latency": 2996
+    },
+    {
+      "id": "ch_tn_xme6",
+      "name": "TN",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/vFwPhPS.png",
+      "url": "http://158.172.155.130:8000/play/a0dp/index.m3u8",
+      "status": "online",
+      "latency": 3082
+    },
+    {
+      "id": "ch_exitosa_tv_7z65",
+      "name": "Exitosa TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/pu0BSB7.png",
+      "url": "http://190.93.224.42/EXITOSA/index.m3u8",
+      "status": "online",
+      "latency": 3242
+    },
+    {
+      "id": "ch_365_news_i3pk",
+      "name": "365 News",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/8I6PWof.png",
+      "url": "https://cdn4.mjunoon.tv:8087/streamtest/140M/chunks.m3u8",
+      "status": "online",
+      "latency": 3252
+    },
+    {
+      "id": "ch_arirang_sttc",
+      "name": "Arirang",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Arirang.png",
+      "url": "https://amdlive-ch01-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/chunklist_b3256000_sleng.m3u8",
+      "status": "online",
+      "latency": 3314
+    },
+    {
+      "id": "ch_abp_ananda_41wf",
+      "name": "ABP Ananda",
+      "group": "国际频道",
+      "logo": "https://dtil.tmsimg.com/assets/s142518_ld_h15_aa.png?lock=720x540",
+      "url": "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/ananda-livetv/master.m3u8",
+      "status": "online",
+      "latency": 3350
+    },
+    {
+      "id": "ch_acustik_tv_rkpi",
+      "name": "Acustik TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/dhiNIng.png",
+      "url": "https://s5.mexside.net:1936/clientetv/clientetv/playlist.m3u8",
+      "status": "online",
+      "latency": 3449
+    },
+    {
+      "id": "ch_9_plus_news_tyrc",
+      "name": "9 Plus News",
+      "group": "国际频道",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/9plusnews.png",
+      "url": "https://stream.ottlive.co.in/9plusnews/index.m3u8",
+      "status": "online",
+      "latency": 3537
+    },
+    {
+      "id": "ch_abc_news_a4kj",
+      "name": "ABC News",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/BrW7gk8.png",
+      "url": "https://abc-news-dmd-streams-1.akamaized.net/out/v1/701126012d044971b3fa89406a440133/index.m3u8",
+      "status": "online",
+      "latency": 3563
+    },
+    {
+      "id": "ch_actualidad_360_en6c",
+      "name": "Actualidad 360",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/3YeTu0n.png",
+      "url": "https://jmp2.uk/plu-67517fae5534bb0008187997.m3u8",
+      "status": "online",
+      "latency": 3630
+    },
+    {
+      "id": "ch_99tv_0qq3",
+      "name": "99TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/dZA4gel.png",
+      "url": "https://cdn.pishow.tv/ott/live/1211/master.m3u8",
+      "status": "online",
+      "latency": 3681
+    },
+    {
+      "id": "ch_abc_news_live_hthe",
+      "name": "ABC News Live",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/ABC_News_Live_logo_2021.svg/960px-ABC_News_Live_logo_2021.svg.png",
+      "url": "https://jmp2.uk/plu-6508be683a0d700008c534e4.m3u8",
+      "status": "online",
+      "latency": 3700
+    },
+    {
+      "id": "ch_6_tv_telugu_4694",
+      "name": "6 TV Telugu",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/l3EcRnZ.png",
+      "url": "https://yuppparoriglin.akamaized.net/181224/smil:6tv.smil/playlist.m3u8?hdnts=st=1735898689~exp=1835898688~acl=*~hmac=f5fe24724fe05481e3841f9eb5ab8efdee0a3dd83645ae9dcf45703f525bab7b",
+      "status": "online",
+      "latency": 4057
+    },
+    {
+      "id": "ch_newsmax_5eyc",
+      "name": "Newsmax",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Newsmax.png",
+      "url": "http://nmxlive.akamaized.net/hls/live/529965/Live_1/index.m3u8",
+      "status": "online",
+      "latency": 4535
+    },
+    {
+      "id": "ch_aaj_tak_jzsb",
+      "name": "Aaj Tak",
+      "group": "国际频道",
+      "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_AAJ_TAK/images/LOGO_HD/image.png",
+      "url": "https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8",
+      "status": "online",
+      "latency": 4814
+    },
+    {
+      "id": "ch_abante_tv_cv7j",
+      "name": "Abante TV",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Abante_masthead.svg",
+      "url": "https://amg19223-amg19223c12-amgplt0352.playout.now3.amagi.tv/playlist/amg19223-amg19223c12-amgplt0352/playlist.m3u8",
+      "status": "online",
+      "latency": 4955
+    },
+    {
+      "id": "ch_a_haber_ws0n",
+      "name": "A Haber",
+      "group": "国际频道",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Ahaber_Logo.png",
+      "url": "https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/ahaber/ahaber.m3u8",
+      "status": "online",
+      "latency": 5563
+    },
+    {
+      "id": "ch_gb_news_twdb",
+      "name": "GB News",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/GB%20News.png",
+      "url": "https://amg01076-lightningintern-gbnewsau-samsungau-et7fz.amagi.tv/playlist/amg01076-lightningintern-gbnewsau-samsungau/playlist.m3u8",
+      "status": "online",
+      "latency": 5575
+    },
+    {
+      "id": "ch_abp_sanjha_5vlr",
+      "name": "ABP Sanjha",
+      "group": "国际频道",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/ABP_Sanjha.png",
+      "url": "https://fta.ektv.in/live/641/master.m3u8",
+      "status": "online",
+      "latency": 5603
+    },
+    {
+      "id": "ch_24_kanal_vksp",
+      "name": "24 Kanal",
+      "group": "国际频道",
+      "logo": "https://pbs.twimg.com/profile_images/1498285886714298374/EMSJzC-0_400x400.jpg",
+      "url": "https://cdn15.live-tv.cloud/ua_infinitas_tv/news24-abr/playlist.m3u8",
+      "status": "online",
+      "latency": 5669
+    },
+    {
+      "id": "ch_fifa__ndbw",
+      "name": "FIFA+",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/FIFA%2B.png",
+      "url": "https://jmp2.uk/plu-660c29b5aec9680008f5b4a4.m3u8",
+      "status": "online",
+      "latency": 5837
+    },
+    {
+      "id": "ch_4_sides_tv_sszw",
+      "name": "4 SiDES TV",
+      "group": "国际频道",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/4sites.png",
+      "url": "https://stream.ottlive.co.in/4sidestv/index.m3u8",
+      "status": "online",
+      "latency": 5840
+    },
+    {
+      "id": "ch_scripps_news_cg8n",
+      "name": "Scripps News",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Scripps%20News.png",
+      "url": "https://aegis-cloudfront-1.tubi.video/7e1c26b7-7975-4240-9a4f-480eaa8f3ea4/playlist.m3u8",
+      "status": "online",
+      "latency": 5896
+    },
+    {
+      "id": "ch_24_horas_catalunya_l2kc",
+      "name": "24 Horas Catalunya",
+      "group": "国际频道",
+      "logo": "https://i.ibb.co/21sXZ3GT/24h.png",
+      "url": "https://ztnr.rtve.es/ztnr/4952053.m3u8",
+      "status": "online",
+      "latency": 6030
+    },
+    {
+      "id": "ch_24_7_canal_de_noticias_udjn",
+      "name": "24/7 Canal de Noticias",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/4hDCB1M.png",
+      "url": "https://panel.host-live.com:19360/cn247tv/cn247tv.m3u8",
+      "status": "online",
+      "latency": 6123
+    },
+    {
+      "id": "ch_24_tv_33we",
+      "name": "24 TV",
+      "group": "国际频道",
+      "logo": "https://i.imgur.com/8FO41es.png",
+      "url": "https://turkmedya-live.ercdn.net/tv24/tv24.m3u8",
+      "status": "online",
+      "latency": 6131
+    },
+    {
+      "id": "ch_aagaaz_times_cifw",
+      "name": "Aagaaz Times",
+      "group": "国际频道",
+      "logo": "https://jiotvimages.cdn.jio.com/dare_images/images/aagaaztimes.png",
+      "url": "https://live1.ottlive.co.in/aagaaztimes/index.m3u8",
+      "status": "online",
+      "latency": 6200
+    },
+    {
+      "id": "ch_stadium_72xt",
+      "name": "Stadium",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Stadium.png",
+      "url": "https://wurl120sports.global.transmit.live/hls/679a907dce42a042c23ace37/v1/stadium_gracenote/samsung_us/latest/main/hls/playlist.m3u8",
+      "status": "online",
+      "latency": 6440
+    },
+    {
+      "id": "ch_abn_andhra_jyoti_omoh",
+      "name": "ABN Andhra Jyoti",
+      "group": "国际频道",
+      "logo": "https://dtil.tmsimg.com/assets/s142517_ld_h15_aa.png?lock=720x540",
+      "url": "https://mumbai-edge.smartplaytv.in/ABNAJ/index.m3u8",
+      "status": "online",
+      "latency": 6441
+    },
+    {
+      "id": "ch_young_hollywood_1ftb",
+      "name": "Young Hollywood",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Young%20Hollywood.png",
+      "url": "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg00143-younghollywoodl-younghollywood-xiaomi/playlist.m3u8",
+      "status": "online",
+      "latency": 8222
+    },
+    {
+      "id": "ch_mytime_juqc",
+      "name": "Mytime",
+      "group": "国际频道",
+      "logo": "https://live.fanmingming.com/tv/Mytime.png",
+      "url": "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg00500-studiocitypictu-mytimeuk-xiaomi/playlist.m3u8",
+      "status": "online",
+      "latency": 8320
+    },
+    {
+      "id": "ch_tarima_tv_m5dw",
+      "name": "Tarima TV",
+      "group": "音乐电台",
+      "logo": "https://vercanalesdominicanos.com/wp-content/uploads/2026/03/tarima.png",
+      "url": "http://190.122.104.210:5080/LiveApp/streams/tarima.m3u8",
+      "status": "online",
+      "latency": 786
+    },
+    {
+      "id": "ch_axs_tv_fyn3",
+      "name": "AXS TV",
+      "group": "音乐电台",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/AXS_TV_logo.svg/960px-AXS_TV_logo.svg.png",
+      "url": "http://23.239.31.26:8989/axstv/index.m3u8",
+      "status": "online",
+      "latency": 799
+    },
+    {
+      "id": "ch_bridge_rock_e4ym",
+      "name": "BRIDGE Rock",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/MHuwct2.png",
+      "url": "http://178.134.1.158:8081/BRIDGEROCK/index.m3u8",
+      "status": "online",
+      "latency": 909
+    },
+    {
+      "id": "ch_music_box_hits_2cwl",
+      "name": "Music Box Hits",
+      "group": "音乐电台",
+      "logo": "https://musicboxhits.com/music_box_hits_logo.png",
+      "url": "http://88.212.15.50/live/mb_hits/index.m3u8",
+      "status": "online",
+      "latency": 925
+    },
+    {
+      "id": "ch_med_muzik_x6b5",
+      "name": "Med Muzik",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/gtUFmCD.png",
+      "url": "http://54.36.110.140/live3/live3.m3u8",
+      "status": "online",
+      "latency": 931
+    },
+    {
+      "id": "ch_music_box_classic_o3xr",
+      "name": "Music Box Classic",
+      "group": "音乐电台",
+      "logo": "https://musicboxclassic.com/music_box_classic_logo.png",
+      "url": "http://88.212.15.50/live/mb_classic/index.m3u8",
+      "status": "online",
+      "latency": 954
+    },
+    {
+      "id": "ch_music_box_sexy_r2a3",
+      "name": "Music Box Sexy",
+      "group": "音乐电台",
+      "logo": "https://musicboxsexy.com/music_box_sexy_logo.png",
+      "url": "http://88.212.15.50/live/mb_sexy/index.m3u8",
+      "status": "online",
+      "latency": 961
+    },
+    {
+      "id": "ch_dstv_wh2i",
+      "name": "DSTV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/YMgzzkf.png",
+      "url": "http://46.249.95.140:8081/hls/data.m3u8",
+      "status": "online",
+      "latency": 1007
+    },
+    {
+      "id": "ch_radio_fantastica_98_9_fm_bvll",
+      "name": "Radio Fantastica 98.9 FM",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/mpcIbrH.jpg",
+      "url": "http://190.107.232.9:8082/livestream/stream.m3u8",
+      "status": "online",
+      "latency": 1019
+    },
+    {
+      "id": "ch_muzsika_tv_mqxh",
+      "name": "Muzsika TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/kmQ5vYC.png",
+      "url": "http://88.212.7.14/live/test_muzsika_hungary_1200_atk/playlist.m3u8",
+      "status": "online",
+      "latency": 1022
+    },
+    {
+      "id": "ch_mtv_live_7cbp",
+      "name": "MTV Live",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/3UByLqb.png",
+      "url": "http://23.237.104.106:8080/USA_MTV_LIVE/index.m3u8",
+      "status": "online",
+      "latency": 1503
+    },
+    {
+      "id": "ch_mi_musica_romantica_dhy1",
+      "name": "Mi Musica Romantica",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/eIaRv0U.png",
+      "url": "http://181.78.12.119:16123/play/ch54/index.m3u8",
+      "status": "online",
+      "latency": 1652
+    },
+    {
+      "id": "ch_ranchenato_tv_ycfy",
+      "name": "Ranchenato TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/TCv5NqN.png",
+      "url": "http://181.78.12.119:16123/play/ch15/index.m3u8",
+      "status": "online",
+      "latency": 1660
+    },
+    {
+      "id": "ch_vm_latino_wmg9",
+      "name": "VM Latino",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/Dvo1b82.png",
+      "url": "http://45.163.139.42:8000/play/a03d/index.m3u8",
+      "status": "online",
+      "latency": 1671
+    },
+    {
+      "id": "ch_exa_tv_37up",
+      "name": "Exa TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/JWOqr1a.png",
+      "url": "http://190.61.90.17:40000/play/a0hk/index.m3u8",
+      "status": "online",
+      "latency": 1746
+    },
+    {
+      "id": "ch_mi_musica_reggaeton_9vl6",
+      "name": "Mi Musica Reggaeton",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/MMb9u4u.png",
+      "url": "http://181.78.12.119:16123/play/ch53/index.m3u8",
+      "status": "online",
+      "latency": 1758
+    },
+    {
+      "id": "ch_slager_tv_s0oz",
+      "name": "Slager TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/qDNRgSQ.png",
+      "url": "http://88.212.7.14/live/test_slager_tv_hungary_1200_atk/playlist.m3u8",
+      "status": "online",
+      "latency": 1813
+    },
+    {
+      "id": "ch_karibena_bwpc",
+      "name": "Karibena",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/cgHjg1e.png",
+      "url": "http://187.102.210.46/KARIBENA/index.m3u8",
+      "status": "online",
+      "latency": 1858
+    },
+    {
+      "id": "ch_htv_phsl",
+      "name": "HTV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/NlKFNHS.png",
+      "url": "http://45.171.64.30:6060/play/a012/index.m3u8",
+      "status": "online",
+      "latency": 1874
+    },
+    {
+      "id": "ch_eska_tv_b8n5",
+      "name": "Eska TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/N0eH0Cg.png",
+      "url": "http://92.114.85.87:8018/play/a00h/index.m3u8",
+      "status": "online",
+      "latency": 1880
+    },
+    {
+      "id": "ch_euro_indie_music_chart_tv_1wc8",
+      "name": "Euro Indie Music Chart TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/lF0iofX.png",
+      "url": "http://178.33.224.197:1935/euroindiemusic/euroindiemusic/playlist.m3u8",
+      "status": "online",
+      "latency": 1886
+    },
+    {
+      "id": "ch_mazzika_tx4x",
+      "name": "Mazzika",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/P7PUHIx.png",
+      "url": "http://149.100.11.235:8080/Mazzika/index.m3u8",
+      "status": "online",
+      "latency": 1912
+    },
+    {
+      "id": "ch_mi_musica_hits_owje",
+      "name": "Mi Musica Hits",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/z9MlLFL.png",
+      "url": "http://38.188.186.47:4000/play/a04n/index.m3u8",
+      "status": "online",
+      "latency": 1958
+    },
+    {
+      "id": "ch_disco_polo_music_vfak",
+      "name": "Disco Polo Music",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/ZZbuTv7.png",
+      "url": "http://185.227.34.179:8080/disco-polo-music/index.m3u8",
+      "status": "online",
+      "latency": 1973
+    },
+    {
+      "id": "ch_isango_tv_49n6",
+      "name": "Isango TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/EfsHaMQ.png",
+      "url": "http://80.241.215.175:1935/isangostar/isangostar/playlist.m3u8",
+      "status": "online",
+      "latency": 1983
+    },
+    {
+      "id": "ch_eska_tv_extra_levk",
+      "name": "Eska TV Extra",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/pZAFshQ.png",
+      "url": "http://92.114.85.87:8016/play/a008/index.m3u8",
+      "status": "online",
+      "latency": 2095
+    },
+    {
+      "id": "ch_live_music_channel_p0mc",
+      "name": "Live Music Channel",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/9qJkxV9.png",
+      "url": "http://46.53.200.153:7777/play/Live_music_channel/index.m3u8",
+      "status": "online",
+      "latency": 2114
+    },
+    {
+      "id": "ch_allegro_rgls",
+      "name": "Allegro",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/bRH34Rn.png",
+      "url": "http://158.172.155.130:8000/play/a0dn/index.m3u8",
+      "status": "online",
+      "latency": 2148
+    },
+    {
+      "id": "ch_kuriakos_music_53ob",
+      "name": "Kuriakos Music",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/Zl40NYi.jpg",
+      "url": "http://195.23.211.179:1935/kmusic/smil:kmusic.smil/playlist.m3u8",
+      "status": "online",
+      "latency": 2148
+    },
+    {
+      "id": "ch_rock___pop_k522",
+      "name": "Rock & Pop",
+      "group": "音乐电台",
+      "logo": "https://fmrockandpop.com/images/ryp/R&P_Logo_web_207x112px.png",
+      "url": "http://190.128.214.97:64333/play/a032/index.m3u8",
+      "status": "online",
+      "latency": 2156
+    },
+    {
+      "id": "ch_htv_argentina_51bl",
+      "name": "HTV Argentina",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/NlKFNHS.png",
+      "url": "http://45.134.141.161:2200/ARG/HTV/index.m3u8",
+      "status": "online",
+      "latency": 2191
+    },
+    {
+      "id": "ch_cmt_jdlu",
+      "name": "CMT",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/S7DOpdY.png",
+      "url": "http://23.237.104.106:8080/USA_CMT/index.m3u8",
+      "status": "online",
+      "latency": 2196
+    },
+    {
+      "id": "ch_1_music_television_nymi",
+      "name": "1 Music Television",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/4Ww7CsR.png",
+      "url": "http://176.118.197.101/1HD/index.m3u8",
+      "status": "online",
+      "latency": 2200
+    },
+    {
+      "id": "ch_music_box_dance_8c8y",
+      "name": "Music Box Dance",
+      "group": "音乐电台",
+      "logo": "https://musicboxdance.com/music_box_dance_logo.png",
+      "url": "http://88.212.15.50/live/mb_dance/index.m3u8",
+      "status": "online",
+      "latency": 2327
+    },
+    {
+      "id": "ch_mi_musica_salsa_uz8p",
+      "name": "Mi Musica Salsa",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/sT91t83.png",
+      "url": "http://181.78.12.119:16123/play/ch55/index.m3u8",
+      "status": "online",
+      "latency": 2341
+    },
+    {
+      "id": "ch_4_fun_dance_9bej",
+      "name": "4 Fun Dance",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/ZEWHe1B.png",
+      "url": "http://92.114.85.87:8018/play/a00k/index.m3u8",
+      "status": "online",
+      "latency": 2742
+    },
+    {
+      "id": "ch_polsat_music_pg77",
+      "name": "Polsat Music",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/uXygf1l.png",
+      "url": "http://92.114.85.87:8001/play/a00z/index.m3u8",
+      "status": "online",
+      "latency": 2825
+    },
+    {
+      "id": "ch_eska_rock_tv_gvdx",
+      "name": "Eska Rock TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/o0Fg19Q.png",
+      "url": "http://92.114.85.87:8016/play/a005/index.m3u8",
+      "status": "online",
+      "latency": 2879
+    },
+    {
+      "id": "ch_telehit_45yp",
+      "name": "TeleHit",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/NVxHxJn.png",
+      "url": "http://190.61.47.54:8000/play/a029/index.m3u8",
+      "status": "online",
+      "latency": 2888
+    },
+    {
+      "id": "ch_bandamax_pyuz",
+      "name": "Bandamax",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/4DfnOTA.png",
+      "url": "http://181.78.106.127:5000/play/ca064/index.m3u8",
+      "status": "online",
+      "latency": 2905
+    },
+    {
+      "id": "ch_vox_music_tv_akbz",
+      "name": "VOX Music TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/N993msF.png",
+      "url": "http://92.114.85.87:8016/play/a00a/index.m3u8",
+      "status": "online",
+      "latency": 2908
+    },
+    {
+      "id": "ch_europa_plus_tv_belarus_4cs7",
+      "name": "Europa Plus TV Belarus",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/GLc4qrc.png",
+      "url": "http://46.53.200.153:7777/play/EuropaPlus/index.m3u8",
+      "status": "online",
+      "latency": 3065
+    },
+    {
+      "id": "ch_quiero_musica_en_mi_idioma_9q8h",
+      "name": "Quiero Musica en mi Idioma",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/RO9Dz3X.png",
+      "url": "http://158.172.155.130:8000/play/a00a/index.m3u8",
+      "status": "online",
+      "latency": 3880
+    },
+    {
+      "id": "ch_top_latino_tv_4td1",
+      "name": "Top Latino TV",
+      "group": "音乐电台",
+      "logo": "https://i.imgur.com/VRl8nPZ.png",
+      "url": "http://38.87.224.20:2220/play/a02b/index.m3u8",
+      "status": "online",
+      "latency": 3914
+    },
+    {
+      "id": "ch_rthk_tv_31_p3pb",
+      "name": "RTHK TV 31",
+      "group": "地方综合",
+      "logo": "https://i.imgur.com/kf818kM.png",
+      "url": "https://rthktv31-live.akamaized.net/hls/live/2036818/RTHKTV31/master.m3u8",
+      "status": "online",
+      "latency": 4944
+    },
+    {
+      "id": "ch_taiwan_indigenous_tv_50fw",
+      "name": "Taiwan Indigenous TV",
+      "group": "General",
+      "logo": "https://i.imgur.com/QqIdVqz.png",
+      "url": "https://streamipcfapp.akamaized.net/live/_definst_/live_720/key_b1500.m3u8",
+      "status": "online",
+      "latency": 6290
+    },
+    {
+      "id": "ch_ftv_357g",
+      "name": "FTV",
+      "group": "General",
+      "logo": "https://i.imgur.com/q8ahtbT.png",
+      "url": "https://stream8.cinerama.uz/1018/playlist.m3u8",
+      "status": "online",
+      "latency": 4154
+    },
+    {
+      "id": "ch_wxtv_pvgy",
+      "name": "WXTV",
+      "group": "Religious",
+      "logo": "https://i.imgur.com/s8tiTeb.png",
+      "url": "https://mobile.ccdntech.com/transcoder/_definst_/vod164_Live/live/chunklist_w1177047531.m3u8",
+      "status": "online",
+      "latency": 2928
+    },
+    {
+      "id": "ch_beautiful_life_tv_4tsb",
+      "name": "Beautiful Life TV",
+      "group": "Religious",
+      "logo": "https://i.imgur.com/hkwcBM9.png",
+      "url": "https://5ddce30eb4b55.streamlock.net/bltvhd/bltv1/playlist.m3u8",
+      "status": "online",
+      "latency": 5875
+    },
+    {
+      "id": "ch_cgntv_chinese_bq17",
+      "name": "CGNTV Chinese",
+      "group": "Religious",
+      "logo": "https://i.imgur.com/bPoPAbR.png",
+      "url": "https://d3e05csss9c272.cloudfront.net/out/v1/f0bf71c57581470fb9379f603e8f5d83/CGNWebLiveCN.m3u8",
+      "status": "online",
+      "latency": 6199
+    },
+    {
+      "id": "ch_bstv_dmnj",
+      "name": "BSTV",
+      "group": "Shop",
+      "logo": "https://i.imgur.com/GVYSSgm.png",
+      "url": "https://samitaorigin.tangotv.in/BSTV/SAMITAORIGIN/index.m3u8",
+      "status": "online",
+      "latency": 6619
+    },
+    {
+      "id": "ch_pet_club_tv_gp4x",
+      "name": "Pet Club TV",
+      "group": "其他频道",
+      "logo": "https://i.imgur.com/ykPNNwQ.png",
+      "url": "https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg01076-lightningintern-petclub-samsungnz/playlist.m3u8",
+      "status": "online",
+      "latency": 8043
+    },
+    {
+      "id": "ch______qub4",
+      "name": "浙江民生",
+      "group": "浙江频道",
+      "logo": "https://live.fanmingming.cn/tv/浙江民生休闲.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel006/1080p.m3u8",
+      "status": "online",
+      "latency": 274
+    },
+    {
+      "id": "ch______bib4",
+      "name": "浙江教科",
+      "group": "浙江频道",
+      "logo": "https://live.fanmingming.cn/tv/浙江教科影视.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel004/1080p.m3u8",
+      "status": "online",
+      "latency": 402
+    },
+    {
+      "id": "ch______u9z5",
+      "name": "浙江新闻",
+      "group": "浙江频道",
+      "logo": "https://live.fanmingming.cn/tv/浙江新闻.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel007/1080p.m3u8",
+      "status": "online",
+      "latency": 462
+    },
+    {
+      "id": "ch______7xz0",
+      "name": "浙江钱江",
+      "group": "浙江频道",
+      "logo": "https://live.fanmingming.cn/tv/钱江都市.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel002/1080p.m3u8",
+      "status": "online",
+      "latency": 70
+    },
+    {
+      "id": "ch______njx8",
+      "name": "浙江经济",
+      "group": "浙江频道",
+      "logo": "https://live.fanmingming.cn/tv/浙江经济生活.png",
+      "url": "https://ali-m-l.cztv.com/channels/lantian/channel003/1080p.m3u8",
+      "status": "online",
+      "latency": 171
     },
     {
       "id": "phoenix_chinese",

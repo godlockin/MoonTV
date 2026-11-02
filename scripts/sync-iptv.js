@@ -16,12 +16,13 @@ const http = require('http');
 const { URL } = require('url');
 
 // 探测超时时间（毫秒）
-const PROBE_TIMEOUT_MS = 3500;
+const PROBE_TIMEOUT_MS = 3000;
 // 并发探测限制
-const CONCURRENCY_LIMIT = 20;
+const CONCURRENCY_LIMIT = 30;
 
-// 1. 预设精选上游 M3U 直播源列表（高频维护与带测速的高分矩阵）
+// 1. 预设精选上游 M3U 直播源列表（涵盖国内超清、港澳台、全球国际大台、影视轮播、少儿、纪录、体育、音乐）
 const STATIC_UPSTREAM_M3U_URLS = [
+  // 国内测速高分矩阵
   'https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_cctv_status.m3u8',
   'https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_province_status.m3u8',
   'https://raw.githubusercontent.com/best-fan/iptv-sources/main/cn_all_status.m3u8',
@@ -29,7 +30,18 @@ const STATIC_UPSTREAM_M3U_URLS = [
   'https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/itv.m3u',
   'https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u',
   'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
-  'https://iptv-org.github.io/iptv/countries/cn.m3u',
+  // 港澳台与海外华语精选
+  'https://raw.githubusercontent.com/hujingguang/ChinaIPTV/main/HongKong.m3u8',
+  'https://raw.githubusercontent.com/hujingguang/ChinaIPTV/main/Global.m3u8',
+  'https://iptv-org.github.io/iptv/countries/hk.m3u',
+  'https://iptv-org.github.io/iptv/countries/tw.m3u',
+  // 全球国际顶级主流台 (新闻、电影、少儿卡通、纪录探索、体育、音乐)
+  'https://iptv-org.github.io/iptv/categories/news.m3u',
+  'https://iptv-org.github.io/iptv/categories/movies.m3u',
+  'https://iptv-org.github.io/iptv/categories/animation.m3u',
+  'https://iptv-org.github.io/iptv/categories/documentary.m3u',
+  'https://iptv-org.github.io/iptv/categories/sports.m3u',
+  'https://iptv-org.github.io/iptv/categories/music.m3u',
 ];
 
 // 2. 基础底座频道库（优选低延迟国内大厂/融媒体高速流，淘汰海外龟速 VPS）
@@ -347,24 +359,122 @@ function parseM3uRaw(content) {
 }
 
 /**
+ * 智能分类归一化（将海内外各种分类标签规整为前端统一优雅的标准分组）
+ */
+function normalizeGroup(rawGroup = '', name = '') {
+  const g = (rawGroup || '').trim();
+  const n = (name || '').trim();
+  const text = `${g} ${n}`.toLowerCase();
+
+  if (text.includes('cctv') || text.includes('央视') || text.includes('cgtn')) return '央视频道';
+  if (text.includes('卫视') || text.includes('省台')) return '卫视频道';
+  if (
+    text.includes('港澳') ||
+    text.includes('香港') ||
+    text.includes('澳门') ||
+    text.includes('台湾') ||
+    text.includes('翡翠') ||
+    text.includes('viutv') ||
+    text.includes('tvbs') ||
+    text.includes('中天') ||
+    text.includes('东森') ||
+    text.includes('凤凰')
+  ) {
+    return '港澳台';
+  }
+  if (
+    text.includes('电影') ||
+    text.includes('影院') ||
+    text.includes('剧场') ||
+    text.includes('轮播') ||
+    text.includes('movie') ||
+    text.includes('cinema') ||
+    text.includes('chc') ||
+    text.includes('sitv') ||
+    text.includes('newtv')
+  ) {
+    return '影视轮播';
+  }
+  if (
+    text.includes('少儿') ||
+    text.includes('动画') ||
+    text.includes('动漫') ||
+    text.includes('卡通') ||
+    text.includes('kid') ||
+    text.includes('animation')
+  ) {
+    return '少儿动画';
+  }
+  if (
+    text.includes('体育') ||
+    text.includes('足球') ||
+    text.includes('篮球') ||
+    text.includes('赛事') ||
+    text.includes('sport')
+  ) {
+    return '体育赛事';
+  }
+  if (
+    text.includes('纪录') ||
+    text.includes('纪实') ||
+    text.includes('探索') ||
+    text.includes('地理') ||
+    text.includes('discovery') ||
+    text.includes('documentary') ||
+    text.includes('history')
+  ) {
+    return '纪录探索';
+  }
+  if (
+    text.includes('音乐') ||
+    text.includes('歌曲') ||
+    text.includes('mtv') ||
+    text.includes('music')
+  ) {
+    return '音乐电台';
+  }
+  if (
+    text.includes('国际') ||
+    text.includes('海外') ||
+    text.includes('欧美') ||
+    text.includes('日韩') ||
+    text.includes('news') ||
+    text.includes('bbc') ||
+    text.includes('cnn') ||
+    text.includes('bloomberg') ||
+    text.includes('dw') ||
+    text.includes('nhk') ||
+    text.includes('france') ||
+    text.includes('sky')
+  ) {
+    return '国际频道';
+  }
+
+  if (g && g !== 'Undefined' && g !== '其他') return g;
+  return '地方综合';
+}
+
+/**
  * 频道名称归一化（将变体清洗为通用规范名，例如 CCTV-1、CCTV1 50FPS 统一映射）
  */
 function normalizeChannelName(rawName) {
   let name = rawName
     .replace(/\[.*?\]|\(.*?\)|【.*?】|「.*?」/g, '')
     .replace(/(?:1080[pi]|720[pi]|4k|fhd|hd|hevc|50fps|60fps|标清|高清|超清|移动|联通|电信)/gi, '')
-    .replace(/\s+/g, '')
-    .toUpperCase();
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const upper = name.toUpperCase().replace(/\s+/g, '');
 
   // 映射 CCTV 格式 (CCTV1 -> CCTV-1, CCTV5+ -> CCTV-5+)
-  const cctvMatch = name.match(/^CCTV-?(\d{1,2}|5\+|4K)(.*)$/);
+  const cctvMatch = upper.match(/^CCTV-?(\d{1,2}|5\+|4K)(.*)$/);
   if (cctvMatch) {
     return `CCTV-${cctvMatch[1]}`;
   }
 
   // 卫视格式
-  if (name.includes('卫视')) {
-    const province = name.replace('卫视', '');
+  if (upper.includes('卫视')) {
+    const province = upper.replace('卫视', '');
     return `${province}卫视`;
   }
 
@@ -413,40 +523,39 @@ async function main() {
 
   // 注入全网采集到的 remoteChannels
   for (const item of remoteChannels) {
-    const normKey = normalizeChannelName(item.name);
-    const existing = channelMap.get(normKey);
-
-    if (existing) {
-      // 过滤无效假域名、失效已注销域名与省网受限内网源
-      if (
-        !item.url.includes('play-live.cctv.com') &&
-        !item.url.includes('gslbserv.itv.cmvideo.cn') &&
-        !item.url.includes('live.cgtn.com') &&
-        !item.url.includes('livedoc.cgtn.com')
-      ) {
-        existing.urls.add(item.url);
-      }
-    } else if (
-      item.group &&
-      !item.url.includes('gslbserv.itv.cmvideo.cn') &&
-      !item.url.includes('play-live.cctv.com') &&
-      !item.url.includes('live.cgtn.com') &&
-      !item.url.includes('livedoc.cgtn.com') &&
-      (item.group.includes('卫视') || item.group.includes('央视') || item.group.includes('港澳') || item.group.includes('电影'))
+    if (!item.name || !item.url) continue;
+    // 过滤无效假域名、失效已注销域名与省网受限内网源
+    if (
+      item.url.includes('play-live.cctv.com') ||
+      item.url.includes('gslbserv.itv.cmvideo.cn') ||
+      item.url.includes('live.cgtn.com') ||
+      item.url.includes('livedoc.cgtn.com') ||
+      item.url.includes('1.1.1.1') ||
+      item.url.includes('127.0.0.1')
     ) {
-      // 自动收录优质大类中的未知频道
+      continue;
+    }
+
+    const normKey = normalizeChannelName(item.name);
+    if (!normKey || normKey.length < 2) continue;
+
+    const existing = channelMap.get(normKey);
+    if (existing) {
+      existing.urls.add(item.url);
+    } else {
+      const groupName = normalizeGroup(item.group, item.name);
       const newId = `ch_${normKey.toLowerCase().replace(/[^a-z0-9]/g, '_')}_${Math.random().toString(36).substring(2, 6)}`;
       channelMap.set(normKey, {
         id: newId,
-        name: item.name,
-        group: item.group,
+        name: normKey,
+        group: groupName,
         logo: item.logo || `https://live.fanmingming.com/tv/${encodeURIComponent(item.name)}.png`,
         urls: new Set([item.url]),
       });
     }
   }
 
-  console.log(`\n📊 聚合去重完成，共归一化识别出 ${channelMap.size} 个电视频道，启动并发测速探活...`);
+  console.log(`\n📊 聚合去重完成，共归一化识别出 ${channelMap.size} 个电视频道，启动高并发测速探活...`);
 
   // 3. 并发嗅探测速：探活每个频道的候选 URL，排序优选出主线路 + 备用线路
   const finalChannels = [];
@@ -459,8 +568,8 @@ async function main() {
     const urls = Array.from(channel.urls);
     const healthyList = [];
 
-    // 为每个频道最多测试 5 条候选源（兼顾探测性能与多样性）
-    const testList = urls.slice(0, 5);
+    // 为每个频道最多测试 3 条候选源（兼顾探测性能与多样性）
+    const testList = urls.slice(0, 3);
     for (const url of testList) {
       totalTestedUrls++;
       const probe = await probeStreamUrl(url);
@@ -486,24 +595,42 @@ async function main() {
       backupUrls = healthyList.slice(1, 4).map((h) => h.url);
     }
 
-    finalChannels.push({
-      id: channel.id,
-      name: channel.name,
-      group: channel.group,
-      logo: channel.logo,
-      url: mainUrl,
-      backup_urls: backupUrls.length > 0 ? backupUrls : undefined,
-      status: isOnline ? 'online' : 'fallback',
-      latency: bestLatency,
-    });
+    // 核心预设频道保留（作为兜底），海量扩展频道只收录真实测活可用的频道，杜绝不可用死链堆积
+    const isPreset = CORE_PRESETS.some((p) => p.id === channel.id);
+    if (isOnline || isPreset) {
+      finalChannels.push({
+        id: channel.id,
+        name: channel.name,
+        group: channel.group,
+        logo: channel.logo,
+        url: mainUrl,
+        backup_urls: backupUrls.length > 0 ? backupUrls : undefined,
+        status: isOnline ? 'online' : 'fallback',
+        latency: bestLatency,
+      });
+    }
   });
 
-  // 4. 分类排序输出（央视 -> 卫视 -> 港澳 -> 轮播影院 -> 地方频道）
-  const groupOrder = ['央视频道', '卫视频道', '港澳频道', '轮播影院'];
+  // 4. 分类排序输出（央视 -> 卫视 -> 港澳台 -> 影视轮播 -> 少儿动画 -> 体育赛事 -> 纪录探索 -> 国际频道 -> 音乐电台 -> 地方综合）
+  const groupOrder = [
+    '央视频道',
+    '卫视频道',
+    '港澳台',
+    '影视轮播',
+    '少儿动画',
+    '体育赛事',
+    '纪录探索',
+    '国际频道',
+    '音乐电台',
+    '地方综合',
+  ];
   finalChannels.sort((a, b) => {
     const idxA = groupOrder.indexOf(a.group);
     const idxB = groupOrder.indexOf(b.group);
-    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1 && idxB !== -1) {
+      if (idxA !== idxB) return idxA - idxB;
+      return (a.latency || 9999) - (b.latency || 9999);
+    }
     if (idxA !== -1) return -1;
     if (idxB !== -1) return 1;
     return a.group.localeCompare(b.group);
