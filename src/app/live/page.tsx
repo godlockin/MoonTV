@@ -28,6 +28,7 @@ function LivePageClient() {
   const [customM3uContent, setCustomM3uContent] = useState<string>('');
   const [loadingCustom, setLoadingCustom] = useState<boolean>(false);
   const [playerError, setPlayerError] = useState<string | null>(null);
+  const [useProxy, setUseProxy] = useState<boolean>(true);
 
   const artRef = useRef<HTMLDivElement>(null);
   const artPlayerInstance = useRef<any>(null);
@@ -114,9 +115,21 @@ function LivePageClient() {
           artPlayerInstance.current = null;
         }
 
+        // 判定实际播放 URL：当开启代理，或在 HTTPS 生产站点下播放 HTTP 直播流时，通过内置边缘代理中转
+        const isHttpsPage =
+          typeof window !== 'undefined' &&
+          window.location.protocol === 'https:';
+        const shouldProxy =
+          useProxy ||
+          (isHttpsPage && selectedChannel.url.startsWith('http://'));
+
+        const targetUrl = shouldProxy
+          ? `/api/live-proxy?url=${encodeURIComponent(selectedChannel.url)}`
+          : selectedChannel.url;
+
         art = new Artplayer({
           container: artRef.current,
-          url: selectedChannel.url,
+          url: targetUrl,
           type: 'm3u8',
           isLive: true,
           autoplay: true,
@@ -144,6 +157,22 @@ function LivePageClient() {
 
                 hls.on(Hls.Events.ERROR, function (_event: any, data: any) {
                   if (data.fatal) {
+                    // 若直连失败且当前尚未使用中转代理，自动尝试使用边缘代理自愈
+                    if (
+                      data.type === Hls.ErrorTypes.NETWORK_ERROR &&
+                      !url.includes('/api/live-proxy')
+                    ) {
+                      console.warn(
+                        '[IPTV] 直播流直连失败，自动切换至边缘代理中转...'
+                      );
+                      const proxiedUrl = `/api/live-proxy?url=${encodeURIComponent(
+                        selectedChannel.url
+                      )}`;
+                      hls.loadSource(proxiedUrl);
+                      hls.startLoad();
+                      return;
+                    }
+
                     switch (data.type) {
                       case Hls.ErrorTypes.NETWORK_ERROR:
                         console.warn('[IPTV] 直播流网络错误，尝试重连...');
@@ -155,7 +184,9 @@ function LivePageClient() {
                         break;
                       default:
                         console.error('[IPTV] 直播流不可用');
-                        setPlayerError('该直播源暂不可用或网络超时，请尝试切换其他频道');
+                        setPlayerError(
+                          '该直播源暂不可用或网络超时，请尝试切换其他频道或开启中转代理'
+                        );
                         hls.destroy();
                         break;
                     }
@@ -197,7 +228,7 @@ function LivePageClient() {
         artPlayerInstance.current = null;
       }
     };
-  }, [selectedChannel]);
+  }, [selectedChannel, useProxy]);
 
   // 处理自定义 M3U 导入
   const handleImportCustomM3u = async () => {
@@ -302,6 +333,21 @@ function LivePageClient() {
             </div>
 
             <div className='flex items-center space-x-2 flex-shrink-0'>
+              <button
+                onClick={() => setUseProxy(!useProxy)}
+                title={
+                  useProxy
+                    ? '已开启 Cloudflare 边缘代理（抗跨域 CORS、抗防盗链及解决 HTTP/HTTPS 混合加载）'
+                    : '已关闭代理（直接连接源站）'
+                }
+                className={`inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors shadow-sm ${
+                  useProxy
+                    ? 'bg-emerald-700/80 hover:bg-emerald-700 text-white border border-emerald-500/30'
+                    : 'bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                <span>{useProxy ? '边缘代理: 开' : '边缘代理: 关'}</span>
+              </button>
               <button
                 onClick={() => setShowCustomModal(true)}
                 className='inline-flex items-center space-x-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-medium rounded-lg transition-colors shadow-sm'
