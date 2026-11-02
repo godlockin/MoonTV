@@ -26,6 +26,8 @@ jobs:
           node-version: 20
 
       - name: Run IPTV Probe and Sync Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/sync-iptv.js
 
       - name: Commit and Push Changes

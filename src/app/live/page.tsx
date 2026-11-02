@@ -29,6 +29,26 @@ function LivePageClient() {
   const [loadingCustom, setLoadingCustom] = useState<boolean>(false);
   const [playerError, setPlayerError] = useState<string | null>(null);
   const [useProxy, setUseProxy] = useState<boolean>(true);
+  const [currentRouteIndex, setCurrentRouteIndex] = useState<number>(0);
+
+  // 当切换频道时重置为主线路
+  useEffect(() => {
+    setCurrentRouteIndex(0);
+  }, [selectedChannel?.id]);
+
+  // 计算当前频道的所有可用线路 (主线 + 备用线路)
+  const allRoutes = useMemo(() => {
+    if (!selectedChannel) return [];
+    const list = [selectedChannel.url];
+    if (Array.isArray(selectedChannel.backup_urls)) {
+      selectedChannel.backup_urls.forEach((u) => {
+        if (u && !list.includes(u)) list.push(u);
+      });
+    }
+    return list;
+  }, [selectedChannel]);
+
+  const currentStreamUrl = allRoutes[currentRouteIndex] || selectedChannel?.url || '';
 
   const artRef = useRef<HTMLDivElement>(null);
   const artPlayerInstance = useRef<any>(null);
@@ -121,11 +141,11 @@ function LivePageClient() {
           window.location.protocol === 'https:';
         const shouldProxy =
           useProxy ||
-          (isHttpsPage && selectedChannel.url.startsWith('http://'));
+          (isHttpsPage && currentStreamUrl.startsWith('http://'));
 
         const targetUrl = shouldProxy
-          ? `/api/live-proxy?url=${encodeURIComponent(selectedChannel.url)}`
-          : selectedChannel.url;
+          ? `/api/live-proxy?url=${encodeURIComponent(currentStreamUrl)}`
+          : currentStreamUrl;
 
         art = new Artplayer({
           container: artRef.current,
@@ -166,10 +186,19 @@ function LivePageClient() {
                         '[IPTV] 直播流直连失败，自动切换至边缘代理中转...'
                       );
                       const proxiedUrl = `/api/live-proxy?url=${encodeURIComponent(
-                        selectedChannel.url
+                        currentStreamUrl
                       )}`;
                       hls.loadSource(proxiedUrl);
                       hls.startLoad();
+                      return;
+                    }
+
+                    // 如果有多线路且后续有备用源，自动切换至下一条线路
+                    if (currentRouteIndex + 1 < allRoutes.length) {
+                      console.warn(
+                        `[IPTV] 线路 ${currentRouteIndex + 1} 异常，自动切换至线路 ${currentRouteIndex + 2}...`
+                      );
+                      setCurrentRouteIndex((prev) => prev + 1);
                       return;
                     }
 
@@ -185,7 +214,7 @@ function LivePageClient() {
                       default:
                         console.error('[IPTV] 直播流不可用');
                         setPlayerError(
-                          '该直播源暂不可用或网络超时，请尝试切换其他频道或开启中转代理'
+                          '当前频道所有可用线路均已超时或失效，请尝试切换其他频道'
                         );
                         hls.destroy();
                         break;
@@ -228,7 +257,7 @@ function LivePageClient() {
         artPlayerInstance.current = null;
       }
     };
-  }, [selectedChannel, useProxy]);
+  }, [selectedChannel, useProxy, currentStreamUrl]);
 
   // 处理自定义 M3U 导入
   const handleImportCustomM3u = async () => {
@@ -325,10 +354,35 @@ function LivePageClient() {
                   <span className='px-2 py-0.5 text-[11px] font-medium bg-green-100 dark:bg-green-950/60 text-green-800 dark:text-green-300 rounded-full'>
                     {selectedChannel.group}
                   </span>
+                  {selectedChannel.latency && (
+                    <span className='px-2 py-0.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 rounded-full'>
+                      {selectedChannel.latency}ms
+                    </span>
+                  )}
                 </div>
-                <p className='text-xs text-gray-400 dark:text-gray-500 font-mono truncate mt-0.5'>
-                  {selectedChannel.url}
-                </p>
+                <div className='flex items-center space-x-2 mt-1'>
+                  <p className='text-xs text-gray-400 dark:text-gray-500 font-mono truncate max-w-xs md:max-w-md'>
+                    {currentStreamUrl}
+                  </p>
+                  {allRoutes.length > 1 && (
+                    <div className='flex items-center space-x-1 flex-shrink-0'>
+                      <span className='text-[10px] text-gray-400'>线路:</span>
+                      {allRoutes.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentRouteIndex(idx)}
+                          className={`px-1.5 py-0.5 text-[10px] font-medium rounded transition-all ${
+                            currentRouteIndex === idx
+                              ? 'bg-green-600 text-white shadow-xs'
+                              : 'bg-gray-200/70 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
+                          }`}
+                        >
+                          {idx === 0 ? '主线' : `备用${idx}`}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 

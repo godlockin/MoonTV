@@ -9,6 +9,9 @@ export interface LiveChannel {
   url: string;
   group: string;
   logo?: string;
+  backup_urls?: string[];
+  latency?: number;
+  status?: 'online' | 'fallback';
 }
 
 export interface LiveCategory {
