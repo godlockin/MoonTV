@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any,no-console,no-empty,react-hooks/exhaustive-deps */
 
 'use client';
 
@@ -161,14 +161,14 @@ function LivePageClient() {
   // 彻底安全销毁旧播放器与 HLS 实例，杜绝换台背景音残留与幽灵进程
   const teardownPlayer = () => {
     // 1. 彻底关停所有 HLS.js 实例的网络请求与解码线程
-    for (const h of activeHlsInstances.current) {
+    activeHlsInstances.current.forEach((h) => {
       try {
         h.removeAllListeners();
         h.stopLoad();
         h.detachMedia();
         h.destroy();
       } catch (_) {}
-    }
+    });
     activeHlsInstances.current.clear();
 
     if (hlsRef.current) {
